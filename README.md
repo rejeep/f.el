@@ -1,4 +1,4 @@
-# f.el
+# f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el)
 
 ## API
 
