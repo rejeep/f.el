@@ -37,3 +37,12 @@
 
 (ert-deftest f-paths-test/dirname-with-extension ()
   (should (equal (f-dirname "/path/to/file.txt") "/path/to/")))
+
+(ert-deftest f-paths-test/ext-no-extension ()
+  (should (equal (f-ext "path/to/file") nil)))
+
+(ert-deftest f-paths-test/ext-single-extension ()
+  (should (equal (f-ext "path/to/file.txt") "txt")))
+
+(ert-deftest f-paths-test/ext-multiple-extensions ()
+  (should (equal (f-ext "path/to/file.txt.org") "org")))
