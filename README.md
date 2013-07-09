@@ -12,7 +12,7 @@
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
 * [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
-* [f-relative](#f-relative-path-to) `(path to)`
+* [f-relative](#f-relative-file-optional-path) `(file &optional path)`
 
 ### Destructive
 
@@ -128,12 +128,13 @@ See: `file-expand-wildcards`
 (f-glob "*.el" "path/to")
 ```
 
-### f-relative `(path to)`
+### f-relative `(file &optional path)`
 
-Returns the path to `path` relative to `to`.
+Returns the path to `file` relative to `path`.
 
 ```lisp
-(f-relative "/some/path/relative/to/my/file.txt" "/some/path") ;; => relative/to/my/file.txt
+(f-relative "/some/path/relative/to/my/file.txt" "/some/path/") ;; => relative/to/my/file.txt
+(f-relative "/default/directory/my/file.txt") ;; => my/file.txt
 ```
 
 ### f-write `(path &optional content)`

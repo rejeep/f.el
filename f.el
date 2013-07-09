@@ -57,9 +57,8 @@
     (setq path default-directory))
   (file-expand-wildcards (f-join path pattern)))
 
-(defun f-relative (path to)
-  ""
-  )
+(defun f-relative (file &optional path)
+  (file-relative-name file path))
 
 (defun f-write (path &optional content)
   ""

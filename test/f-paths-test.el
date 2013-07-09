@@ -78,3 +78,10 @@
   (with-mock
    (mock (file-expand-wildcards "path/to/*.el") :times 1)
    (f-glob "*.el" "path/to")))
+
+(ert-deftest f-paths-test/relative-with-path ()
+  (should (equal (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") "relative/to/my/file.txt")))
+
+(ert-deftest f-paths-test/relative-without-path ()
+  (let ((default-directory "/default/directory"))
+    (should (equal (f-relative "/default/directory/my/file.txt") "my/file.txt"))))
