@@ -1,6 +1,9 @@
 (require 'cl)
 (require 'el-mock)
 
+(defmacro with-default-directory (&rest body)
+  `(let ((default-directory "/default/directory")) ,@body))
+
 (ert-deftest f-paths-test/join-single-path ()
   (should (equal (f-join "path") "path")))
 
@@ -8,20 +11,20 @@
   (should (equal (f-join "path" "to" "file") "path/to/file")))
 
 (ert-deftest f-paths-test/expand-no-dirs ()
-  (let ((default-directory "/default/directory"))
-    (should (equal (f-expand "foo") "/default/directory/foo"))))
+  (with-default-directory
+   (should (equal (f-expand "foo") "/default/directory/foo"))))
 
 (ert-deftest f-paths-test/expand-single-dir ()
-  (let ((default-directory "/default/directory"))
-    (should (equal (f-expand "foo" "/other") "/other/foo"))))
+  (with-default-directory
+   (should (equal (f-expand "foo" "/other") "/other/foo"))))
 
 (ert-deftest f-paths-test/expand-multiple-dirs-absolute ()
-  (let ((default-directory "/default/directory"))
-    (should (equal (f-expand "foo" "/other" "directory") "/other/directory/foo"))))
+  (with-default-directory
+   (should (equal (f-expand "foo" "/other" "directory") "/other/directory/foo"))))
 
 (ert-deftest f-paths-test/expand-multiple-dirs-relative ()
-  (let ((default-directory "/default/directory"))
-    (should (equal (f-expand "foo" "path" "to") "/default/directory/path/to/foo"))))
+  (with-default-directory
+   (should (equal (f-expand "foo" "path" "to") "/default/directory/path/to/foo"))))
 
 (ert-deftest f-paths-test/filename-relative ()
   (should (equal (f-filename "path/to/file") "file")))
@@ -71,8 +74,8 @@
 (ert-deftest f-paths-test/glob-without-path ()
   (with-mock
    (mock (file-expand-wildcards "/default/directory/*.el") :times 1)
-   (let ((default-directory "/default/directory"))
-     (f-glob "*.el"))))
+   (with-default-directory
+    (f-glob "*.el"))))
 
 (ert-deftest f-paths-test/glob-with-path ()
   (with-mock
@@ -83,5 +86,5 @@
   (should (equal (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") "relative/to/my/file.txt")))
 
 (ert-deftest f-paths-test/relative-without-path ()
-  (let ((default-directory "/default/directory"))
-    (should (equal (f-relative "/default/directory/my/file.txt") "my/file.txt"))))
+  (with-default-directory
+   (should (equal (f-relative "/default/directory/my/file.txt") "my/file.txt"))))
