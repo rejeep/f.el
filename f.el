@@ -35,8 +35,7 @@
   (mapconcat 'identity args f-path-separator))
 
 (defun f-expand (file &rest dirs)
-  ""
-  )
+  (expand-file-name file (apply 'f-join dirs)))
 
 (defun f-filename (path)
   ""
