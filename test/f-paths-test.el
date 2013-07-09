@@ -1,3 +1,6 @@
+(require 'cl)
+(require 'el-mock)
+
 (ert-deftest f-paths-test/join-single-path ()
   (should (equal (f-join "path") "path")))
 
@@ -64,3 +67,14 @@
 
 (ert-deftest f-paths-test/base-multiple-extensions ()
   (should (equal (f-base "path/to/file.txt.org") "file.txt")))
+
+(ert-deftest f-paths-test/glob-without-path ()
+  (with-mock
+   (mock (file-expand-wildcards "/default/directory/*.el") :times 1)
+   (let ((default-directory "/default/directory"))
+     (f-glob "*.el"))))
+
+(ert-deftest f-paths-test/glob-with-path ()
+  (with-mock
+   (mock (file-expand-wildcards "path/to/*.el") :times 1)
+   (f-glob "*.el" "path/to")))

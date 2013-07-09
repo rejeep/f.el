@@ -53,8 +53,9 @@
   (f-no-ext (f-filename path)))
 
 (defun f-glob (pattern &optional path)
-  ""
-  )
+  (unless path
+    (setq path default-directory))
+  (file-expand-wildcards (f-join path pattern)))
 
 (defun f-relative (path to)
   ""
