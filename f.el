@@ -38,8 +38,7 @@
   (expand-file-name file (apply 'f-join dirs)))
 
 (defun f-filename (path)
-  ""
-  )
+  (file-name-nondirectory path))
 
 (defun f-dirname (path)
   ""
