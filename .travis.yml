@@ -16,7 +16,7 @@ before_install:
   - export PATH="/home/travis/.carton/bin:$PATH"
   - carton
 env:
-  - EMACS=emacs23
+  - EMACS=emacs
   - EMACS=emacs24
   - EMACS=emacs-snapshot
 script:
