@@ -29,6 +29,126 @@
 
 ;;; Code:
 
+(defun f-join (&rest args)
+  ""
+  )
+
+(defun f-expand (file &rest dirs)
+  ""
+  )
+
+(defun f-filename (path)
+  ""
+  )
+
+(defun f-dirname (path)
+  ""
+  )
+
+(defun f-ext (path)
+  ""
+  )
+
+(defun f-no-ext (path)
+  ""
+  )
+
+(defun f-base (path)
+  ""
+  )
+
+(defun f-glob (pattern &optional path)
+  ""
+  )
+
+(defun f-relative (path to)
+  ""
+  )
+
+(defun f-write (path &optional content)
+  ""
+  )
+
+(defun f-make (&rest dirs)
+  ""
+  )
+
+(defun f-delete (path &optional force)
+  ""
+  )
+
+(defun f-symlink (source path)
+  ""
+  )
+
+(defun f-move (from to)
+  ""
+  )
+
+(defun f-chmod (path mode &optional recursive)
+  ""
+  )
+
+(defun f-chown (path user group &optional recursive)
+  ""
+  )
+
+(defun f-exists? (path)
+  ""
+  )
+
+(defun f-directory? (path)
+  ""
+  )
+
+(defun f-file? (path)
+  ""
+  )
+
+(defun f-symlink? (path)
+  ""
+  )
+
+(defun f-readable? (path)
+  ""
+  )
+
+(defun f-writable? (path)
+  ""
+  )
+
+(defun f-executable? (path)
+  ""
+  )
+
+(defun f-size (path)
+  ""
+  )
+
+(defun f-last-change (path)
+  ""
+  )
+
+(defun f-last-access (path)
+  ""
+  )
+
+(defun f-read (path)
+  ""
+  )
+
+(defun f-entries (path &optional pattern recursive)
+  ""
+  )
+
+(defun f-directories (path &optional pattern recursive)
+  ""
+  )
+
+(defun f-files (path &optional pattern recursive)
+  ""
+  )
+
 (provide 'f)
 
 ;;; f.el ends here
