@@ -47,12 +47,10 @@
   (file-name-extension path))
 
 (defun f-no-ext (path)
-  ""
-  )
+  (file-name-sans-extension path))
 
 (defun f-base (path)
-  ""
-  )
+  (f-no-ext (f-filename path)))
 
 (defun f-glob (pattern &optional path)
   ""

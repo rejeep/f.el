@@ -46,3 +46,21 @@
 
 (ert-deftest f-paths-test/ext-multiple-extensions ()
   (should (equal (f-ext "path/to/file.txt.org") "org")))
+
+(ert-deftest f-paths-test/no-ext-no-extension ()
+  (should (equal (f-no-ext "path/to/file") "path/to/file")))
+
+(ert-deftest f-paths-test/no-ext-single-extension ()
+  (should (equal (f-no-ext "path/to/file.txt") "path/to/file")))
+
+(ert-deftest f-paths-test/no-ext-multiple-extensions ()
+  (should (equal (f-no-ext "path/to/file.txt.org") "path/to/file.txt")))
+
+(ert-deftest f-paths-test/base-no-extension ()
+  (should (equal (f-base "path/to/file") "file")))
+
+(ert-deftest f-paths-test/base-single-extension ()
+  (should (equal (f-base "path/to/file.txt") "file")))
+
+(ert-deftest f-paths-test/base-multiple-extensions ()
+  (should (equal (f-base "path/to/file.txt.org") "file.txt")))
