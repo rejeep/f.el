@@ -41,8 +41,7 @@
   (file-name-nondirectory path))
 
 (defun f-dirname (path)
-  ""
-  )
+  (file-name-directory path))
 
 (defun f-ext (path)
   ""

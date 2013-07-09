@@ -28,3 +28,12 @@
 
 (ert-deftest f-paths-test/filename-with-extension ()
   (should (equal (f-filename "/path/to/file.txt") "file.txt")))
+
+(ert-deftest f-paths-test/dirname-relative ()
+  (should (equal (f-dirname "path/to/directory") "path/to/")))
+
+(ert-deftest f-paths-test/dirname-absolute ()
+  (should (equal (f-dirname "/path/to/directory") "/path/to/")))
+
+(ert-deftest f-paths-test/dirname-with-extension ()
+  (should (equal (f-dirname "/path/to/file.txt") "/path/to/")))
