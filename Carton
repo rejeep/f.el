@@ -1,0 +1,6 @@
+(source 'melpa)
+
+(package-file "f.el")
+
+(development
+ (depends-on "el-mock"))
