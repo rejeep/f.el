@@ -29,9 +29,10 @@
 
 ;;; Code:
 
+(defvar f-path-separator "/")
+
 (defun f-join (&rest args)
-  ""
-  )
+  (mapconcat 'identity args f-path-separator))
 
 (defun f-expand (file &rest dirs)
   ""
