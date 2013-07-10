@@ -70,9 +70,11 @@
       (setq dir (f-expand (car dirs) dir))
       (make-directory dir)
       (setq dirs (cdr dirs)))))
+
 (defun f-delete (path &optional force)
-  ""
-  )
+  (if (f-file? path)
+      (delete-file path nil)
+    (delete-directory path force nil)))
 
 (defun f-symlink (source path)
   ""
@@ -99,8 +101,7 @@
   )
 
 (defun f-file? (path)
-  ""
-  )
+  (file-regular-p path))
 
 (defun f-symlink? (path)
   ""

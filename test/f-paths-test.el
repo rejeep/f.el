@@ -1,9 +1,3 @@
-(require 'cl)
-(require 'el-mock)
-
-(defmacro with-default-directory (&rest body)
-  `(let ((default-directory "/default/directory")) ,@body))
-
 (ert-deftest f-join-test/single-path ()
   (should (equal (f-join "path") "path")))
 

@@ -1,32 +1,3 @@
-(defvar f-sandbox-path
-  (expand-file-name "sandbox" (file-name-directory load-file-name)))
-
-(defun should-exist (filename &optional content)
-  (let ((path (expand-file-name filename f-sandbox-path)))
-    (should (file-exists-p path))
-    (when content
-      (with-temp-buffer
-        (insert-file-contents-literally path)
-        (should (equal (buffer-string) content))))))
-
-(defmacro with-sandbox (&rest body)
-  `(let ((default-directory f-sandbox-path))
-     (mapc
-      (lambda (file)
-        (if (file-directory-p file)
-            (delete-directory file t)
-          (delete-file file nil)))
-      (directory-files f-sandbox-path t "^[^\\.\\.?]"))
-     ,@body))
-
-(defmacro with-no-messages (&rest body)
-  `(let ((messages))
-     (flet ((message
-             (format-string &rest args)
-             (add-to-list 'messages (format format-string args) t)))
-       ,@body
-       (should-not messages))))
-
 (ert-deftest f-write-test/no-content-relative-path ()
   (with-sandbox
    (with-no-messages
@@ -66,3 +37,29 @@
    (with-no-messages
     (f-mkdir "foo" "bar" "baz"))
    (should-exist "foo/bar/baz")))
+
+(ert-deftest f-delete-test/foo ()
+  (with-sandbox
+   (with-no-messages
+    (f-mkdir "foo")
+    (f-write "foo/bar.txt")
+    (should-exist "foo/bar.txt")
+    (f-delete "foo/bar.txt")
+    (should-not-exist "foo/bar.txt"))))
+
+(ert-deftest f-delete-test/bar ()
+  (with-sandbox
+   (with-no-messages
+    (f-mkdir "foo")
+    (should-exist "foo")
+    (f-delete "foo")
+    (should-not-exist "foo"))))
+
+(ert-deftest f-delete-test/baz ()
+  (with-sandbox
+   (with-no-messages
+    (f-mkdir "foo")
+    (f-write "foo/bar.txt")
+    (should-exist "foo/bar.txt")
+    (f-delete "foo/bar.txt" t)
+    (should-not-exist "foo/bar.txt"))))

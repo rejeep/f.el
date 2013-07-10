@@ -7,6 +7,7 @@
   (require 'ert (expand-file-name "ert" f-vendor-path)))
 (require 'f (expand-file-name "f.el" f-root-path))
 
+(load (expand-file-name "test-helper.el" f-test-path) nil t)
 (let ((test-files
        (or
         (mapcar
