@@ -92,6 +92,7 @@
 (defun f-exists? (path)
   (file-exists-p path))
 
+(defalias 'f-dir? 'f-directory?)
 (defun f-directory? (path)
   (file-directory-p path))
 

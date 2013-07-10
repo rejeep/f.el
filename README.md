@@ -206,6 +206,8 @@ Returns true if `path` exists, false otherwise.
 
 ### f-directory? `(path)`
 
+Alias: `f-dir?`
+
 Returns true if `path` is a directory, false otherwise.
 
 ```lisp

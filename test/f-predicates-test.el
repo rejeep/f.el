@@ -22,6 +22,11 @@
    (f-write "foo.txt")
    (should-not (f-directory? "foo.txt"))))
 
+(ert-deftest f-dir?-test/alias ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (should (f-dir? "foo"))))
+
 (ert-deftest f-file?-test/is-file ()
   (with-sandbox
    (f-write "foo.txt")
