@@ -75,8 +75,7 @@
   (make-symbolic-link source path))
 
 (defun f-move (from to)
-  ""
-  )
+  (rename-file from to t))
 
 (defun f-chmod (path mode)
   (set-file-modes path mode))

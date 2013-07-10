@@ -61,6 +61,36 @@
    (f-symlink "foo.txt" "foo.link")
    (should (f-symlink? "foo.link"))))
 
+(ert-deftest f-move-test/move-relative-path ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (f-mkdir "bar")
+   (f-move "foo.txt" "bar")
+   (should-exist "bar/foo.txt")))
+
+(ert-deftest f-move-test/move-absolute-path ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (f-mkdir "bar")
+   (f-move
+    (f-expand "foo.txt" f-sandbox-path)
+    (f-expand "bar" f-sandbox-path))
+   (should-exist "bar/foo.txt")))
+
+(ert-deftest f-move-test/rename-relative-path ()
+  (with-sandbox
+   (f-write "foo.txt" "FOO")
+   (f-move "foo.txt" "bar.txt")
+   (should-exist "bar.txt" "FOO")))
+
+(ert-deftest f-move-test/rename-absolute-path ()
+  (with-sandbox
+   (f-write "foo.txt" "FOO")
+   (f-move
+    (f-expand "foo.txt" f-sandbox-path)
+    (f-expand "bar.txt" f-sandbox-path))
+   (should-exist "bar.txt" "FOO")))
+
 (ert-deftest f-chmod-test/set-permissions ()
   (with-sandbox
    (f-write "foo.txt")
