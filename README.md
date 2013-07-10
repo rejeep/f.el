@@ -11,7 +11,6 @@
 * [f-ext](#f-ext-path) `(path)`
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
-* [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
 * [f-relative](#f-relative-file-optional-path) `(file &optional path)`
 
 ### Destructive
@@ -48,6 +47,7 @@
 ### Misc
 
 * [f-read](#f-read-path) `(path)`
+* [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
 * [f-entries](#f-entries-path-optional-pattern-recursive) `(path &optional pattern recursive)`
 * [f-directories](#f-directories-path-optional-pattern-recursive) `(path &optional pattern recursive)`
 * [f-files](#f-files-path-optional-pattern-recursive) `(path &optional pattern recursive)`
@@ -117,15 +117,6 @@ Returns the name of the `path`, excluding the extension if file.
 ```lisp
 (f-base "path/to/file.ext") ;; => "file"
 (f-base "path/to/directory") ;; => nil
-```
-
-### f-glob `(pattern &optional path)`
-
-See: `file-expand-wildcards`
-
-```lisp
-(f-glob "path/to/*.el")
-(f-glob "*.el" "path/to")
 ```
 
 ### f-relative `(file &optional path)`
@@ -302,6 +293,15 @@ Reads the content of `path`.
 
 ```lisp
 (f-read "path/to/file.txt")
+```
+
+### f-glob `(pattern &optional path)`
+
+See: `file-expand-wildcards`
+
+```lisp
+(f-glob "path/to/*.el")
+(f-glob "*.el" "path/to")
 ```
 
 ### f-entries `(path &optional pattern recursive)`

@@ -65,17 +65,6 @@
 (ert-deftest f-base-test/multiple-extensions ()
   (should (equal (f-base "path/to/file.txt.org") "file.txt")))
 
-(ert-deftest f-glob-test/without-path ()
-  (with-mock
-   (mock (file-expand-wildcards "/default/directory/*.el") :times 1)
-   (with-default-directory
-    (f-glob "*.el"))))
-
-(ert-deftest f-glob-test/with-path ()
-  (with-mock
-   (mock (file-expand-wildcards "path/to/*.el") :times 1)
-   (f-glob "*.el" "path/to")))
-
 (ert-deftest f-relative-test/with-path ()
   (should (equal (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") "relative/to/my/file.txt")))
 

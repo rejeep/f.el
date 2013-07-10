@@ -52,11 +52,6 @@
 (defun f-base (path)
   (f-no-ext (f-filename path)))
 
-(defun f-glob (pattern &optional path)
-  (unless path
-    (setq path default-directory))
-  (file-expand-wildcards (f-join path pattern)))
-
 (defun f-relative (file &optional path)
   (file-relative-name file path))
 
@@ -126,6 +121,11 @@
 (defun f-read (path)
   ""
   )
+
+(defun f-glob (pattern &optional path)
+  (unless path
+    (setq path default-directory))
+  (file-expand-wildcards (f-join path pattern)))
 
 (defun f-entries (path &optional pattern recursive)
   ""
