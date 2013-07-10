@@ -71,3 +71,14 @@
 (ert-deftest f-relative-test/without-path ()
   (with-default-directory
    (should (equal (f-relative "/default/directory/my/file.txt") "my/file.txt"))))
+
+(ert-deftest f-parent-test/directory ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz")
+   (should (equal (f-relative (f-parent "foo/bar/baz") f-sandbox-path) "foo/bar/"))))
+
+(ert-deftest f-parent-test/file ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz")
+   (f-write "foo/bar/baz/qux.txt")
+   (should (equal (f-relative (f-parent "foo/bar/baz/qux.txt") f-sandbox-path) "foo/bar/baz/"))))

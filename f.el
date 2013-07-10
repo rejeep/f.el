@@ -59,6 +59,9 @@
 (defun f-relative (file &optional path)
   (file-relative-name file path))
 
+(defun f-parent (path)
+  (file-name-directory (f-expand path default-directory)))
+
 (defun f-write (path &optional content)
   (with-temp-file path
     (if content (insert content))))

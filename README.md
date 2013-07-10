@@ -12,6 +12,7 @@
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-file-optional-path) `(file &optional path)`
+* [f-parent](#f-parent-path) `(path)`
 
 ### Destructive
 
@@ -126,6 +127,15 @@ Returns the path to `file` relative to `path`.
 ```lisp
 (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") ;; => relative/to/my/file.txt
 (f-relative "/default/directory/my/file.txt") ;; => my/file.txt
+```
+
+### f-parent `(path)`
+
+Returns the parent directory to `path`.
+
+```lisp
+(f-parent "/path/to/file.txt") ;; => /path/to
+(f-parent "/path/to/dir") ;; => /path/to
 ```
 
 ### f-write `(path &optional content)`
