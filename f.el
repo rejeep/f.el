@@ -123,9 +123,8 @@
   )
 
 (defun f-glob (pattern &optional path)
-  (unless path
-    (setq path default-directory))
-  (file-expand-wildcards (f-join path pattern)))
+  (file-expand-wildcards
+   (f-join (or path default-directory) pattern)))
 
 (defun f-entries (path &optional pattern recursive)
   ""
