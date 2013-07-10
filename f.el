@@ -118,8 +118,11 @@
   )
 
 (defun f-read (path)
-  ""
-  )
+  (with-temp-buffer
+    (insert-file-contents-literally path)
+    (buffer-substring-no-properties
+     (point-min)
+     (point-max))))
 
 (defun f-glob (pattern &optional path)
   (file-expand-wildcards
