@@ -34,8 +34,8 @@
 * [f-readable?](#f-readable-path) `(path)`
 * [f-writable?](#f-writable-path) `(path)`
 * [f-executable?](#f-executable-path) `(path)`
-* f-absolute?
-* f-relative?
+* [f-absolute?](#f-absolute-path) `(path)`
+* [f-relative?](#f-relative-path) `(path)`
 
 ### Stats
 
@@ -242,6 +242,24 @@ Returns true if `path` is executable, false otherwise.
 ```lisp
 (f-executable? "path/to/file.txt")
 (f-executable? "path/to/dir")
+```
+
+### f-absolute? `(path)`
+
+Returns true if `path` is absolute, false otherwise.
+
+```lisp
+(f-absolute? "path/to/dir") ;; => nil
+(f-absolute? "/full/path/to/dir") ;; => t
+```
+
+### f-relative? `(path)`
+
+Returns true if `path` is absolute, false otherwise.
+
+```lisp
+(f-relative? "path/to/dir") ;; => t
+(f-relative? "/full/path/to/dir") ;; => nil
 ```
 
 ### f-size `(path)`

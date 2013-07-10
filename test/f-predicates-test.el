@@ -83,3 +83,15 @@
    (f-write "foo.txt")
    (chmod "foo.txt" "200")
    (should-not (f-executable? "foo.txt"))))
+
+(ert-deftest f-absolute?-test/is-absolute ()
+  (should (f-absolute? "/full/path/to/dir")))
+
+(ert-deftest f-absolute?-test/is-relative ()
+  (should-not (f-absolute? "path/to/dir")))
+
+(ert-deftest f-relative?-test/is-relative ()
+  (should (f-relative? "path/to/dir")))
+
+(ert-deftest f-relative?-test/is-absolute ()
+  (should-not (f-relative? "/full/path/to/dir")))

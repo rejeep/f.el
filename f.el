@@ -105,6 +105,12 @@
 (defun f-executable? (path)
   (file-executable-p path))
 
+(defun f-absolute? (path)
+  (file-name-absolute-p path))
+
+(defun f-relative? (path)
+  (not (f-absolute? path)))
+
 (defun f-size (path)
   (if (f-directory? path)
       (apply '+ (-map 'f-size (f-files path nil t)))
