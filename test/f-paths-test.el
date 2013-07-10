@@ -82,3 +82,10 @@
    (f-mkdir "foo" "bar" "baz")
    (f-write "foo/bar/baz/qux.txt")
    (should (equal (f-relative (f-parent "foo/bar/baz/qux.txt") f-sandbox-path) "foo/bar/baz/"))))
+
+(ert-deftest f-parent-test/absolute ()
+  (with-sandbox
+   (f-mkdir "foo" "bar")
+   (should
+    (equal
+     (f-relative (f-parent (f-expand "foo/bar" f-sandbox-path)) f-sandbox-path) "foo/"))))
