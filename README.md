@@ -283,7 +283,7 @@ Return timestamp of when `path` was last accessed.
 
 ### f-read `(path)`
 
-Reads the content of `path`.
+Returns the content of `path`.
 
 ```lisp
 (f-read "path/to/file.txt")
