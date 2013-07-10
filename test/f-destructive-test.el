@@ -70,3 +70,10 @@
     (f-write "foo.txt")
     (f-symlink "foo.txt" "foo.link")
     (should (f-symlink? "foo.link")))))
+
+(ert-deftest f-chmod-test/set-permissions ()
+  (with-sandbox
+   (with-no-messages
+    (f-write "foo.txt")
+    (f-chmod "foo.txt" #o123)
+    (should (equal (format "%o" (file-modes "foo.txt")) "123")))))

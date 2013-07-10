@@ -83,9 +83,8 @@
   ""
   )
 
-(defun f-chmod (path mode &optional recursive)
-  ""
-  )
+(defun f-chmod (path mode)
+  (set-file-modes path mode))
 
 (defun f-chown (path user group &optional recursive)
   ""

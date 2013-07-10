@@ -21,7 +21,7 @@
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
-* [f-chmod](#f-chmod-path-mode-optional-recursive) `(path mode &optional recursive)`
+* [f-chmod](#f-chmod-path-mode) `(path mode)`
 * [f-chown](#f-chown-path-user-group-optional-recursive) `(path user group &optional recursive)`
 
 ### Predicates
@@ -183,14 +183,14 @@ Move or rename `from` to `to`.
 (f-move "path/to/file.txt" "other/path")
 ```
 
-### f-chmod `(path mode &optional recursive)`
+### f-chmod `(path mode)`
 
 Change mode permissions of `path`. Use `recursive` to apply to
 directory recursively.
 
 ```lisp
-(f-chmod "path/to/file.txt" "755")
-(f-chmod "path/to/dir" "+x" t)
+(f-chmod "path/to/file.txt" #o644)
+(f-chmod "path/to/dir" #o755)
 ```
 
 ### f-chown `(path user group &optional recursive)`
