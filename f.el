@@ -109,8 +109,7 @@
   (file-writable-p path))
 
 (defun f-executable? (path)
-  ""
-  )
+  (file-executable-p path))
 
 (defun f-size (path)
   ""
