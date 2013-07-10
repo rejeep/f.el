@@ -36,7 +36,7 @@
 (defvar f-path-separator "/")
 
 (defun f-join (&rest args)
-  (mapconcat 'identity args f-path-separator))
+  (s-join f-path-separator args))
 
 (defun f-expand (file &rest dirs)
   (expand-file-name file (apply 'f-join dirs)))
