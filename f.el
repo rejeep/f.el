@@ -77,8 +77,7 @@
     (delete-directory path force nil)))
 
 (defun f-symlink (source path)
-  ""
-  )
+  (make-symbolic-link source path))
 
 (defun f-move (from to)
   ""
@@ -102,8 +101,7 @@
   (file-regular-p path))
 
 (defun f-symlink? (path)
-  ""
-  )
+  (file-symlink-p path))
 
 (defun f-readable? (path)
   ""

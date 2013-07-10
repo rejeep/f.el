@@ -31,3 +31,14 @@
   (with-sandbox
    (f-mkdir "foo")
    (should-not (f-file? "foo"))))
+
+(ert-deftest f-symlink?-test/is-symlink ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (f-symlink "foo.txt" "foo.link")
+   (should (f-symlink? "foo.link"))))
+
+(ert-deftest f-symlink?-test/is-not-symlink ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (should-not (f-symlink? "foo.txt"))))
