@@ -54,3 +54,15 @@
    (f-write "foo.txt")
    (f-chmod "foo.txt" #o000)
    (should-not (f-readable? "foo.txt"))))
+
+(ert-deftest f-writeable?-test/is-readable ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (f-chmod "foo.txt" #o700)
+   (should (f-writable? "foo.txt"))))
+
+(ert-deftest f-writeable?-test/is-not-readable ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (f-chmod "foo.txt" #o400)
+   (should-not (f-writable? "foo.txt"))))

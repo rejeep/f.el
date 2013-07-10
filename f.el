@@ -106,8 +106,7 @@
   (file-readable-p path))
 
 (defun f-writable? (path)
-  ""
-  )
+  (file-writable-p path))
 
 (defun f-executable? (path)
   ""
