@@ -4,12 +4,17 @@
 (defvar f-sandbox-path
   (expand-file-name "sandbox" (file-name-directory load-file-name)))
 
+(defmacro f-flet (specs &rest body)
+  (declare (indent 1) (debug t))
+  (let ((flet (if (fboundp 'cl-flet) 'cl-flet 'flet)))
+    `(,flet ,specs ,@body)))
+
 (defmacro with-default-directory (&rest body)
   `(let ((default-directory "/default/directory")) ,@body))
 
 (defmacro with-no-messages (&rest body)
   `(let ((messages))
-     (flet ((message
+     (f-flet ((message
              (format-string &rest args)
              (add-to-list 'messages (format format-string args) t)))
        ,@body
