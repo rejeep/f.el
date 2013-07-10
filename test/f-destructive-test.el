@@ -38,7 +38,7 @@
     (f-mkdir "foo" "bar" "baz"))
    (should-exist "foo/bar/baz")))
 
-(ert-deftest f-delete-test/foo ()
+(ert-deftest f-delete-test/file-in-directory ()
   (with-sandbox
    (with-no-messages
     (f-mkdir "foo")
@@ -47,7 +47,7 @@
     (f-delete "foo/bar.txt")
     (should-not-exist "foo/bar.txt"))))
 
-(ert-deftest f-delete-test/bar ()
+(ert-deftest f-delete-test/directory ()
   (with-sandbox
    (with-no-messages
     (f-mkdir "foo")
@@ -55,7 +55,7 @@
     (f-delete "foo")
     (should-not-exist "foo"))))
 
-(ert-deftest f-delete-test/baz ()
+(ert-deftest f-delete-test/directory-with-content ()
   (with-sandbox
    (with-no-messages
     (f-mkdir "foo")
