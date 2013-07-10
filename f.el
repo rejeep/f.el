@@ -110,8 +110,9 @@
   (file-executable-p path))
 
 (defun f-size (path)
-  ""
-  )
+  (if (f-directory? path)
+      (apply '+ (-map 'f-size (f-files path nil t)))
+    (nth 7 (file-attributes path))))
 
 (defun f-last-change (path)
   ""
