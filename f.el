@@ -46,7 +46,10 @@
 
 (defalias 'f-parent 'f-dirname)
 (defun f-dirname (path)
-  (file-name-directory (f-expand path default-directory)))
+  (let ((parent (file-name-directory (f-expand path default-directory))))
+    (if (f-relative? path)
+        (f-relative parent)
+      parent)))
 
 (defun f-ext (path)
   (file-name-extension path))
