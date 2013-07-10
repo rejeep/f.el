@@ -42,3 +42,15 @@
   (with-sandbox
    (f-write "foo.txt")
    (should-not (f-symlink? "foo.txt"))))
+
+(ert-deftest f-readable?-test/is-readable ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (f-chmod "foo.txt" #o400)
+   (should (f-readable? "foo.txt"))))
+
+(ert-deftest f-readable?-test/is-not-readable ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (f-chmod "foo.txt" #o000)
+   (should-not (f-readable? "foo.txt"))))

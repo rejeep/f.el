@@ -103,8 +103,7 @@
   (file-symlink-p path))
 
 (defun f-readable? (path)
-  ""
-  )
+  (file-readable-p path))
 
 (defun f-writable? (path)
   ""
