@@ -7,6 +7,7 @@
 ;; Version: 0.0.1
 ;; Keywords: files, directories
 ;; URL: http://github.com/rejeep/f.el
+;; Package-Requires: ((s "1.6.0") (dash "1.4.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -28,6 +29,9 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+
+(require 's)
+(require 'dash)
 
 (defvar f-path-separator "/")
 
