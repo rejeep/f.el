@@ -54,3 +54,15 @@
     (f-write "foo.txt" "FOO")
     (f-write "foo.txt" "BAR"))
    (should-exist "foo.txt" "BAR")))
+
+(ert-deftest f-mkdir-test/single-level ()
+  (with-sandbox
+   (with-no-messages
+    (f-mkdir "foo"))
+   (should-exist "foo")))
+
+(ert-deftest f-mkdir-test/multiple-levels ()
+  (with-sandbox
+   (with-no-messages
+    (f-mkdir "foo" "bar" "baz"))
+   (should-exist "foo/bar/baz")))

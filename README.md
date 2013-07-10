@@ -17,7 +17,7 @@
 ### Destructive
 
 * [f-write](#f-write-path-optional-content) `(path &optional content)`
-* [f-make](#f-make-rest-dirs) `(&rest dirs)`
+* [f-mkdir](#f-mkdir-rest-dirs) `(&rest dirs)`
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
@@ -146,13 +146,13 @@ Writes the `content` or nothing to `path`.
 (f-write "path/to/file.txt" "some-content")
 ```
 
-### f-make `(&rest dirs)`
+### f-mkdir `(&rest dirs)`
 
 Creates directory.
 
 ```lisp
-(f-make "dir")
-(f-make "other" "dir")
+(f-mkdir "dir") ;; => /default/directory/dir
+(f-mkdir "other" "dir") ;; => /default/directory/other/dir
 ```
 
 ### f-delete `(path &optional force)`

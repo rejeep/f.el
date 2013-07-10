@@ -64,10 +64,12 @@
   (with-temp-file path
     (if content (insert content))))
 
-(defun f-make (&rest dirs)
-  ""
-  )
-
+(defun f-mkdir (&rest dirs)
+  (let (dir)
+    (while dirs
+      (setq dir (f-expand (car dirs) dir))
+      (make-directory dir)
+      (setq dirs (cdr dirs)))))
 (defun f-delete (path &optional force)
   ""
   )
