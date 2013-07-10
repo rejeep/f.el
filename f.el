@@ -97,8 +97,7 @@
   )
 
 (defun f-directory? (path)
-  ""
-  )
+  (file-directory-p path))
 
 (defun f-file? (path)
   (file-regular-p path))

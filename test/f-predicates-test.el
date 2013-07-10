@@ -1,3 +1,13 @@
+(ert-deftest f-directory?-test/is-directory ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (should (f-directory? "foo"))))
+
+(ert-deftest f-directory?-test/is-file ()
+  (with-sandbox
+   (f-write "foo.txt")
+   (should-not (f-directory? "foo.txt"))))
+
 (ert-deftest f-file?-test/is-file ()
   (with-sandbox
    (f-write "foo.txt")
