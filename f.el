@@ -93,8 +93,7 @@
   )
 
 (defun f-exists? (path)
-  ""
-  )
+  (file-exists-p path))
 
 (defun f-directory? (path)
   (file-directory-p path))
