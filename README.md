@@ -48,9 +48,9 @@
 
 * [f-read](#f-read-path) `(path)`
 * [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
-* [f-entries](#f-entries-path-optional-pattern-recursive) `(path &optional pattern recursive)`
-* [f-directories](#f-directories-path-optional-pattern-recursive) `(path &optional pattern recursive)`
-* [f-files](#f-files-path-optional-pattern-recursive) `(path &optional pattern recursive)`
+* [f-entries](#f-entries-path-optional-fn-recursive) `(path &optional fn recursive)`
+* [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
+* [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
 
 ## Documentation and examples
 
@@ -304,38 +304,38 @@ See: `file-expand-wildcards`
 (f-glob "*.el" "path/to")
 ```
 
-### f-entries `(path &optional pattern recursive)`
+### f-entries `(path &optional fn recursive)`
 
-Return all files and directories in `path`. If `pattern` is specified,
-return only those who match it. If `recursive`, return all
+Return all files and directories in `path`. If `fn` is specified,
+return only those who returns a true value. If `recursive`, return all
 recursively.
 
 ```lisp
 (f-entries "path/to/dir")
-(f-entries "path/to/dir" ".+\\.el$")
+(f-entries "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-entries "path/to/dir" nil t)
 ```
 
-### f-directories `(path &optional pattern recursive)`
+### f-directories `(path &optional fn recursive)`
 
-Return all directories in `path`. If `pattern` is specified, return
-only those who match it. If `recursive`, return all directories
+Return all directories in `path`. If `fn` is specified, return only
+those who returns a true value. If `recursive`, return all directories
 recursively.
 
 ```lisp
 (f-directories "path/to/dir")
-(f-directories "path/to/dir" "[^\.].+$")
+(f-directories "path/to/dir" (lambda (dir) ((f-filename dir) "test")))
 (f-directories "path/to/dir" nil t)
 ```
 
-### f-files `(path &optional pattern recursive)`
+### f-files `(path &optional fn recursive)`
 
-Return all files in `path`. If `pattern` is specified, return
-only those who match it. If `recursive`, return all files
+Return all files in `path`. If `fn` is specified, return only those
+who returns a true value. If `recursive`, return all files
 recursively.
 
 ```lisp
 (f-files "path/to/dir")
-(f-files "path/to/dir" "foo-.+$")
+(f-files "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-files "path/to/dir" nil t)
 ```

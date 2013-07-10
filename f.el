@@ -132,17 +132,35 @@
   (file-expand-wildcards
    (f-join (or path default-directory) pattern)))
 
-(defun f-entries (path &optional pattern recursive)
-  ""
-  )
+(defun f--entries (path)
+  (-reject
+   (lambda (file)
+     (or
+      (equal (f-filename file) ".")
+      (equal (f-filename file) "..")))
+   (directory-files path t)))
 
-(defun f-directories (path &optional pattern recursive)
-  ""
-  )
+(defun f-entries (path &optional fn recursive)
+  (let (result (entries (f--entries path)))
+    (cond (recursive
+           (-map
+            (lambda (entry)
+              (if (f-file? entry)
+                  (setq result (cons entry result))
+                (when (f-directory? entry)
+                  (setq result (cons entry result))
+                  (setq result (append result (f-entries entry fn recursive))))))
+            entries))
+          (t (setq result entries)))
+    (if fn (-filter fn result) result)))
 
-(defun f-files (path &optional pattern recursive)
-  ""
-  )
+(defun f-directories (path &optional fn recursive)
+  (let ((directories (f-entries path 'f-directory? recursive)))
+    (if fn (-filter fn directories) directories)))
+
+(defun f-files (path &optional fn recursive)
+  (let ((files (f-entries path 'f-file? recursive)))
+    (if fn (-filter fn files) files)))
 
 (provide 'f)
 
