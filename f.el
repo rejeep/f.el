@@ -61,8 +61,8 @@
   (file-relative-name file path))
 
 (defun f-write (path &optional content)
-  ""
-  )
+  (with-temp-file path
+    (if content (insert content))))
 
 (defun f-make (&rest dirs)
   ""
