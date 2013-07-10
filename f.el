@@ -110,14 +110,6 @@
       (apply '+ (-map 'f-size (f-files path nil t)))
     (nth 7 (file-attributes path))))
 
-(defun f-last-change (path)
-  ""
-  )
-
-(defun f-last-access (path)
-  ""
-  )
-
 (defun f-read (path)
   (with-temp-buffer
     (insert-file-contents-literally path)

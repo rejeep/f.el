@@ -40,8 +40,6 @@
 ### Stats
 
 * [f-size](#f-size-path) `(path)`
-* [f-last-change](#f-last-change-path) `(path)`
-* [f-last-access](#f-last-access-path) `(path)`
 * f-uid
 * f-user
 * f-gid
@@ -254,24 +252,6 @@ return total size of all files in it.
 ```lisp
 (f-size "path/to/file.txt")
 (f-size "path/to/dir")
-```
-
-### f-last-change `(path)`
-
-Return timestamp of when `path` was last changed.
-
-```lisp
-(f-last-change "path/to/file.txt")
-(f-last-change "path/to/dir")
-```
-
-### f-last-access `(path)`
-
-Return timestamp of when `path` was last accessed.
-
-```lisp
-(f-last-access "path/to/file.txt")
-(f-last-access "path/to/dir")
 ```
 
 ### f-read `(path)`
