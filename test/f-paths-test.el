@@ -29,14 +29,28 @@
 (ert-deftest f-filename-test/with-extension ()
   (should (equal (f-filename "/path/to/file.txt") "file.txt")))
 
-(ert-deftest f-dirname-test/relative ()
-  (should (equal (f-dirname "path/to/directory") "path/to/")))
+(ert-deftest f-dirname-test/directory ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz")
+   (should (equal (f-relative (f-dirname "foo/bar/baz") f-sandbox-path) "foo/bar/"))))
+
+(ert-deftest f-dirname-test/file ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz")
+   (f-write "foo/bar/baz/qux.txt")
+   (should (equal (f-relative (f-dirname "foo/bar/baz/qux.txt") f-sandbox-path) "foo/bar/baz/"))))
 
 (ert-deftest f-dirname-test/absolute ()
-  (should (equal (f-dirname "/path/to/directory") "/path/to/")))
+  (with-sandbox
+   (f-mkdir "foo" "bar")
+   (should
+    (equal
+     (f-relative (f-dirname (f-expand "foo/bar" f-sandbox-path)) f-sandbox-path) "foo/"))))
 
-(ert-deftest f-dirname-test/with-extension ()
-  (should (equal (f-dirname "/path/to/file.txt") "/path/to/")))
+(ert-deftest f-dirname-test/parent-alias ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz")
+   (should (equal (f-relative (f-parent "foo/bar/baz") f-sandbox-path) "foo/bar/"))))
 
 (ert-deftest f-ext-test/no-extension ()
   (should (equal (f-ext "path/to/file") nil)))
@@ -71,21 +85,3 @@
 (ert-deftest f-relative-test/without-path ()
   (with-default-directory
    (should (equal (f-relative "/default/directory/my/file.txt") "my/file.txt"))))
-
-(ert-deftest f-parent-test/directory ()
-  (with-sandbox
-   (f-mkdir "foo" "bar" "baz")
-   (should (equal (f-relative (f-parent "foo/bar/baz") f-sandbox-path) "foo/bar/"))))
-
-(ert-deftest f-parent-test/file ()
-  (with-sandbox
-   (f-mkdir "foo" "bar" "baz")
-   (f-write "foo/bar/baz/qux.txt")
-   (should (equal (f-relative (f-parent "foo/bar/baz/qux.txt") f-sandbox-path) "foo/bar/baz/"))))
-
-(ert-deftest f-parent-test/absolute ()
-  (with-sandbox
-   (f-mkdir "foo" "bar")
-   (should
-    (equal
-     (f-relative (f-parent (f-expand "foo/bar" f-sandbox-path)) f-sandbox-path) "foo/"))))

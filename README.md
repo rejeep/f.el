@@ -89,6 +89,8 @@ Returns the name of `path`, which can be a file or directory.
 
 ### f-dirname `(path)`
 
+Alias: `f-parent`
+
 Returns the parent directory to `path`.
 
 ```lisp
@@ -130,15 +132,6 @@ Returns the path to `file` relative to `path`.
 ```lisp
 (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") ;; => relative/to/my/file.txt
 (f-relative "/default/directory/my/file.txt") ;; => my/file.txt
-```
-
-### f-parent `(path)`
-
-Returns the parent directory to `path`.
-
-```lisp
-(f-parent "/path/to/file.txt") ;; => /path/to
-(f-parent "/path/to/dir") ;; => /path/to
 ```
 
 ### f-write `(path &optional content)`

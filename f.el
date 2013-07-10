@@ -44,8 +44,9 @@
 (defun f-filename (path)
   (file-name-nondirectory path))
 
+(defalias 'f-parent 'f-dirname)
 (defun f-dirname (path)
-  (file-name-directory path))
+  (file-name-directory (f-expand path default-directory)))
 
 (defun f-ext (path)
   (file-name-extension path))
@@ -58,9 +59,6 @@
 
 (defun f-relative (file &optional path)
   (file-relative-name file path))
-
-(defun f-parent (path)
-  (file-name-directory (f-expand path default-directory)))
 
 (defun f-write (path &optional content)
   (with-temp-file path
