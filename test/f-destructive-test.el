@@ -27,8 +27,15 @@
    (f-mkdir "foo")
    (should-exist "foo")))
 
-(ert-deftest f-mkdir-test/multiple-levels ()
+(ert-deftest f-mkdir-test/multiple-levels-same-call ()
   (with-sandbox
+   (f-mkdir "foo" "bar" "baz")
+   (should-exist "foo/bar/baz")))
+
+(ert-deftest f-mkdir-test/multiple-levels-different-calls ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-mkdir "foo" "bar")
    (f-mkdir "foo" "bar" "baz")
    (should-exist "foo/bar/baz")))
 

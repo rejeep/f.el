@@ -67,7 +67,8 @@
   (let (dir)
     (while dirs
       (setq dir (f-expand (car dirs) dir))
-      (make-directory dir)
+      (unless (f-directory? dir)
+        (make-directory dir))
       (setq dirs (cdr dirs)))))
 
 (defun f-delete (path &optional force)
