@@ -27,13 +27,13 @@
        ,@body
        (should-not messages))))
 
-(ert-deftest f-destructive-test/write-no-content-relative-path ()
+(ert-deftest f-write-test/no-content-relative-path ()
   (with-sandbox
    (with-no-messages
     (f-write "foo.txt"))
    (should-exist "foo.txt")))
 
-(ert-deftest f-destructive-test/write-no-content-absolute-path ()
+(ert-deftest f-write-test/no-content-absolute-path ()
   (with-sandbox
    (let* ((dirname (expand-file-name "bar" f-sandbox-path))
           (filename (expand-file-name "foo.txt" dirname)))
@@ -42,13 +42,13 @@
       (f-write filename))
      (should-exist "bar/foo.txt"))))
 
-(ert-deftest f-destructive-test/write-with-content ()
+(ert-deftest f-write-test/with-content ()
   (with-sandbox
    (with-no-messages
     (f-write "foo.txt" "FOO"))
    (should-exist "foo.txt" "FOO")))
 
-(ert-deftest f-destructive-test/write-override ()
+(ert-deftest f-write-test/override ()
   (with-sandbox
    (with-no-messages
     (f-write "foo.txt" "FOO")
