@@ -23,6 +23,7 @@
 * [f-move](#f-move-from-to) `(from to)`
 * [f-chmod](#f-chmod-path-mode) `(path mode)`
 * [f-chown](#f-chown-path-user-group-optional-recursive) `(path user group &optional recursive)`
+* f-touch
 
 ### Predicates
 
@@ -33,6 +34,8 @@
 * [f-readable?](#f-readable-path) `(path)`
 * [f-writable?](#f-writable-path) `(path)`
 * [f-executable?](#f-executable-path) `(path)`
+* f-absolute?
+* f-relative?
 
 ### Stats
 
