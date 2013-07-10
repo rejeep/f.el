@@ -7,6 +7,15 @@
 (defmacro with-default-directory (&rest body)
   `(let ((default-directory "/default/directory")) ,@body))
 
+(defmacro with-no-messages (&rest body)
+  `(let ((messages))
+     (flet ((message
+             (format-string &rest args)
+             (add-to-list 'messages (format format-string args) t)))
+       ,@body
+       (should-not messages))))
+
+
 (defmacro with-sandbox (&rest body)
   `(let ((default-directory f-sandbox-path))
      (mapc
@@ -15,15 +24,7 @@
             (delete-directory file t)
           (delete-file file nil)))
       (directory-files f-sandbox-path t "^[^\\.\\.?]"))
-     ,@body))
-
-(defmacro with-no-messages (&rest body)
-  `(let ((messages))
-     (flet ((message
-             (format-string &rest args)
-             (add-to-list 'messages (format format-string args) t)))
-       ,@body
-       (should-not messages))))
+     (with-no-messages ,@body)))
 
 (defun should-exist (filename &optional content)
   (let ((path (expand-file-name filename f-sandbox-path)))
