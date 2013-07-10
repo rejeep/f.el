@@ -63,3 +63,10 @@
     (should-exist "foo/bar.txt")
     (f-delete "foo/bar.txt" t)
     (should-not-exist "foo/bar.txt"))))
+
+(ert-deftest f-symlink-test/make-link-to-file ()
+  (with-sandbox
+   (with-no-messages
+    (f-write "foo.txt")
+    (f-symlink "foo.txt" "foo.link")
+    (should (f-symlink? "foo.link")))))
