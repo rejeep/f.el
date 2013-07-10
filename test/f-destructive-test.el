@@ -97,9 +97,3 @@
     (f-expand "foo.txt" f-sandbox-path)
     (f-expand "bar.txt" f-sandbox-path))
    (should-exist "bar.txt" "FOO")))
-
-(ert-deftest f-chmod-test/set-permissions ()
-  (with-sandbox
-   (f-write "foo.txt")
-   (f-chmod "foo.txt" #o123)
-   (should (equal (format "%o" (file-modes "foo.txt")) "123"))))

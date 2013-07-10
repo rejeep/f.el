@@ -42,3 +42,8 @@
 (defun should-not-exist (filename)
   (let ((path (expand-file-name filename f-sandbox-path)))
     (should-not (file-exists-p path))))
+
+(defun chmod (file mode)
+  (let ((chmod (executable-find "chmod"))
+        (args (list mode (f-expand file f-sandbox-path))))
+    (apply 'call-process (append (list chmod nil nil nil) args))))

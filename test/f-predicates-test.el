@@ -51,35 +51,35 @@
 (ert-deftest f-readable?-test/is-readable ()
   (with-sandbox
    (f-write "foo.txt")
-   (f-chmod "foo.txt" #o400)
+   (chmod "foo.txt" "400")
    (should (f-readable? "foo.txt"))))
 
 (ert-deftest f-readable?-test/is-not-readable ()
   (with-sandbox
    (f-write "foo.txt")
-   (f-chmod "foo.txt" #o000)
+   (chmod "foo.txt" "000")
    (should-not (f-readable? "foo.txt"))))
 
 (ert-deftest f-writeable?-test/is-readable ()
   (with-sandbox
    (f-write "foo.txt")
-   (f-chmod "foo.txt" #o700)
+   (chmod "foo.txt" "700")
    (should (f-writable? "foo.txt"))))
 
 (ert-deftest f-writeable?-test/is-not-readable ()
   (with-sandbox
    (f-write "foo.txt")
-   (f-chmod "foo.txt" #o400)
+   (chmod "foo.txt" "400")
    (should-not (f-writable? "foo.txt"))))
 
 (ert-deftest f-writeable?-test/is-readable ()
   (with-sandbox
    (f-write "foo.txt")
-   (f-chmod "foo.txt" #o100)
+   (chmod "foo.txt" "100")
    (should (f-executable? "foo.txt"))))
 
 (ert-deftest f-writeable?-test/is-not-readable ()
   (with-sandbox
    (f-write "foo.txt")
-   (f-chmod "foo.txt" #o200)
+   (chmod "foo.txt" "200")
    (should-not (f-executable? "foo.txt"))))

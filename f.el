@@ -85,13 +85,6 @@
 (defun f-move (from to)
   (rename-file from to t))
 
-(defun f-chmod (path mode)
-  (set-file-modes path mode))
-
-(defun f-chown (path user group &optional recursive)
-  ""
-  )
-
 (defun f-exists? (path)
   (file-exists-p path))
 

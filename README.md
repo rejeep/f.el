@@ -21,9 +21,9 @@
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
-* [f-chmod](#f-chmod-path-mode) `(path mode)`
-* [f-chown](#f-chown-path-user-group-optional-recursive) `(path user group &optional recursive)`
 * f-touch
+* f-chmod
+* f-chown
 
 ### Predicates
 
@@ -185,27 +185,6 @@ Move or rename `from` to `to`.
 ```lisp
 (f-move "path/to/file.txt" "new-file.txt")
 (f-move "path/to/file.txt" "other/path")
-```
-
-### f-chmod `(path mode)`
-
-Change mode permissions of `path`. Use `recursive` to apply to
-directory recursively.
-
-```lisp
-(f-chmod "path/to/file.txt" #o644)
-(f-chmod "path/to/dir" #o755)
-```
-
-### f-chown `(path user group &optional recursive)`
-
-Change user or/and group of `path`. Use `recursive` to apply to
-directory recursively.
-
-```lisp
-(f-chown "path/to/file.txt" "user" "group")
-(f-chown "path/to/file.txt" nil "group")
-(f-chown "path/to/dir" "user" "group" t)
 ```
 
 ### f-exists? `(path)`
