@@ -23,9 +23,6 @@
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
-* f-touch
-* f-chmod
-* f-chown
 
 ### Predicates
 
@@ -42,11 +39,6 @@
 ### Stats
 
 * [f-size](#f-size-path) `(path)`
-* f-uid
-* f-user
-* f-gid
-* f-group
-* f-inode
 
 ### Misc
 
