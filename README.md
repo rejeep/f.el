@@ -11,7 +11,7 @@
 * [f-ext](#f-ext-path) `(path)`
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
-* [f-relative](#f-relative-file-optional-path) `(file &optional path)`
+* [f-relative](#f-relative-path-optional-file) `(path &optional file)`
 * [f-parent](#f-parent-path) `(path)`
 
 ### Destructive
@@ -122,9 +122,9 @@ Returns the name of the `path`, excluding the extension if file.
 (f-base "path/to/directory") ;; => nil
 ```
 
-### f-relative `(file &optional path)`
+### f-relative `(path &optional dir)`
 
-Returns the path to `file` relative to `path`.
+Returns the path to `path` relative to `dir`.
 
 ```lisp
 (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") ;; => relative/to/my/file.txt

@@ -60,8 +60,8 @@
 (defun f-base (path)
   (f-no-ext (f-filename path)))
 
-(defun f-relative (file &optional path)
-  (file-relative-name file path))
+(defun f-relative (path &optional dir)
+  (file-relative-name path dir))
 
 (defun f-write (path &optional content)
   (with-temp-file path
