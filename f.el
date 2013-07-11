@@ -86,7 +86,7 @@
       (setq dir (f-expand (car dirs) dir))
       (unless (f-directory? dir)
         (make-directory dir))
-      (setq dirs (cdr dirs)))))
+      (!cdr dirs))))
 
 (defun f-delete (path &optional force)
   "Delete PATH, which can be file or directory.
