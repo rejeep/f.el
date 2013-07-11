@@ -147,7 +147,7 @@ If FORCE is t, a directory will be deleted recursively."
 If PATH is a file, return size of that file. If PATH is
 directory, return sum of all files in PATH."
   (if (f-directory? path)
-      (apply '+ (-map 'f-size (f-files path nil t)))
+      (-sum (-map 'f-size (f-files path nil t)))
     (nth 7 (file-attributes path))))
 
 (defun f-read (path)
