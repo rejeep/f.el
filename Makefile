@@ -8,4 +8,4 @@ test:
 docs:
 	${CARTON} exec bin/make-docs
 
-.PHONY:	all test
+.PHONY:	all test docs
