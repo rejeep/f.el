@@ -1,4 +1,4 @@
-;;; f.el --- TODO
+;;; f.el --- Modern API for working with files and directories
 
 ;; Copyright (C) 2013 Johan Andersson
 

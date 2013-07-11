@@ -3,8 +3,8 @@
 Much inspired by [@magnars](https://github.com/magnars)'s excellent
 [s.el](https://github.com/magnars/s.el) and
 [dash.el](https://github.com/magnars/dash.el),
-[f.el](https://github.com/rejeep/f.el) is a library for working with
-files and directories.
+[f.el](https://github.com/rejeep/f.el) is a modern API for working
+with files and directories in Emacs.
 
 ## Installation
 
