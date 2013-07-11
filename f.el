@@ -71,9 +71,12 @@
   "Return PATH relative to DIR."
   (file-relative-name path dir))
 
-(defun f-write (path &optional content)
+(defun f-write (path &optional content append)
   "Write CONTENT or nothing to PATH. If no content, just create file."
   (with-temp-file path
+    (when append
+      (insert-file-contents-literally path)
+      (goto-char (point-max)))
     (if content (insert content))))
 
 (defun f-mkdir (&rest dirs)

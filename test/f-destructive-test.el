@@ -22,6 +22,13 @@
    (f-write "foo.txt" "BAR")
    (should-exist "foo.txt" "BAR")))
 
+(ert-deftest f-write-test/append ()
+  (with-sandbox
+   (f-write "foo.txt" "FOO")
+   (should-exist "foo.txt" "FOO")
+   (f-write "foo.txt" "BAR" 'append)
+   (should-exist "foo.txt" "FOOBAR")))
+
 (ert-deftest f-mkdir-test/single-level ()
   (with-sandbox
    (f-mkdir "foo")
