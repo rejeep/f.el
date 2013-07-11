@@ -5,7 +5,7 @@
 ### Paths
 
 * [f-join](#f-join-rest-args) `(&rest args)`
-* [f-expand](#f-expand-file-rest-dirs) `(file &rest dirs)`
+* [f-expand](#f-expand-path-optional-dir) `(path &optional dir)`
 * [f-filename](#f-filename-path) `(path)`
 * [f-dirname](#f-dirname-path) `(path)`
 * [f-ext](#f-ext-path) `(path)`
@@ -66,14 +66,13 @@ Join list of files and directories to a single path.
 (f-join "path" "to" "heaven") ;; => "path/to/heaven"
 ```
 
-### f-expand `(file &rest dirs)`
+### f-expand `(path &optional dir)`
 
-Expands `file` relative to `dirs`.
+Expands `path` relative to `dir` or `default-directory`.
 
 ```lisp
-(f-expand "name") ;; => "default/directory/name"
+(f-expand "name") ;; => "/default/directory/name"
 (f-expand "name" "other/directory") ;; => "other/directory/name"
-(f-expand "name" "other" "directory") ;; => "other/directory/name"
 ```
 
 ### f-filename `(path)`

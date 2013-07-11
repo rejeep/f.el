@@ -38,8 +38,8 @@
 (defun f-join (&rest args)
   (s-join f-path-separator args))
 
-(defun f-expand (file &rest dirs)
-  (expand-file-name file (apply 'f-join dirs)))
+(defun f-expand (path &optional dir)
+  (expand-file-name path dir))
 
 (defun f-filename (path)
   (file-name-nondirectory path))
