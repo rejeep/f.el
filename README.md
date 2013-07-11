@@ -1,6 +1,18 @@
 # f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el)
 
+Much inspired by [@magnars](https://github.com/magnars)'s excellent
+[s.el](https://github.com/magnars/s.el) and
+[dash.el](https://github.com/magnars/dash.el),
+[f.el](https://github.com/rejeep/f.el) is a library for working with
+files and directories.
+
 ## Installation
+
+It's available on [marmalade](http://marmalade-repo.org/) and [Melpa](http://melpa.milkbox.net/):
+
+    M-x package-install f
+
+Or you can just dump `f.el` in your load path somewhere.
 
 ## API
 
@@ -323,6 +335,18 @@ Find all files in PATH. See `f-files`.
 (f-files "path/to/dir" nil t)
 ```
 
-## Example
-
 ## Contribution
+
+Be sure to!
+
+Install [Carton](https://github.com/rejeep/carton) if you haven't
+already.
+
+Run the unit tests with:
+
+    $ make test
+
+Do not change `README.md` directly. If you want to change the README
+or if you change any function comments, update the README with:
+
+    $ make docs
