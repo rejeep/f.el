@@ -1,5 +1,7 @@
 # f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el)
 
+## Installation
+
 ## API
 
 ### Paths
@@ -317,3 +319,7 @@ See: `file-expand-wildcards`
 (f-files "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-files "path/to/dir" nil t)
 ```
+
+## Example
+
+## Contribution
