@@ -58,7 +58,7 @@
 
 ### f-join `(&rest args)`
 
-Join ARGS to a single path.
+{{f-join}}
 
 ```lisp
 (f-join "path") ;; => "path"
@@ -68,7 +68,7 @@ Join ARGS to a single path.
 
 ### f-expand `(path &optional dir)`
 
-Expand PATH relative to DIR (or `default-directory').
+{{f-expand}}
 
 ```lisp
 (f-expand "name") ;; => "/default/directory/name"
@@ -77,7 +77,7 @@ Expand PATH relative to DIR (or `default-directory').
 
 ### f-filename `(path)`
 
-Return the name of PATH.
+{{f-filename}}
 
 ```lisp
 (f-filename "path/to/file.ext") ;; => "file.ext"
@@ -86,7 +86,7 @@ Return the name of PATH.
 
 ### f-dirname `(path)`
 
-Return the parent directory to PATH.
+{{f-dirname}}
 
 Alias: `f-parent`
 
@@ -97,7 +97,7 @@ Alias: `f-parent`
 
 ### f-ext `(path)`
 
-Return the file extension of PATH.
+{{f-ext}}
 
 ```lisp
 (f-ext "path/to/file.ext") ;; => "ext"
@@ -106,7 +106,7 @@ Return the file extension of PATH.
 
 ### f-no-ext `(path)`
 
-Return everything but the file extension of PATH.
+{{f-no-ext}}
 
 ```lisp
 (f-no-ext "path/to/file.ext") ;; => "path/to/file"
@@ -115,7 +115,7 @@ Return everything but the file extension of PATH.
 
 ### f-base `(path)`
 
-Return the name of PATH, excluding the extension if file.
+{{f-base}}
 
 ```lisp
 (f-base "path/to/file.ext") ;; => "file"
@@ -124,7 +124,7 @@ Return the name of PATH, excluding the extension if file.
 
 ### f-relative `(path &optional dir)`
 
-Return PATH relative to DIR.
+{{f-relative}}
 
 ```lisp
 (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") ;; => relative/to/my/file.txt
@@ -133,7 +133,7 @@ Return PATH relative to DIR.
 
 ### f-write `(path &optional content)`
 
-Write CONTENT or nothing to PATH. If no content, just create file.
+{{f-write}}
 
 ```lisp
 (f-write "path/to/file.txt")
@@ -142,9 +142,7 @@ Write CONTENT or nothing to PATH. If no content, just create file.
 
 ### f-mkdir `(&rest dirs)`
 
-Create directories DIRS.
-
-(f-mkdir "foo" "bar") will create the directory: "foo/bar"
+{{f-mkdir}}
 
 ```lisp
 (f-mkdir "dir") ;; => /default/directory/dir
@@ -153,9 +151,7 @@ Create directories DIRS.
 
 ### f-delete `(path &optional force)`
 
-Delete PATH, which can be file or directory.
-
-If FORCE is t, a directory will be deleted recursively.
+{{f-delete}}
 
 ```lisp
 (f-delete "dir")
@@ -165,7 +161,7 @@ If FORCE is t, a directory will be deleted recursively.
 
 ### f-symlink `(source path)`
 
-Create a symlink to `source` from `path`.
+{{f-symlink}}
 
 ```lisp
 (f-symlink "path/to/source" "path/to/link")
@@ -173,7 +169,7 @@ Create a symlink to `source` from `path`.
 
 ### f-move `(from to)`
 
-Move or rename FROM to TO.
+{{f-move}}
 
 ```lisp
 (f-move "path/to/file.txt" "new-file.txt")
@@ -182,7 +178,7 @@ Move or rename FROM to TO.
 
 ### f-exists? `(path)`
 
-Return t if PATH exists, false otherwise.
+{{f-exists?}}
 
 ```lisp
 (f-exists? "path/to/file.txt")
@@ -191,7 +187,7 @@ Return t if PATH exists, false otherwise.
 
 ### f-directory? `(path)`
 
-Return t if PATH is directory, false otherwise.
+{{f-directory?}}
 
 Alias: `f-dir?`
 
@@ -202,7 +198,7 @@ Alias: `f-dir?`
 
 ### f-file? `(path)`
 
-Return t if PATH is file, false otherwise.
+{{f-file?}}
 
 ```lisp
 (f-directory? "path/to/file.txt") ;; => t
@@ -211,7 +207,7 @@ Return t if PATH is file, false otherwise.
 
 ### f-symlink? `(path)`
 
-Return t if PATH is symlink, false otherwise.
+{{f-symlink?}}
 
 ```lisp
 (f-symlink? "path/to/file.txt") ;; => nil
@@ -221,7 +217,7 @@ Return t if PATH is symlink, false otherwise.
 
 ### f-readable? `(path)`
 
-Return t if PATH is readable, false otherwise.
+{{f-readable?}}
 
 ```lisp
 (f-readable? "path/to/file.txt")
@@ -230,7 +226,7 @@ Return t if PATH is readable, false otherwise.
 
 ### f-writable? `(path)`
 
-Return t if PATH is writable, false otherwise.
+{{f-writable?}}
 
 ```lisp
 (f-writable? "path/to/file.txt")
@@ -239,7 +235,7 @@ Return t if PATH is writable, false otherwise.
 
 ### f-executable? `(path)`
 
-Return t if PATH is executable, false otherwise.
+{{f-executable?}}
 
 ```lisp
 (f-executable? "path/to/file.txt")
@@ -248,7 +244,7 @@ Return t if PATH is executable, false otherwise.
 
 ### f-absolute? `(path)`
 
-Return t if PATH is absolute, false otherwise.
+{{f-absolute?}}
 
 ```lisp
 (f-absolute? "path/to/dir") ;; => nil
@@ -257,7 +253,7 @@ Return t if PATH is absolute, false otherwise.
 
 ### f-relative? `(path)`
 
-Return t if PATH is relative, false otherwise.
+{{f-relative?}}
 
 ```lisp
 (f-relative? "path/to/dir") ;; => t
@@ -266,10 +262,7 @@ Return t if PATH is relative, false otherwise.
 
 ### f-size `(path)`
 
-Return size of PATH.
-
-If PATH is a file, return size of that file. If PATH is
-directory, return sum of all files in PATH.
+{{f-size}}
 
 ```lisp
 (f-size "path/to/file.txt")
@@ -278,7 +271,7 @@ directory, return sum of all files in PATH.
 
 ### f-read `(path)`
 
-Return content of PATH.
+{{f-read}}
 
 ```lisp
 (f-read "path/to/file.txt")
@@ -286,7 +279,7 @@ Return content of PATH.
 
 ### f-glob `(pattern &optional path)`
 
-Find PATTERN in PATH.
+{{f-glob}}
 
 See: `file-expand-wildcards`
 
@@ -297,11 +290,7 @@ See: `file-expand-wildcards`
 
 ### f-entries `(path &optional fn recursive)`
 
-Find all files and directories in PATH.
-
-FN - called for each found file and directory. If FN returns a thruthy
-value, file or directory will be included.
-RECURSIVE - Search for files and directories recursive.
+{{f-entries}}
 
 ```lisp
 (f-entries "path/to/dir")
@@ -311,7 +300,7 @@ RECURSIVE - Search for files and directories recursive.
 
 ### f-directories `(path &optional fn recursive)`
 
-Find all directories in PATH. See `f-files`.
+{{f-directories}}
 
 ```lisp
 (f-directories "path/to/dir")
@@ -321,7 +310,7 @@ Find all directories in PATH. See `f-files`.
 
 ### f-files `(path &optional fn recursive)`
 
-Find all files in PATH. See `f-files`.
+{{f-files}}
 
 ```lisp
 (f-files "path/to/dir")
