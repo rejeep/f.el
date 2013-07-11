@@ -130,16 +130,15 @@
   (file-expand-wildcards
    (f-join (or path default-directory) pattern)))
 
-(defun f--entries (path)
-  (-reject
-   (lambda (file)
-     (or
-      (equal (f-filename file) ".")
-      (equal (f-filename file) "..")))
-   (directory-files path t)))
-
-(defun f-entries (path &optional fn recursive)
-  (let (result (entries (f--entries path)))
+(defun f--entries (path recursive)
+  (let (result
+        (entries
+         (-reject
+          (lambda (file)
+            (or
+             (equal (f-filename file) ".")
+             (equal (f-filename file) "..")))
+          (directory-files path t))))
     (cond (recursive
            (-map
             (lambda (entry)
@@ -147,18 +146,22 @@
                   (setq result (cons entry result))
                 (when (f-directory? entry)
                   (setq result (cons entry result))
-                  (setq result (append result (f-entries entry fn recursive))))))
+                  (setq result (append result (f--entries entry recursive))))))
             entries))
           (t (setq result entries)))
-    (if fn (-filter fn result) result)))
+    result))
+
+(defun f-entries (path &optional fn recursive)
+  (let ((entries (f--entries path recursive)))
+    (if fn (-select fn entries) entries)))
 
 (defun f-directories (path &optional fn recursive)
-  (let ((directories (f-entries path 'f-directory? recursive)))
-    (if fn (-filter fn directories) directories)))
+  (let ((directories (-select 'f-directory? (f--entries path recursive))))
+    (if fn (-select fn directories) directories)))
 
 (defun f-files (path &optional fn recursive)
-  (let ((files (f-entries path 'f-file? recursive)))
-    (if fn (-filter fn files) files)))
+  (let ((files (-select 'f-file? (f--entries path recursive))))
+    (if fn (-select fn files) files)))
 
 (provide 'f)
 
