@@ -77,9 +77,7 @@
     (if content (insert content))))
 
 (defun f-mkdir (&rest dirs)
-  "Create directories DIRS.
-
-(f-mkdir \"foo\" \"bar\") will create the directory: \"foo/bar\""
+  "Create directories DIRS."
   (let (dir)
     (while dirs
       (setq dir (f-expand (car dirs) dir))

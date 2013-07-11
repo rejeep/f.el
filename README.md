@@ -150,8 +150,6 @@ Write CONTENT or nothing to PATH. If no content, just create file.
 
 Create directories DIRS.
 
-(f-mkdir "foo" "bar") will create the directory: "foo/bar"
-
 ```lisp
 (f-mkdir "dir") ;; => /default/directory/dir
 (f-mkdir "other" "dir") ;; => /default/directory/other/dir
