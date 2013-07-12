@@ -27,7 +27,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
-* [f-parent](#f-parent-path) `(path)`
+* [f-abbrev](#f-abbrev-path) `(path)`
 
 ### Destructive
 
