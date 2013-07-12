@@ -44,7 +44,7 @@
 
 (defun f-expand (path &optional dir)
   "Expand PATH relative to DIR (or `default-directory')."
-  (expand-file-name path dir))
+  (directory-file-name (expand-file-name path dir)))
 
 (defun f-filename (path)
   "Return the name of PATH."
@@ -56,7 +56,7 @@
   (let ((parent (file-name-directory (f-expand path default-directory))))
     (if (f-relative? path)
         (f-relative parent)
-      parent)))
+      (directory-file-name parent))))
 
 (defun f-ext (path)
   "Return the file extension of PATH."

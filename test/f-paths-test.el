@@ -55,6 +55,13 @@
      (f-dirname (f-expand "foo/bar/baz/qux.txt" f-sandbox-path))
      (f-expand "foo/bar/baz/" f-sandbox-path)))))
 
+(ert-deftest f-dirname-test/file-with-ending-slash ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz")
+   (should
+    (equal
+     (f-dirname "foo/bar/baz/") "foo/bar/"))))
+
 (ert-deftest f-dirname-test/parent-alias ()
   (with-sandbox
    (f-mkdir "foo" "bar" "baz")
