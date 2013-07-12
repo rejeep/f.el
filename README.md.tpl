@@ -345,6 +345,35 @@ See: `file-expand-wildcards`
 (f-files "path/to/dir" nil t)
 ```
 
+## Example
+
+Here's an example of a function that finds the Git project root.
+
+### Using standard Emacs builtin functions
+
+```lisp
+(defun find-git-root (&optional dir)
+  (unless dir (setq dir (expand-file-name (file-name-directory (buffer-file-name)))))
+  (let ((parent (expand-file-name ".." dir)))
+    (unless (equal parent dir)
+      (if (file-exists-p (expand-file-name ".git" dir))
+          dir
+        (find-git-root parent)))))
+```
+
+### Using `f.el`
+
+```lisp
+(defun find-git-root (&optional dir)
+  (interactive)
+  (unless dir (setq dir (f-dirname (buffer-file-name))))
+  (let ((parent (f-parent dir)))
+    (unless (f-root? parent)
+      (if (f-exists? (f-expand ".git" dir))
+          dir
+        (find-git-root parent)))))
+```
+
 ## Contribution
 
 Be sure to!
