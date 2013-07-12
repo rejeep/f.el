@@ -26,7 +26,7 @@
       (lambda (file)
         (if (file-directory-p file)
             (delete-directory file t)
-          (delete-file file nil)))
+          (delete-file file)))
       (directory-files f-sandbox-path t "^[^\\.\\.?]"))
      (with-no-messages ,@body)))
 

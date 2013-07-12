@@ -93,8 +93,8 @@
 
 If FORCE is t, a directory will be deleted recursively."
   (if (f-file? path)
-      (delete-file path nil)
-    (delete-directory path force nil)))
+      (delete-file path)
+    (delete-directory path force)))
 
 (defun f-symlink (source path)
   "Create a symlink to `source` from `path`."
