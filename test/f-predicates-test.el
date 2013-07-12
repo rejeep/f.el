@@ -95,3 +95,9 @@
 
 (ert-deftest f-relative?-test/is-absolute ()
   (should-not (f-relative? "/full/path/to/dir")))
+
+(ert-deftest f-root?-test/is-root ()
+  (should (f-root? "/")))
+
+(ert-deftest f-root?-test/is-not-root ()
+  (should-not (f-root? "/not/root")))

@@ -150,6 +150,10 @@ If FORCE is t, a directory will be deleted recursively."
   "Return t if PATH is relative, false otherwise."
   (not (f-absolute? path)))
 
+(defun f-root? (path)
+  "Return t if PATH is root directory, false otherwise."
+  (equal path (f-parent path)))
+
 (defun f-size (path)
   "Return size of PATH.
 
