@@ -84,12 +84,13 @@
 
 (defun f-mkdir (&rest dirs)
   "Create directories DIRS."
-  (let (dir)
-    (while dirs
-      (setq dir (f-expand (car dirs) dir))
-      (unless (f-directory? dir)
-        (make-directory dir))
-      (!cdr dirs))))
+  (let (path)
+    (-map
+     (lambda (dir)
+       (setq path (f-expand dir path))
+       (unless (f-directory? path)
+         (make-directory path)))
+     dirs)))
 
 (defun f-delete (path &optional force)
   "Delete PATH, which can be file or directory.
