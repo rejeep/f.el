@@ -26,7 +26,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
-* [f-parent](#f-parent-path) `(path)`
+* [f-abbrev](#f-abbrev-path) `(path)`
 
 ### Destructive
 
@@ -135,6 +135,17 @@ Alias: `f-parent`
 ```lisp
 (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") ;; => relative/to/my/file.txt
 (f-relative "/default/directory/my/file.txt") ;; => my/file.txt
+```
+
+### f-abbrev `(path)`
+
+{{f-abbrev}}
+
+Alias: `f-short`
+
+```lisp
+(f-abbrev "/Users/foo/Code/bar") ;; => ~/Code/bar
+(f-abbrev "/path/to/Code/bar") ;; => /path/to/Code/bar
 ```
 
 ### f-write `(path &optional content)`

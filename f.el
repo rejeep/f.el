@@ -74,6 +74,11 @@
   "Return PATH relative to DIR."
   (file-relative-name path dir))
 
+(defalias 'f-short 'f-abbrev)
+(defun f-abbrev (path)
+  "Abbrev PATH. See `abbreviate-file-name'."
+  (abbreviate-file-name path))
+
 (defun f-write (path &optional content append)
   "Write CONTENT or nothing to PATH. If no content, just create file."
   (with-temp-file path

@@ -137,6 +137,17 @@ Return PATH relative to DIR.
 (f-relative "/default/directory/my/file.txt") ;; => my/file.txt
 ```
 
+### f-abbrev `(path)`
+
+Abbrev PATH. See `abbreviate-file-name'.
+
+Alias: `f-short`
+
+```lisp
+(f-abbrev "/Users/foo/Code/bar") ;; => ~/Code/bar
+(f-abbrev "/path/to/Code/bar") ;; => /path/to/Code/bar
+```
+
 ### f-write `(path &optional content)`
 
 Write CONTENT or nothing to PATH. If no content, just create file.

@@ -93,3 +93,15 @@
 (ert-deftest f-relative-test/without-path ()
   (with-default-directory
    (should (equal (f-relative "/default/directory/my/file.txt") "my/file.txt"))))
+
+(ert-deftest f-abbrev-test/home ()
+  (let ((home (getenv "HOME")))
+    (should (equal (f-abbrev (f-expand "Code/bar" home)) "~/Code/bar"))))
+
+(ert-deftest f-abbrev-test/other ()
+  (should (equal (f-abbrev "/path/to/Code/bar") "/path/to/Code/bar")))
+
+(ert-deftest f-abbrev-test/alias ()
+  (let ((home (getenv "HOME")))
+    (should (equal (f-short (f-expand "Code/bar" home)) "~/Code/bar")))
+  (should (equal (f-short "/path/to/Code/bar") "/path/to/Code/bar")))
