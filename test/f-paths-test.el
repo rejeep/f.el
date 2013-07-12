@@ -1,8 +1,14 @@
-(ert-deftest f-join-test/single-path ()
+(ert-deftest f-join-test/single-path-relative ()
   (should (equal (f-join "path") "path")))
 
-(ert-deftest f-join-test/multiple-paths ()
+(ert-deftest f-join-test/single-path-absolute ()
+  (should (equal (f-join "/path") "/path")))
+
+(ert-deftest f-join-test/multiple-paths-relative ()
   (should (equal (f-join "path" "to" "file") "path/to/file")))
+
+(ert-deftest f-join-test/multiple-paths-absolute ()
+  (should (equal (f-join "/path" "to" "file") "/path/to/file")))
 
 (ert-deftest f-expand-test/no-dir ()
   (with-default-directory

@@ -33,11 +33,14 @@
 (require 's)
 (require 'dash)
 
-(defvar f-path-separator "/")
-
 (defun f-join (&rest args)
   "Join ARGS to a single path."
-  (s-join f-path-separator args))
+  (let (path (relative (f-relative? (car args))))
+    (-map
+     (lambda (arg)
+       (setq path (f-expand arg path)))
+     args)
+    (if relative (f-relative path) path)))
 
 (defun f-expand (path &optional dir)
   "Expand PATH relative to DIR (or `default-directory')."
