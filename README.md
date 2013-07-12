@@ -336,7 +336,7 @@ RECURSIVE - Search for files and directories recursive.
 
 ### f-directories `(path &optional fn recursive)`
 
-Find all directories in PATH. See `f-files`.
+Find all directories in PATH. See `f-entries`.
 
 ```lisp
 (f-directories "path/to/dir")
@@ -346,7 +346,7 @@ Find all directories in PATH. See `f-files`.
 
 ### f-files `(path &optional fn recursive)`
 
-Find all files in PATH. See `f-files`.
+Find all files in PATH. See `f-entries`.
 
 ```lisp
 (f-files "path/to/dir")

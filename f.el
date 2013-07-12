@@ -207,12 +207,12 @@ RECURSIVE - Search for files and directories recursive."
     (if fn (-select fn entries) entries)))
 
 (defun f-directories (path &optional fn recursive)
-  "Find all directories in PATH. See `f-files`."
+  "Find all directories in PATH. See `f-entries`."
   (let ((directories (-select 'f-directory? (f--entries path recursive))))
     (if fn (-select fn directories) directories)))
 
 (defun f-files (path &optional fn recursive)
-  "Find all files in PATH. See `f-files`."
+  "Find all files in PATH. See `f-entries`."
   (let ((files (-select 'f-file? (f--entries path recursive))))
     (if fn (-select fn files) files)))
 
