@@ -20,4 +20,5 @@ env:
   - EMACS=emacs24
   # - EMACS=emacs-snapshot
 script:
-  make
+  - make compile
+  - make test
