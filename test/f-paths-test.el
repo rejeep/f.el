@@ -27,6 +27,9 @@
 (ert-deftest f-filename-test/with-extension ()
   (should (equal (f-filename "/path/to/file.txt") "file.txt")))
 
+(ert-deftest f-filename-test/with-ending-slash ()
+  (should (equal (f-filename "/path/to/dir/") "dir")))
+
 (ert-deftest f-dirname-test/directory-relative ()
   (with-sandbox
    (f-mkdir "foo" "bar" "baz")

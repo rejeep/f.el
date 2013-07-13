@@ -48,7 +48,7 @@
 
 (defun f-filename (path)
   "Return the name of PATH."
-  (file-name-nondirectory path))
+  (file-name-nondirectory (directory-file-name path)))
 
 (defalias 'f-parent 'f-dirname)
 (defun f-dirname (path)
