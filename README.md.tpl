@@ -8,7 +8,7 @@ with files and directories in Emacs.
 
 ## Installation
 
-It's available on [marmalade](http://marmalade-repo.org/) and [Melpa](http://melpa.milkbox.net/):
+It's available on [Melpa](http://melpa.milkbox.net/):
 
     M-x package-install f
 
