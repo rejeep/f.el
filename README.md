@@ -77,9 +77,13 @@ Join ARGS to a single path.
 
 Expand PATH relative to DIR (or `default-directory').
 
+If PATH is a list, it will first be run through `f-join'.
+
 ```lisp
 (f-expand "name") ;; => "/default/directory/name"
 (f-expand "name" "other/directory") ;; => "other/directory/name"
+(f-expand '("nested" "path")) ;; => "/default/directory/nested/path"
+(f-expand '("nested" "path") "other/directory") ;; => "other/directory/nested/path"
 ```
 
 ### f-filename `(path)`

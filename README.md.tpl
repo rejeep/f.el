@@ -80,6 +80,8 @@ Or you can just dump `f.el` in your load path somewhere.
 ```lisp
 (f-expand "name") ;; => "/default/directory/name"
 (f-expand "name" "other/directory") ;; => "other/directory/name"
+(f-expand '("nested" "path")) ;; => "/default/directory/nested/path"
+(f-expand '("nested" "path") "other/directory") ;; => "other/directory/nested/path"
 ```
 
 ### f-filename `(path)`
