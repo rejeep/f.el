@@ -48,6 +48,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-absolute?](#f-absolute-path) `(path)`
 * [f-relative?](#f-relative-path) `(path)`
 * [f-root?](#f-root-path) `(path)`
+* [f-ext?](#f-ext-path-ext) `(path ext)`
 
 ### Stats
 
@@ -285,6 +286,17 @@ Alias: `f-dir?`
 ```lisp
 (f-root? "/") ;; => t
 (f-root? "/not/root") ;; => nil
+```
+
+### f-ext? `(path ext)`
+
+{{f-ext?}}
+
+```lisp
+(f-ext? "path/to/file.el" "el") ;; => t
+(f-ext? "path/to/file.el" "txt") ;; => nil
+(f-ext? "path/to/file.el") ;; => t
+(f-ext? "path/to/file") ;; => nil
 ```
 
 ### f-size `(path)`
