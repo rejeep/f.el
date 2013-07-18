@@ -48,6 +48,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-absolute?](#f-absolute-path) `(path)`
 * [f-relative?](#f-relative-path) `(path)`
 * [f-root?](#f-root-path) `(path)`
+* [f-ext?](#f-ext-path-ext) `(path ext)`
 
 ### Stats
 
@@ -287,6 +288,20 @@ Return t if PATH is root directory, false otherwise.
 ```lisp
 (f-root? "/") ;; => t
 (f-root? "/not/root") ;; => nil
+```
+
+### f-ext? `(path ext)`
+
+Return t if extension of PATH is EXT, false otherwise.
+
+If EXT is nil or omitted, return t if PATH has any extension,
+false otherwise.
+
+```lisp
+(f-ext? "path/to/file.el" "el") ;; => t
+(f-ext? "path/to/file.el" "txt") ;; => nil
+(f-ext? "path/to/file.el") ;; => t
+(f-ext? "path/to/file") ;; => nil
 ```
 
 ### f-size `(path)`

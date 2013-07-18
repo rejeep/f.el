@@ -101,3 +101,23 @@
 
 (ert-deftest f-root?-test/is-not-root ()
   (should-not (f-root? "/not/root")))
+
+(ert-deftest f-ext?-test/ext-does-match ()
+  (with-sandbox
+   (f-write "foo.el")
+   (should (f-ext? "foo.el" "el"))))
+
+(ert-deftest f-ext?-test/ext-does-not-match ()
+  (with-sandbox
+   (f-write "foo.el")
+   (should-not (f-ext? "foo.el" "txt"))))
+
+(ert-deftest f-ext?-test/with-ext ()
+  (with-sandbox
+   (f-write "foo.el")
+   (should (f-ext? "foo.el"))))
+
+(ert-deftest f-ext?-test/without-ext ()
+  (with-sandbox
+   (f-write "foo")
+   (should-not (f-ext? "foo"))))

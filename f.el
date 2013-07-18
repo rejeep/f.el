@@ -154,6 +154,15 @@ If FORCE is t, a directory will be deleted recursively."
   "Return t if PATH is root directory, false otherwise."
   (equal path (f-parent path)))
 
+(defun f-ext? (path &optional ext)
+  "Return t if extension of PATH is EXT, false otherwise.
+
+If EXT is nil or omitted, return t if PATH has any extension,
+false otherwise."
+  (if ext
+      (string= (f-ext path) ext)
+    (not (eq (f-ext path) nil))))
+
 (defun f-size (path)
   "Return size of PATH.
 
