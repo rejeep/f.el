@@ -43,8 +43,11 @@
     (if relative (f-relative path) path)))
 
 (defun f-expand (path &optional dir)
-  "Expand PATH relative to DIR (or `default-directory')."
-  (directory-file-name (expand-file-name path dir)))
+  "Expand PATH relative to DIR (or `default-directory').
+
+If PATH is a list, it will first be run through `f-join'."
+  (let ((path (if (listp path) (apply 'f-join path) path)))
+    (directory-file-name (expand-file-name path dir))))
 
 (defun f-filename (path)
   "Return the name of PATH."

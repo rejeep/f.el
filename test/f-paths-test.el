@@ -18,6 +18,14 @@
   (with-default-directory
    (should (equal (f-expand "foo" "/other") "/other/foo"))))
 
+(ert-deftest f-expand-test/with-list ()
+  (with-default-directory
+   (should (equal (f-expand '("foo" "bar")) "/default/directory/foo/bar"))))
+
+(ert-deftest f-expand-test/with-list-and-dir ()
+  (with-default-directory
+   (should (equal (f-expand '("foo" "bar") "/other") "/other/foo/bar"))))
+
 (ert-deftest f-filename-test/relative ()
   (should (equal (f-filename "path/to/file") "file")))
 
