@@ -104,3 +104,35 @@
     (f-expand "foo.txt" f-sandbox-path)
     (f-expand "bar.txt" f-sandbox-path))
    (should-exist "bar.txt" "FOO")))
+
+(ert-deftest f-copy-test/copy-relative-file ()
+  (with-sandbox
+   (f-write "foo.txt" "FOO")
+   (f-copy "foo.txt" "bar.txt")
+   (should-exist "foo.txt" "FOO")
+   (should-exist "bar.txt" "FOO")))
+
+(ert-deftest f-copy-test/copy-absolute-file ()
+  (with-sandbox
+   (f-write "foo.txt" "FOO")
+   (f-copy
+    (f-expand "foo.txt" f-sandbox-path)
+    (f-expand "bar.txt" f-sandbox-path))
+   (should-exist "foo.txt" "FOO")
+   (should-exist "bar.txt" "FOO")))
+
+(ert-deftest f-copy-test/copy-relative-dir ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-write "foo/file.txt" "FILE")
+   (f-copy "foo" "bar")
+   (should-exist "foo/file.txt" "FILE")))
+
+(ert-deftest f-copy-test/copy-absolute-dir ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-write "foo/file.txt" "FILE")
+   (f-copy
+    (f-expand "foo" f-sandbox-path)
+    (f-expand "bar" f-sandbox-path))
+   (should-exist "foo/file.txt" "FILE")))

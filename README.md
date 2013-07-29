@@ -35,6 +35,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
+* [f-copy](#f-copy-from-to) `(from to)`
 
 ### Predicates
 
@@ -195,6 +196,15 @@ Move or rename FROM to TO.
 ```lisp
 (f-move "path/to/file.txt" "new-file.txt")
 (f-move "path/to/file.txt" "other/path")
+```
+
+### f-copy `(from to)`
+
+Copy file or directory.
+
+```lisp
+(f-copy "path/to/file.txt" "new-file.txt")
+(f-copy "path/to/dir" "other/dir")
 ```
 
 ### f-exists? `(path)`

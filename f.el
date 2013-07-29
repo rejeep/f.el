@@ -113,6 +113,12 @@ If FORCE is t, a directory will be deleted recursively."
   "Move or rename FROM to TO."
   (rename-file from to t))
 
+(defun f-copy (from to)
+  "Copy file or directory."
+  (if (f-file? from)
+      (copy-file from to)
+    (copy-directory from to)))
+
 (defun f-exists? (path)
   "Return t if PATH exists, false otherwise."
   (file-exists-p path))
