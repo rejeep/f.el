@@ -412,7 +412,7 @@ Here's an example of a function that finds the Git project root.
 
 Be sure to!
 
-Install [Carton](https://github.com/rejeep/carton) if you haven't
+Install [Cask](https://github.com/rejeep/cask.el) if you haven't
 already.
 
 Run the unit tests with:
