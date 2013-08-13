@@ -169,6 +169,11 @@ false otherwise."
       (string= (f-ext path) ext)
     (not (eq (f-ext path) nil))))
 
+(defalias 'f-equal? 'f-same?)
+(defun f-same? (path-a path-b)
+  "Return t if PATH-A and PATH-b are references to same file."
+  (equal (f-expand path-a) (f-expand path-b)))
+
 (defun f-size (path)
   "Return size of PATH.
 
