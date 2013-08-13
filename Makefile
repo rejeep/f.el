@@ -4,7 +4,7 @@ CASK ?= cask
 all: test
 
 test:
-	${CASK} exec test/f-test
+	${CASK} exec ert-runner run -l test/f-test.el
 
 docs:
 	${CASK} exec bin/make-docs
