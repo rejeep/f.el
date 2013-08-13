@@ -121,3 +121,33 @@
   (with-sandbox
    (f-write "foo")
    (should-not (f-ext? "foo"))))
+
+(ert-deftest f-same?/relative-equal ()
+  (with-sandbox
+   (should (f-same? "foo" "foo"))))
+
+(ert-deftest f-same?/relative-not-equal ()
+  (with-sandbox
+   (should-not (f-same? "foo" "bar"))))
+
+(ert-deftest f-same?/absolute-equal ()
+  (with-sandbox
+   (should (f-same? (f-expand "foo" f-sandbox-path)
+                    (f-expand "foo" f-sandbox-path)))))
+
+(ert-deftest f-same?/absolute-not-equal ()
+  (with-sandbox
+   (should-not (f-same? (f-expand "foo" f-sandbox-path)
+                        (f-expand "bar" f-sandbox-path)))))
+
+(ert-deftest f-same?/relative-and-absolute-equal ()
+  (with-sandbox
+   (should (f-same? "foo" (f-expand "foo" f-sandbox-path)))))
+
+(ert-deftest f-same?/relative-and-absolute-not-equal ()
+  (with-sandbox
+   (should-not (f-same? "foo" (f-expand "bar" f-sandbox-path)))))
+
+(ert-deftest f-alias?/equal ()
+  (with-sandbox
+   (should (f-equal? "foo" "foo"))))

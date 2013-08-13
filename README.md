@@ -50,6 +50,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-relative?](#f-relative-path) `(path)`
 * [f-root?](#f-root-path) `(path)`
 * [f-ext?](#f-ext-path-ext) `(path ext)`
+* [f-same?](#f-same-path-a-path-b) `(path-a path-b)`
 
 ### Stats
 
@@ -312,6 +313,17 @@ false otherwise.
 (f-ext? "path/to/file.el" "txt") ;; => nil
 (f-ext? "path/to/file.el") ;; => t
 (f-ext? "path/to/file") ;; => nil
+```
+
+### f-same? `(path-a path-b)`
+
+Return t if PATH-A and PATH-b are references to same file.
+
+Alias: `f-equal?`
+
+```lisp
+(f-same? "foo.txt" "foo.txt") ;; => t
+(f-same? "/path/to/foo.txt" "/path/to/bar.txt") ;; => nil
 ```
 
 ### f-size `(path)`
