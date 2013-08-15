@@ -83,6 +83,14 @@
   "Return the canonical name of PATH."
   (file-truename path))
 
+(defun f-this-file ()
+  "Return path to this file."
+  (cond
+   (load-in-progress load-file-name)
+   ((and (boundp 'byte-compile-current-file) byte-compile-current-file)
+    byte-compile-current-file)
+   (:else (buffer-file-name))))
+
 (defun f-write (path &optional content append)
   "Write CONTENT or nothing to PATH. If no content, just create file."
   (with-temp-file path
