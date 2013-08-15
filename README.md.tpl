@@ -28,6 +28,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
 * [f-abbrev](#f-abbrev-path) `(path)`
 * [f-canonical](#f-canonical-path) `(path)`
+* [f-this-file](#f-this-file) `()`
 
 ### Destructive
 
@@ -160,6 +161,14 @@ Alias: `f-short`
 ```lisp
 (f-canonical "/path/to/real/file") ;; => /path/to/real/file
 (f-canonical "/link/to/file") ;; => /path/to/real/file
+```
+
+### f-this-file `()`
+
+{{f-this-file}}
+
+```lisp
+(f-this-file) ;; => /path/to/this/file
 ```
 
 ### f-write `(path &optional content)`
