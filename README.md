@@ -27,6 +27,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
 * [f-abbrev](#f-abbrev-path) `(path)`
+* [f-canonical](#f-canonical-path) `(path)`
 
 ### Destructive
 
@@ -150,6 +151,15 @@ Alias: `f-short`
 ```lisp
 (f-abbrev "/Users/foo/Code/bar") ;; => ~/Code/bar
 (f-abbrev "/path/to/Code/bar") ;; => /path/to/Code/bar
+```
+
+### f-canonical `(path)`
+
+Return the canonical name of PATH.
+
+```lisp
+(f-canonical "/path/to/real/file") ;; => /path/to/real/file
+(f-canonical "/link/to/file") ;; => /path/to/real/file
 ```
 
 ### f-write `(path &optional content)`

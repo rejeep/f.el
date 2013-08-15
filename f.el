@@ -79,6 +79,10 @@
   "Abbrev PATH. See `abbreviate-file-name'."
   (abbreviate-file-name path))
 
+(defun f-canonical (path)
+  "Return the canonical name of PATH."
+  (file-truename path))
+
 (defun f-write (path &optional content append)
   "Write CONTENT or nothing to PATH. If no content, just create file."
   (with-temp-file path
@@ -173,8 +177,8 @@ false otherwise."
 (defun f-same? (path-a path-b)
   "Return t if PATH-A and PATH-b are references to same file."
   (equal
-   (file-truename (f-expand path-a))
-   (file-truename (f-expand path-b))))
+   (f-canonical (f-expand path-a))
+   (f-canonical (f-expand path-b))))
 
 (defun f-size (path)
   "Return size of PATH.
