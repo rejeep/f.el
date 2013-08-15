@@ -148,6 +148,6 @@
   (with-sandbox
    (should-not (f-same? "foo" (f-expand "bar" f-sandbox-path)))))
 
-(ert-deftest f-alias?/equal ()
+(ert-deftest f-equal?/alias ()
   (with-sandbox
    (should (f-equal? "foo" "foo"))))
