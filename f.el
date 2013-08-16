@@ -79,6 +79,18 @@
   "Abbrev PATH. See `abbreviate-file-name'."
   (abbreviate-file-name path))
 
+(defun f-canonical (path)
+  "Return the canonical name of PATH."
+  (file-truename path))
+
+(defun f-this-file ()
+  "Return path to this file."
+  (cond
+   (load-in-progress load-file-name)
+   ((and (boundp 'byte-compile-current-file) byte-compile-current-file)
+    byte-compile-current-file)
+   (:else (buffer-file-name))))
+
 (defun f-write (path &optional content append)
   "Write CONTENT or nothing to PATH. If no content, just create file."
   (with-temp-file path
@@ -86,6 +98,35 @@
       (insert-file-contents-literally path)
       (goto-char (point-max)))
     (if content (insert content))))
+
+(make-obsolete
+ 'f-write "Use `f-write-text' instead for proper coding conversion" "0.6")
+
+(defun f-write-text (text coding path)
+  "Write TEXT with CODING to PATH.
+
+TEXT is a multibyte string.  CODING is a coding system to encode
+TEXT with.  PATH is a file name to write to."
+  (unless (multibyte-string-p text)
+    (signal 'wrong-type-argument (list 'multibyte-string-p text)))
+  (f-write-bytes (encode-coding-string text coding) path))
+
+(defun f-unibyte-string-p (s)
+  "Determine whether S is a unibyte string."
+  (not (multibyte-string-p s)))
+
+(defun f-write-bytes (data path)
+  "Write binary DATA to PATH.
+
+DATA is a unibyte string.  PATH is a file name to write to."
+  (unless (f-unibyte-string-p data)
+    (signal 'wrong-type-argument (list 'f-unibyte-string-p data)))
+  (let ((file-coding-system-alist nil)
+        (coding-system-for-write 'binary))
+    (with-temp-file path
+      (setq buffer-file-coding-system 'binary)
+      (set-buffer-multibyte nil)
+      (insert data))))
 
 (defun f-mkdir (&rest dirs)
   "Create directories DIRS."
@@ -172,7 +213,9 @@ false otherwise."
 (defalias 'f-equal? 'f-same?)
 (defun f-same? (path-a path-b)
   "Return t if PATH-A and PATH-b are references to same file."
-  (equal (f-expand path-a) (f-expand path-b)))
+  (equal
+   (f-canonical (f-expand path-a))
+   (f-canonical (f-expand path-b))))
 
 (defun f-size (path)
   "Return size of PATH.
@@ -190,6 +233,27 @@ directory, return sum of all files in PATH."
     (buffer-substring-no-properties
      (point-min)
      (point-max))))
+
+(make-obsolete
+ 'f-read "Use `f-read-text' instead for proper coding conversion" "0.6")
+
+(defun f-read-bytes (path)
+  "Read binary data from PATH.
+
+Return the binary data as unibyte string."
+  (with-temp-buffer
+    (set-buffer-multibyte nil)
+    (setq buffer-file-coding-system 'binary)
+    (insert-file-contents-literally path)
+    (buffer-substring-no-properties (point-min) (point-max))))
+
+(defun f-read-text (path &optional coding)
+  "Read text with PATH, using CODING.
+
+CODING defaults to `prefer-utf-8'.
+
+Return the decoded text as multibyte string."
+  (decode-coding-string (f-read-bytes path) (or coding 'prefer-utf-8)))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."

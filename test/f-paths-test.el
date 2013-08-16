@@ -115,3 +115,15 @@
   (let ((home (getenv "HOME")))
     (should (equal (f-short (f-expand "Code/bar" home)) "~/Code/bar")))
   (should (equal (f-short "/path/to/Code/bar") "/path/to/Code/bar")))
+
+(ert-deftest f-canonical-test/path ()
+  (should (equal (f-canonical f-sandbox-path) f-sandbox-path)))
+
+(ert-deftest f-canonical-test/symlink ()
+  (with-sandbox
+   (f-write "foo")
+   (f-symlink "foo" "bar")
+   (should
+    (equal
+     (f-expand "foo" f-sandbox-path)
+     (f-canonical (f-expand "bar" f-sandbox-path))))))
