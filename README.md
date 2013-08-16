@@ -28,10 +28,17 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
 * [f-abbrev](#f-abbrev-path) `(path)`
 * [f-canonical](#f-canonical-path) `(path)`
+* [f-this-file](#f-this-file) `()`
+
+### I/O
+
+* [f-read-bytes](#f-read-bytes-path) `(path)`
+* [f-write-bytes](#f-write-bytes-path) `(path)`
+* [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
+* [f-write-text](#f-write-text)`(text coding path)`
 
 ### Destructive
 
-* [f-write](#f-write-path-optional-content) `(path &optional content)`
 * [f-mkdir](#f-mkdir-rest-dirs) `(&rest dirs)`
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
@@ -59,7 +66,6 @@ Or you can just dump `f.el` in your load path somewhere.
 
 ### Misc
 
-* [f-read](#f-read-path) `(path)`
 * [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
 * [f-entries](#f-entries-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
@@ -162,13 +168,55 @@ Return the canonical name of PATH.
 (f-canonical "/link/to/file") ;; => /path/to/real/file
 ```
 
-### f-write `(path &optional content)`
+### f-this-file `()`
 
-Write CONTENT or nothing to PATH. If no content, just create file.
+Return path to this file.
 
 ```lisp
-(f-write "path/to/file.txt")
-(f-write "path/to/file.txt" "some-content")
+(f-this-file) ;; => /path/to/this/file
+```
+
+### f-read-bytes `(path)`
+
+Write binary DATA to PATH.
+
+DATA is a unibyte string.  PATH is a file name to write to.
+
+```lisp
+(f-read-bytes "path/to/binary/data")
+```
+
+### f-write-bytes `(path)`
+
+{Write binary DATA to PATH.
+
+DATA is a unibyte string.  PATH is a file name to write to.}
+
+```lisp
+(f-write-bytes "path/to/binary/data" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))
+```
+
+### f-read-text `(path &optional coding)`
+
+Read text with PATH, using CODING.
+
+CODING defaults to `prefer-utf-8'.
+
+Return the decoded text as multibyte string.
+
+```lisp
+(f-read-text "path/to/file.txt" 'utf-8)
+```
+
+### f-write-text `(text coding path)`
+
+Write TEXT with CODING to PATH.
+
+TEXT is a multibyte string.  CODING is a coding system to encode
+TEXT with.  PATH is a file name to write to.
+
+```lisp
+(f-write-text "Hello world" 'utf-8 "path/to/file.txt")
 ```
 
 ### f-mkdir `(&rest dirs)`
@@ -346,14 +394,6 @@ directory, return sum of all files in PATH.
 ```lisp
 (f-size "path/to/file.txt")
 (f-size "path/to/dir")
-```
-
-### f-read `(path)`
-
-Return content of PATH.
-
-```lisp
-(f-read "path/to/file.txt")
 ```
 
 ### f-glob `(pattern &optional path)`
