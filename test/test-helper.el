@@ -35,8 +35,11 @@
     (should (file-exists-p path))
     (when content
       (with-temp-buffer
-        (insert-file-contents-literally path)
-        (should (equal (buffer-string) content))))))
+        (if (multibyte-string-p content)
+            (insert-file-contents path)
+          (set-buffer-multibyte nil)
+          (insert-file-contents-literally path))
+        (should (string= (buffer-string) content))))))
 
 (defun should-not-exist (filename)
   (let ((path (expand-file-name filename f-sandbox-path)))

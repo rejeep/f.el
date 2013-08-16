@@ -1,34 +1,3 @@
-(ert-deftest f-write-test/no-content-relative-path ()
-  (with-sandbox
-   (f-write "foo.txt")
-   (should-exist "foo.txt")))
-
-(ert-deftest f-write-test/no-content-absolute-path ()
-  (with-sandbox
-   (let* ((dirname (expand-file-name "bar" f-sandbox-path))
-          (filename (expand-file-name "foo.txt" dirname)))
-     (make-directory dirname)
-     (f-write filename)
-     (should-exist "bar/foo.txt"))))
-
-(ert-deftest f-write-test/with-content ()
-  (with-sandbox
-   (f-write "foo.txt" "FOO")
-   (should-exist "foo.txt" "FOO")))
-
-(ert-deftest f-write-test/override ()
-  (with-sandbox
-   (f-write "foo.txt" "FOO")
-   (f-write "foo.txt" "BAR")
-   (should-exist "foo.txt" "BAR")))
-
-(ert-deftest f-write-test/append ()
-  (with-sandbox
-   (f-write "foo.txt" "FOO")
-   (should-exist "foo.txt" "FOO")
-   (f-write "foo.txt" "BAR" 'append)
-   (should-exist "foo.txt" "FOOBAR")))
-
 (ert-deftest f-mkdir-test/single-level ()
   (with-sandbox
    (f-mkdir "foo")
