@@ -30,9 +30,15 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-canonical](#f-canonical-path) `(path)`
 * [f-this-file](#f-this-file) `()`
 
+### I/O
+
+* [f-read-bytes](#f-read-bytes-path) `(path)`
+* [f-write-bytes](#f-write-bytes-path) `(path)`
+* [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
+* [f-write-text](#f-write-text)`(text coding path)`
+
 ### Destructive
 
-* [f-write](#f-write-path-optional-content) `(path &optional content)`
 * [f-mkdir](#f-mkdir-rest-dirs) `(&rest dirs)`
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
@@ -60,7 +66,6 @@ Or you can just dump `f.el` in your load path somewhere.
 
 ### Misc
 
-* [f-read](#f-read-path) `(path)`
 * [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
 * [f-entries](#f-entries-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
@@ -171,13 +176,36 @@ Alias: `f-short`
 (f-this-file) ;; => /path/to/this/file
 ```
 
-### f-write `(path &optional content)`
+### f-read-bytes `(path)`
 
-{{f-write}}
+{{f-write-bytes}}
 
 ```lisp
-(f-write "path/to/file.txt")
-(f-write "path/to/file.txt" "some-content")
+(f-read-bytes "path/to/binary/data")
+```
+
+### f-write-bytes `(path)`
+
+{{{f-write-bytes}}}
+
+```lisp
+(f-write-bytes "path/to/binary/data" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))
+```
+
+### f-read-text `(path &optional coding)`
+
+{{f-read-text}}
+
+```lisp
+(f-read-text "path/to/file.txt" 'utf-8)
+```
+
+### f-write-text `(text coding path)`
+
+{{f-write-text}}
+
+```lisp
+(f-write-text "Hello world" 'utf-8 "path/to/file.txt")
 ```
 
 ### f-mkdir `(&rest dirs)`
@@ -347,14 +375,6 @@ Alias: `f-equal?`
 ```lisp
 (f-size "path/to/file.txt")
 (f-size "path/to/dir")
-```
-
-### f-read `(path)`
-
-{{f-read}}
-
-```lisp
-(f-read "path/to/file.txt")
 ```
 
 ### f-glob `(pattern &optional path)`

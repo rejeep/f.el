@@ -99,6 +99,35 @@
       (goto-char (point-max)))
     (if content (insert content))))
 
+(make-obsolete
+ 'f-write "Use `f-write-text' instead for proper coding conversion" "0.6")
+
+(defun f-write-text (text coding path)
+  "Write TEXT with CODING to PATH.
+
+TEXT is a multibyte string.  CODING is a coding system to encode
+TEXT with.  PATH is a file name to write to."
+  (unless (multibyte-string-p text)
+    (signal 'wrong-type-argument (list 'multibyte-string-p text)))
+  (f-write-bytes (encode-coding-string text coding) path))
+
+(defun f-unibyte-string-p (s)
+  "Determine whether S is a unibyte string."
+  (not (multibyte-string-p s)))
+
+(defun f-write-bytes (data path)
+  "Write binary DATA to PATH.
+
+DATA is a unibyte string.  PATH is a file name to write to."
+  (unless (f-unibyte-string-p data)
+    (signal 'wrong-type-argument (list 'f-unibyte-string-p data)))
+  (let ((file-coding-system-alist nil)
+        (coding-system-for-write 'binary))
+    (with-temp-file path
+      (setq buffer-file-coding-system 'binary)
+      (set-buffer-multibyte nil)
+      (insert data))))
+
 (defun f-mkdir (&rest dirs)
   "Create directories DIRS."
   (let (path)
@@ -204,6 +233,27 @@ directory, return sum of all files in PATH."
     (buffer-substring-no-properties
      (point-min)
      (point-max))))
+
+(make-obsolete
+ 'f-read "Use `f-read-text' instead for proper coding conversion" "0.6")
+
+(defun f-read-bytes (path)
+  "Read binary data from PATH.
+
+Return the binary data as unibyte string."
+  (with-temp-buffer
+    (set-buffer-multibyte nil)
+    (setq buffer-file-coding-system 'binary)
+    (insert-file-contents-literally path)
+    (buffer-substring-no-properties (point-min) (point-max))))
+
+(defun f-read-text (path &optional coding)
+  "Read text with PATH, using CODING.
+
+CODING defaults to `prefer-utf-8'.
+
+Return the decoded text as multibyte string."
+  (decode-coding-string (f-read-bytes path) (or coding 'prefer-utf-8)))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."
