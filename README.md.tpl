@@ -35,7 +35,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-read-bytes](#f-read-bytes-path) `(path)`
 * [f-write-bytes](#f-write-bytes-path) `(path)`
 * [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
-* [f-write-text](#f-write-text)`(text coding path)`
+* [f-write-text](#f-write-text-text-coding-path)`(text coding path)`
 
 ### Destructive
 
