@@ -107,8 +107,6 @@
 
 TEXT is a multibyte string.  CODING is a coding system to encode
 TEXT with.  PATH is a file name to write to."
-  (unless (multibyte-string-p text)
-    (signal 'wrong-type-argument (list 'multibyte-string-p text)))
   (f-write-bytes (encode-coding-string text coding) path))
 
 (defun f-unibyte-string-p (s)

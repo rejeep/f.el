@@ -15,11 +15,10 @@
 
 (ert-deftest f-write-text-test/unibyte-string ()
   (with-sandbox
-   (let ((err (should-error (f-write-text (unibyte-string 1 2 3 4 5)
-                                          'utf-8 "foo.txt")
-                            :type 'wrong-type-argument)))
-     (should (equal (cdr err)
-                    (list 'multibyte-string-p (unibyte-string 1 2 3 4 5)))))))
+   (f-write-text (unibyte-string 1 2 3 4 5) 'utf-8 "foo.txt")
+   ;; Emacs only makes multibyte strings if actually required.
+   (f-write-text "bar" 'utf-8 "bar.txt")
+   (should-exist "bar.txt" "bar")))
 
 (ert-deftest f-write-text-test/multibyte-string ()
   (with-sandbox
