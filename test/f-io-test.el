@@ -47,6 +47,10 @@
      (should (string= text "über"))
      (should (multibyte-string-p text)))))
 
+(ert-deftest f-read-text-no-coding-specified ()
+  (f-write-text "text" 'utf-8 "foo.txt")
+  (should (equal (f-read-text "foo.txt") "text")))
+
 ;;; Obsolete functions
 (ert-deftest f-read-test/empty ()
   (with-sandbox

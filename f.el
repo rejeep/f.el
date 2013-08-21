@@ -121,10 +121,10 @@ Return the binary data as unibyte string."
 (defun f-read-text (path &optional coding)
   "Read text with PATH, using CODING.
 
-CODING defaults to `prefer-utf-8'.
+CODING defaults to `utf-8'.
 
 Return the decoded text as multibyte string."
-  (decode-coding-string (f-read-bytes path) (or coding 'prefer-utf-8)))
+  (decode-coding-string (f-read-bytes path) (or coding 'utf-8)))
 
 (defun f-write (path &optional content append)
   "Write CONTENT or nothing to PATH. If no content, just create file."
