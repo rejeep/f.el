@@ -105,3 +105,31 @@
     (f-expand "foo" f-sandbox-path)
     (f-expand "bar" f-sandbox-path))
    (should-exist "foo/file.txt" "FILE")))
+
+(ert-deftest f-touch-test/file-does-not-exist-relative-path ()
+  (with-sandbox
+   (should-not-exist "foo")
+   (f-touch "foo")
+   (should-exist "foo" "")))
+
+(ert-deftest f-touch-test/file-does-not-exists-absolute-path ()
+  (with-sandbox
+   (let ((path (f-expand "foo" f-sandbox-path)))
+     (f-touch path)
+     (should-exist path ""))))
+
+(ert-deftest f-touch-test/file-does-exist-text-file ()
+  (with-sandbox
+   (f-write-text "text" 'utf-8 "foo")
+   (set-file-times "foo" '(12 34 0 0))
+   (f-touch "foo")
+   (should-exist "foo" "text")
+   (should-not (equal (nth 5 (file-attributes "foo")) '(12 34 0 0)))))
+
+(ert-deftest f-touch-file-test/does-exist-bytes-file ()
+  (with-sandbox
+   (f-write-bytes "data" "foo")
+   (set-file-times "foo" '(12 34 0 0))
+   (f-touch "foo")
+   (should-exist "foo" "data")
+   (should-not (equal (nth 5 (file-attributes "foo")) '(12 34 0 0)))))
