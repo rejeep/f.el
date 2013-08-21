@@ -33,6 +33,9 @@
 (require 's)
 (require 'dash)
 
+
+;;;; Paths
+
 (defun f-join (&rest args)
   "Join ARGS to a single path."
   (let (path (relative (f-relative? (car args))))
@@ -91,6 +94,38 @@
     byte-compile-current-file)
    (:else (buffer-file-name))))
 
+
+;;;; I/O
+
+(defun f-read (path)
+  "Return content of PATH."
+  (with-temp-buffer
+    (insert-file-contents-literally path)
+    (buffer-substring-no-properties
+     (point-min)
+     (point-max))))
+
+(make-obsolete
+ 'f-read "Use `f-read-text' instead for proper coding conversion" "0.6")
+
+(defun f-read-bytes (path)
+  "Read binary data from PATH.
+
+Return the binary data as unibyte string."
+  (with-temp-buffer
+    (set-buffer-multibyte nil)
+    (setq buffer-file-coding-system 'binary)
+    (insert-file-contents-literally path)
+    (buffer-substring-no-properties (point-min) (point-max))))
+
+(defun f-read-text (path &optional coding)
+  "Read text with PATH, using CODING.
+
+CODING defaults to `prefer-utf-8'.
+
+Return the decoded text as multibyte string."
+  (decode-coding-string (f-read-bytes path) (or coding 'prefer-utf-8)))
+
 (defun f-write (path &optional content append)
   "Write CONTENT or nothing to PATH. If no content, just create file."
   (with-temp-file path
@@ -126,6 +161,9 @@ DATA is a unibyte string.  PATH is a file name to write to."
       (set-buffer-multibyte nil)
       (insert data))))
 
+
+;;;; Destructive
+
 (defun f-mkdir (&rest dirs)
   "Create directories DIRS."
   (let (path)
@@ -157,6 +195,9 @@ If FORCE is t, a directory will be deleted recursively."
   (if (f-file? from)
       (copy-file from to)
     (copy-directory from to)))
+
+
+;;;; Predicates
 
 (defun f-exists? (path)
   "Return t if PATH exists, false otherwise."
@@ -215,6 +256,9 @@ false otherwise."
    (f-canonical (f-expand path-a))
    (f-canonical (f-expand path-b))))
 
+
+;;;; Stats
+
 (defun f-size (path)
   "Return size of PATH.
 
@@ -224,34 +268,8 @@ directory, return sum of all files in PATH."
       (-sum (-map 'f-size (f-files path nil t)))
     (nth 7 (file-attributes path))))
 
-(defun f-read (path)
-  "Return content of PATH."
-  (with-temp-buffer
-    (insert-file-contents-literally path)
-    (buffer-substring-no-properties
-     (point-min)
-     (point-max))))
-
-(make-obsolete
- 'f-read "Use `f-read-text' instead for proper coding conversion" "0.6")
-
-(defun f-read-bytes (path)
-  "Read binary data from PATH.
-
-Return the binary data as unibyte string."
-  (with-temp-buffer
-    (set-buffer-multibyte nil)
-    (setq buffer-file-coding-system 'binary)
-    (insert-file-contents-literally path)
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-(defun f-read-text (path &optional coding)
-  "Read text with PATH, using CODING.
-
-CODING defaults to `prefer-utf-8'.
-
-Return the decoded text as multibyte string."
-  (decode-coding-string (f-read-bytes path) (or coding 'prefer-utf-8)))
+
+;;;; Misc
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."
