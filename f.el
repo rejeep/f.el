@@ -196,6 +196,12 @@ If FORCE is t, a directory will be deleted recursively."
       (copy-file from to)
     (copy-directory from to)))
 
+(defun f-touch (path)
+  "Update PATH last modification date or create if it does not exist."
+  (if (f-file? path)
+      (set-file-times path)
+    (f-write-bytes "" path)))
+
 
 ;;;; Predicates
 

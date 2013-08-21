@@ -44,6 +44,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
 * [f-copy](#f-copy-from-to) `(from to)`
+* [f-touch](#f-touch-path) `(path)`
 
 ### Predicates
 
@@ -264,6 +265,15 @@ Copy file or directory.
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")
 (f-copy "path/to/dir" "other/dir")
+```
+
+### f-touch `(path)`
+
+Update PATH last modification date or create if it does not exist.
+
+```lisp
+(f-touch "path/to/existing/file.txt")
+(f-touch "path/to/non/existing/file.txt")
 ```
 
 ### f-exists? `(path)`
