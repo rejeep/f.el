@@ -82,6 +82,10 @@
   "Return abbrev of PATH. See `abbreviate-file-name'."
   (abbreviate-file-name path))
 
+(defun f-long (path)
+  "Return long version of PATH."
+  (f-expand path))
+
 (defun f-canonical (path)
   "Return the canonical name of PATH."
   (file-truename path))

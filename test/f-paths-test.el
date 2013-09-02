@@ -116,6 +116,13 @@
     (should (equal (f-abbrev (f-expand "Code/bar" home)) "~/Code/bar")))
   (should (equal (f-abbrev "/path/to/Code/bar") "/path/to/Code/bar")))
 
+(ert-deftest f-long-test/home ()
+  (let ((home (getenv "HOME")))
+    (should (equal (f-long "~/Code/bar") (f-expand "Code/bar" home)))))
+
+(ert-deftest f-long-test/other ()
+  (should (equal (f-long "/path/to/Code/bar") "/path/to/Code/bar")))
+
 (ert-deftest f-canonical-test/path ()
   (should (equal (f-canonical f-sandbox-path) f-sandbox-path)))
 
