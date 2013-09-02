@@ -156,3 +156,6 @@
   ;; need it.
   (let (default-directory)
     (should (equal (f-path-separator) "/"))))
+
+(ert-deftest f-root-test ()
+  (should (equal (f-root) "/")))

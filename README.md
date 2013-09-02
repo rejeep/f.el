@@ -75,6 +75,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-entries](#f-entries-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
+* [f-root](#f-root-) `()`
 
 ## Documentation and examples
 
@@ -493,6 +494,14 @@ Find all files in PATH. See `f-entries`.
 (f-files "path/to/dir")
 (f-files "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-files "path/to/dir" nil t)
+```
+
+### f-root `()`
+
+Return absolute root.
+
+```lisp
+(f-root) ;; "/"
 ```
 
 ## Changelog

@@ -344,6 +344,13 @@ RECURSIVE - Search for files and directories recursive."
   (let ((files (-select 'f-file? (f--entries path recursive))))
     (if fn (-select fn files) files)))
 
+(defun f-root ()
+  "Return absolute root."
+  (let ((dir default-directory))
+    (while (not (f-root? dir))
+      (setq dir (f-parent dir)))
+    dir))
+
 (provide 'f)
 
 ;;; f.el ends here
