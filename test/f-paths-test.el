@@ -129,16 +129,37 @@
      (f-canonical (f-expand "bar" f-sandbox-path))))))
 
 (ert-deftest f-slash-test/absolute-no-slash ()
-  (should (equal "/path/to/file/" (f-slash "/path/to/file"))))
+  (with-sandbox
+   (f-mkdir "foo")
+   (let ((foo (f-expand "foo" f-sandbox-path)))
+     (should (equal (f-slash foo) (concat foo "/"))))))
 
 (ert-deftest f-slash-test/absolute-with-slash ()
-  (should (equal "/path/to/file/" (f-slash "/path/to/file/"))))
+  (with-sandbox
+   (f-mkdir "foo")
+   (let ((foo (f-expand "foo" f-sandbox-path)))
+     (should (equal (f-slash (concat foo "/")) (concat foo "/"))))))
 
 (ert-deftest f-slash-test/relative-no-slash ()
-  (should (equal "path/to/file/" (f-slash "path/to/file"))))
+  (with-sandbox
+   (f-mkdir "foo")
+   (should (equal (f-slash "foo") "foo/"))))
 
 (ert-deftest f-slash-test/relative-with-slash ()
-  (should (equal "path/to/file/" (f-slash "path/to/file/"))))
+  (with-sandbox
+   (f-mkdir "foo")
+   (should (equal (f-slash "foo/") "foo/"))))
+
+(ert-deftest f-slash-test/relative-file ()
+  (with-sandbox
+   (f-touch "foo")
+   (should (equal (f-slash "foo") "foo"))))
+
+(ert-deftest f-slash-test/absolute-file ()
+  (with-sandbox
+   (f-touch "foo")
+   (let ((foo (f-expand "foo" f-sandbox-path)))
+     (should (equal (f-slash foo) foo)))))
 
 (ert-deftest f-slash-test/different-path-separator ()
   (with-mock
