@@ -480,6 +480,11 @@ See: `file-expand-wildcards`
 
 ## Changelog
 
+### v0.10.0
+
+* Add `f-root`.
+* Fix `f-root?` bug for weird syntax
+
 ### v0.9.0
 
 * Make `s-long`
