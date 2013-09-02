@@ -497,6 +497,14 @@ Find all files in PATH. See `f-entries`.
 
 ## Changelog
 
+### v0.9.0
+
+* Make `s-long`
+* Make `s-short` default and `f-abbrev` the alias
+* Add `f-full`
+* Do not append path separator if file in `f-slash`
+* Fixed bug in `f-path-separator`
+
 ### v0.8.0
 
 * Moved `f-this-file` to misc section
