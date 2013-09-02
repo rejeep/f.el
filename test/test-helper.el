@@ -1,4 +1,5 @@
 (require 'cl)
+(require 'el-mock)
 
 (defvar f-sandbox-path
   (expand-file-name "sandbox" (file-name-directory load-file-name)))

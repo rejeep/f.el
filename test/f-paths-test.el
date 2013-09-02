@@ -127,3 +127,20 @@
     (equal
      (f-expand "foo" f-sandbox-path)
      (f-canonical (f-expand "bar" f-sandbox-path))))))
+
+(ert-deftest f-slash-test/absolute-no-slash ()
+  (should (equal "/path/to/file/" (f-slash "/path/to/file"))))
+
+(ert-deftest f-slash-test/absolute-with-slash ()
+  (should (equal "/path/to/file/" (f-slash "/path/to/file/"))))
+
+(ert-deftest f-slash-test/relative-no-slash ()
+  (should (equal "path/to/file/" (f-slash "path/to/file"))))
+
+(ert-deftest f-slash-test/relative-with-slash ()
+  (should (equal "path/to/file/" (f-slash "path/to/file/"))))
+
+(ert-deftest f-slash-test/different-path-separator ()
+  (with-mock
+   (stub f-path-separator => "\\")
+   (should (equal "path\\to\\file\\" (f-slash "path\\to\\file")))))

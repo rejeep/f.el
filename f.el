@@ -86,13 +86,14 @@
   "Return the canonical name of PATH."
   (file-truename path))
 
-(defun f-this-file ()
-  "Return path to this file."
-  (cond
-   (load-in-progress load-file-name)
-   ((and (boundp 'byte-compile-current-file) byte-compile-current-file)
-    byte-compile-current-file)
-   (:else (buffer-file-name))))
+(defun f-slash (path)
+  "Append slash to PATH unless one already.
+
+Some functions, such as `call-process' requires there to be an
+ending slash."
+  (if (s-ends-with? (f-path-separator) path)
+      path
+    (s-concat path (f-path-separator))))
 
 
 ;;;; I/O
@@ -276,6 +277,19 @@ directory, return sum of all files in PATH."
 
 
 ;;;; Misc
+
+(defun f-this-file ()
+  "Return path to this file."
+  (cond
+   (load-in-progress load-file-name)
+   ((and (boundp 'byte-compile-current-file) byte-compile-current-file)
+    byte-compile-current-file)
+   (:else (buffer-file-name))))
+
+(defun f-path-separator ()
+  "Return path separator."
+  (let ((dir (f-canonical default-directory)))
+    (substring (f-expand "x" dir) (1- (length dir)) (length dir))))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."

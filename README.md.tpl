@@ -28,7 +28,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
 * [f-abbrev](#f-abbrev-path) `(path)`
 * [f-canonical](#f-canonical-path) `(path)`
-* [f-this-file](#f-this-file-) `()`
+* [f-slash](#f-slash-path) `(path)`
 
 ### I/O
 
@@ -67,6 +67,8 @@ Or you can just dump `f.el` in your load path somewhere.
 
 ### Misc
 
+* [f-this-file](#f-this-file-) `()`
+* [f-path-separator](#f-path-separator-) `()`
 * [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
 * [f-entries](#f-entries-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
@@ -169,12 +171,13 @@ Alias: `f-short`
 (f-canonical "/link/to/file") ;; => /path/to/real/file
 ```
 
-### f-this-file `()`
+### f-slash `(path)`
 
-{{f-this-file}}
+{{f-slash}}
 
 ```lisp
-(f-this-file) ;; => /path/to/this/file
+(f-slash "/path/to/file") ;; => /path/to/file/
+(f-slash "/path/to/file/") ;; => /path/to/file/
 ```
 
 ### f-read-bytes `(path)`
@@ -385,6 +388,22 @@ Alias: `f-equal?`
 ```lisp
 (f-size "path/to/file.txt")
 (f-size "path/to/dir")
+```
+
+### f-this-file `()`
+
+{{f-this-file}}
+
+```lisp
+(f-this-file) ;; => /path/to/this/file
+```
+
+### f-path-separator `()`
+
+{{f-path-separator}}
+
+```lisp
+(f-path-separator) ;; => /
 ```
 
 ### f-glob `(pattern &optional path)`
