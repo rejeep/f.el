@@ -28,7 +28,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
 * [f-abbrev](#f-abbrev-path) `(path)`
 * [f-canonical](#f-canonical-path) `(path)`
-* [f-this-file](#f-this-file-) `()`
+* [f-slash](#f-slash-path) `(path)`
 
 ### I/O
 
@@ -67,6 +67,8 @@ Or you can just dump `f.el` in your load path somewhere.
 
 ### Misc
 
+* [f-this-file](#f-this-file-) `()`
+* [f-path-separator](#f-path-separator-) `()`
 * [f-glob](#f-glob-pattern-optional-path) `(pattern &optional path)`
 * [f-entries](#f-entries-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
@@ -169,12 +171,16 @@ Return the canonical name of PATH.
 (f-canonical "/link/to/file") ;; => /path/to/real/file
 ```
 
-### f-this-file `()`
+### f-slash `(path)`
 
-Return path to this file.
+Append slash to PATH unless one already.
+
+Some functions, such as `call-process' requires there to be an
+ending slash.
 
 ```lisp
-(f-this-file) ;; => /path/to/this/file
+(f-slash "/path/to/file") ;; => /path/to/file/
+(f-slash "/path/to/file/") ;; => /path/to/file/
 ```
 
 ### f-read-bytes `(path)`
@@ -201,7 +207,7 @@ DATA is a unibyte string.  PATH is a file name to write to.}
 
 Read text with PATH, using CODING.
 
-CODING defaults to `prefer-utf-8'.
+CODING defaults to `utf-8'.
 
 Return the decoded text as multibyte string.
 
@@ -406,6 +412,22 @@ directory, return sum of all files in PATH.
 (f-size "path/to/dir")
 ```
 
+### f-this-file `()`
+
+Return path to this file.
+
+```lisp
+(f-this-file) ;; => /path/to/this/file
+```
+
+### f-path-separator `()`
+
+Return path separator.
+
+```lisp
+(f-path-separator) ;; => /
+```
+
 ### f-glob `(pattern &optional path)`
 
 Find PATTERN in PATH.
@@ -450,63 +472,6 @@ Find all files in PATH. See `f-entries`.
 (f-files "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-files "path/to/dir" nil t)
 ```
-
-## Changelog
-
-### v0.7.1
-
-* Fix coding bug in `f-read-text`
-
-### v0.7.0
-
-* Add `f-touch`
-
-### v0.6.1
-
-* Fix `f-write-text` for unibyte strings
-
-### v0.6.0
-
-* Add `f-write-text` and `f-write-bytes` and deprecate `f-write`
-* Add `f-read-text` and `f-read-bytes` and deprecate `f-read`
-* Add `f-this-file`
-* Add `f-canonical`
-* Fix `f-same?` for symlinks
-
-### v0.5.0
-
-* Add `f-same?` (alias `f-equal?`)
-
-### v0.4.1
-
-* Bump `s` and `dash` versions
-
-### v0.4.0
-
-* Add `f-copy`
-
-### v0.3.0
-
-* Add `f-ext?`
-
-### v0.2.1
-
-* Fix `f-filename` when ending with slash
-
-### v0.2.0
-
-* Add `f-root?`
-* Fix `f-dirname` when ending with slash
-
-### v0.1.0
-
-* Add `f-abbrev` (alias `f-short`)
-
-### v0.0.2
-
-* `f-join` platform independent
-
-### v0.0.1
 
 ## Example
 
