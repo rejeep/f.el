@@ -7,7 +7,7 @@
 ;; Version: 0.9.0
 ;; Keywords: files, directories
 ;; URL: http://github.com/rejeep/f.el
-;; Package-Requires: ((s "1.6.1") (dash "1.5.0"))
+;; Package-Requires: ((s "1.7.0") (dash "2.2.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
