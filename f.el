@@ -288,8 +288,8 @@ directory, return sum of all files in PATH."
 
 (defun f-path-separator ()
   "Return path separator."
-  (let ((dir (f-canonical default-directory)))
-    (substring (f-expand "x" dir) (1- (length dir)) (length dir))))
+  (let ((x (f-expand "x" "y")))
+    (substring x (- (length x) 2) (- (length x) 1))))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."

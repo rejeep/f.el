@@ -150,3 +150,9 @@
     (equal
      (--map (f-relative it "foo") (f-files "foo" nil t))
      '("bar.el" "bar/baz.el" "bar/qux/hey.el")))))
+
+(ert-deftest f-path-separator-test ()
+  ;; was previously based on `default-directory', make sure we don't
+  ;; need it.
+  (let (default-directory)
+    (should (equal (f-path-separator) "/"))))
