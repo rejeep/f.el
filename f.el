@@ -95,6 +95,10 @@ ending slash."
       path
     (s-concat path (f-path-separator))))
 
+(defun f-full (path)
+  "Return absolute path to PATH, with ending slash."
+  (f-slash (f-expand path)))
+
 
 ;;;; I/O
 

@@ -165,3 +165,47 @@
   (with-mock
    (stub f-path-separator => "\\")
    (should (equal "path\\to\\file\\" (f-slash "path\\to\\file")))))
+
+(ert-deftest f-full-test/relative-no-slash ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (should (equal (f-full "foo") (concat (f-expand "foo" f-sandbox-path) "/")))))
+
+(ert-deftest f-full-test/relative-with-slash ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (should (equal (f-full "foo/") (concat (f-expand "foo" f-sandbox-path) "/")))))
+
+(ert-deftest f-full-test/relative-tilde ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (should (equal (f-full (f-short (f-expand "foo" f-sandbox-path)))
+                  (concat (f-expand "foo" f-sandbox-path) "/")))))
+
+(ert-deftest f-full-test/absolute-no-slash ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (let ((foo (f-expand "foo" f-sandbox-path)))
+     (should (equal (f-full foo) (concat foo "/"))))))
+
+(ert-deftest f-full-test/absolute-with-slash ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (let ((foo (f-expand "foo" f-sandbox-path)))
+     (should (equal (f-full (concat foo "/")) (concat foo "/"))))))
+
+(ert-deftest f-full-test/absolute-tilde ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (let ((foo (f-expand "foo" f-sandbox-path)))
+     (should (equal (f-full (f-short foo)) (concat foo "/"))))))
+
+(ert-deftest f-full-test/file ()
+  (with-sandbox
+   (f-touch "foo")
+   (should (equal (f-full "foo") (f-expand "foo" f-sandbox-path)))))
+
+(ert-deftest f-full-test/file-tilde ()
+  (with-sandbox
+   (f-touch "foo")
+   (should (equal (f-full (f-short "foo")) (f-expand "foo" f-sandbox-path)))))

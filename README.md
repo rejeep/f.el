@@ -29,6 +29,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-abbrev](#f-abbrev-path) `(path)`
 * [f-canonical](#f-canonical-path) `(path)`
 * [f-slash](#f-slash-path) `(path)`
+* [f-full](#f-full-path) `(path)`
 
 ### I/O
 
@@ -182,6 +183,16 @@ ending slash.
 (f-slash "/path/to/file") ;; => /path/to/file
 (f-slash "/path/to/dir") ;; => /path/to/dir/
 (f-slash "/path/to/dir/") ;; => /path/to/dir/
+```
+
+### f-full `(path)`
+
+Return absolute path to PATH, with ending slash.
+
+```lisp
+(f-slash "~/path/to/file") ;; => /home/path/to/file
+(f-slash "~/path/to/dir") ;; => /home/path/to/dir/
+(f-slash "~/path/to/dir/") ;; => /home/path/to/dir/
 ```
 
 ### f-read-bytes `(path)`
