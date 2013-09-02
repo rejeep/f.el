@@ -1,5 +1,3 @@
-#!/usr/bin/env emacs -Q --script
-
 (defvar f-root-path
   (expand-file-name ".." (file-name-directory load-file-name)))
 

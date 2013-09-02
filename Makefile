@@ -7,7 +7,7 @@ test:
 	${CASK} exec ert-runner
 
 docs:
-	${CASK} exec bin/make-docs
+	${CASK} exec ${EMACS} -Q --script bin/docs.el
 
 compile:
 	${CASK} exec ${EMACS} -Q -batch -f batch-byte-compile f.el
