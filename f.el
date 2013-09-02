@@ -168,12 +168,12 @@ DATA is a unibyte string.  PATH is a file name to write to."
 (defun f-mkdir (&rest dirs)
   "Create directories DIRS."
   (let (path)
-    (-map
+    (-each
+     dirs
      (lambda (dir)
        (setq path (f-expand dir path))
        (unless (f-directory? path)
-         (make-directory path)))
-     dirs)))
+         (make-directory path))))))
 
 (defun f-delete (path &optional force)
   "Delete PATH, which can be file or directory.
