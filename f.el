@@ -253,7 +253,7 @@ If FORCE is t, a directory will be deleted recursively."
 
 (defun f-root? (path)
   "Return t if PATH is root directory, false otherwise."
-  (equal path (f-parent path)))
+  (f-same? path (f-parent path)))
 
 (defun f-ext? (path &optional ext)
   "Return t if extension of PATH is EXT, false otherwise.

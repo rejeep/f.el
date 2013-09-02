@@ -102,6 +102,9 @@
 (ert-deftest f-root?-test/is-not-root ()
   (should-not (f-root? "/not/root")))
 
+(ert-deftest f-root?-test/is-root-weird-syntax ()
+  (should (f-root? "/bin/..")))
+
 (ert-deftest f-ext?-test/ext-does-match ()
   (with-sandbox
    (f-write "foo.el")
