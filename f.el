@@ -86,13 +86,6 @@
   "Return the canonical name of PATH."
   (file-truename path))
 
-(defun f-this-file ()
-  "Return path to this file."
-  (cond
-   (load-in-progress load-file-name)
-   ((and (boundp 'byte-compile-current-file) byte-compile-current-file)
-    byte-compile-current-file)
-   (:else (buffer-file-name))))
 
 
 ;;;; I/O
@@ -276,6 +269,14 @@ directory, return sum of all files in PATH."
 
 
 ;;;; Misc
+
+(defun f-this-file ()
+  "Return path to this file."
+  (cond
+   (load-in-progress load-file-name)
+   ((and (boundp 'byte-compile-current-file) byte-compile-current-file)
+    byte-compile-current-file)
+   (:else (buffer-file-name))))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."
