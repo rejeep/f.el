@@ -77,9 +77,9 @@
   "Return PATH relative to DIR."
   (file-relative-name path dir))
 
-(defalias 'f-short 'f-abbrev)
-(defun f-abbrev (path)
-  "Abbrev PATH. See `abbreviate-file-name'."
+(defalias 'f-abbrev 'f-short)
+(defun f-short (path)
+  "Return abbrev of PATH. See `abbreviate-file-name'."
   (abbreviate-file-name path))
 
 (defun f-canonical (path)

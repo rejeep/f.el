@@ -104,17 +104,17 @@
   (with-default-directory
    (should (equal (f-relative "/default/directory/my/file.txt") "my/file.txt"))))
 
-(ert-deftest f-abbrev-test/home ()
+(ert-deftest f-short-test/home ()
   (let ((home (getenv "HOME")))
-    (should (equal (f-abbrev (f-expand "Code/bar" home)) "~/Code/bar"))))
+    (should (equal (f-short (f-expand "Code/bar" home)) "~/Code/bar"))))
 
-(ert-deftest f-abbrev-test/other ()
-  (should (equal (f-abbrev "/path/to/Code/bar") "/path/to/Code/bar")))
-
-(ert-deftest f-abbrev-test/alias ()
-  (let ((home (getenv "HOME")))
-    (should (equal (f-short (f-expand "Code/bar" home)) "~/Code/bar")))
+(ert-deftest f-short-test/other ()
   (should (equal (f-short "/path/to/Code/bar") "/path/to/Code/bar")))
+
+(ert-deftest f-short-test/alias ()
+  (let ((home (getenv "HOME")))
+    (should (equal (f-abbrev (f-expand "Code/bar" home)) "~/Code/bar")))
+  (should (equal (f-abbrev "/path/to/Code/bar") "/path/to/Code/bar")))
 
 (ert-deftest f-canonical-test/path ()
   (should (equal (f-canonical f-sandbox-path) f-sandbox-path)))

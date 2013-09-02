@@ -26,7 +26,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
-* [f-abbrev](#f-abbrev-path) `(path)`
+* [f-short](#f-short-path) `(path)`
 * [f-canonical](#f-canonical-path) `(path)`
 * [f-slash](#f-slash-path) `(path)`
 * [f-full](#f-full-path) `(path)`
@@ -152,15 +152,15 @@ Return PATH relative to DIR.
 (f-relative "/default/directory/my/file.txt") ;; => my/file.txt
 ```
 
-### f-abbrev `(path)`
+### f-short `(path)`
 
-Abbrev PATH. See `abbreviate-file-name'.
+Return abbrev of PATH. See `abbreviate-file-name'.
 
-Alias: `f-short`
+Alias: `f-abbrev`
 
 ```lisp
-(f-abbrev "/Users/foo/Code/bar") ;; => ~/Code/bar
-(f-abbrev "/path/to/Code/bar") ;; => /path/to/Code/bar
+(f-short "/Users/foo/Code/bar") ;; => ~/Code/bar
+(f-short "/path/to/Code/bar") ;; => /path/to/Code/bar
 ```
 
 ### f-canonical `(path)`
