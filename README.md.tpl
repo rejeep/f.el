@@ -449,6 +449,12 @@ See: `file-expand-wildcards`
 
 ## Changelog
 
+### v0.8.0
+
+* Moved `f-this-file` to misc section
+* Add `f-slash`
+* Add `f-path-separator`
+
 ### v0.7.1
 
 * Fix coding bug in `f-read-text`
