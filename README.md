@@ -179,8 +179,9 @@ Some functions, such as `call-process' requires there to be an
 ending slash.
 
 ```lisp
-(f-slash "/path/to/file") ;; => /path/to/file/
-(f-slash "/path/to/file/") ;; => /path/to/file/
+(f-slash "/path/to/file") ;; => /path/to/file
+(f-slash "/path/to/dir") ;; => /path/to/dir/
+(f-slash "/path/to/dir/") ;; => /path/to/dir/
 ```
 
 ### f-read-bytes `(path)`

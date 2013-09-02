@@ -176,8 +176,9 @@ Alias: `f-short`
 {{f-slash}}
 
 ```lisp
-(f-slash "/path/to/file") ;; => /path/to/file/
-(f-slash "/path/to/file/") ;; => /path/to/file/
+(f-slash "/path/to/file") ;; => /path/to/file
+(f-slash "/path/to/dir") ;; => /path/to/dir/
+(f-slash "/path/to/dir/") ;; => /path/to/dir/
 ```
 
 ### f-read-bytes `(path)`
