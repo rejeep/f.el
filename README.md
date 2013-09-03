@@ -501,7 +501,7 @@ Find all files in PATH. See `f-entries`.
 Return absolute root.
 
 ```lisp
-(f-root) ;; "/"
+(f-root) ;; => "/"
 ```
 
 ## Changelog

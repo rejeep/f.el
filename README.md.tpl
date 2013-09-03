@@ -475,7 +475,7 @@ See: `file-expand-wildcards`
 {{f-root}}
 
 ```lisp
-(f-root) ;; "/"
+(f-root) ;; => "/"
 ```
 
 ## Changelog
