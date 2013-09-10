@@ -488,7 +488,7 @@ See: `file-expand-wildcards`
  (lambda (path)
    (f-exists? ".git" path))
  start-dir)
-(f--up (f-exists? ".git" path) start-dir) ;; same as above
+(f--up (f-exists? ".git" it) start-dir) ;; same as above
 ```
 
 ## Changelog
