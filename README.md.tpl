@@ -76,6 +76,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-root](#f-root-) `()`
+* [f-up](#f-up-fn-optional-dir) `(fn &optional dir)`
 
 ## Documentation and examples
 
@@ -478,7 +479,23 @@ See: `file-expand-wildcards`
 (f-root) ;; => "/"
 ```
 
+### f-up `(fn &optional dir)`
+
+{{f-up}}
+
+```lisp
+(f-up
+ (lambda (path)
+   (f-exists? ".git" path))
+ start-dir)
+(f--up (f-exists? ".git" path) start-dir) ;; same as above
+```
+
 ## Changelog
+
+### v0.11.0
+
+* Add `f-up`.
 
 ### v0.10.0
 
@@ -582,6 +599,8 @@ Here's an example of a function that finds the Git project root.
           dir
         (find-git-root parent)))))
 ```
+
+Now, try writing it even simpler yourself. Hint, check out `f-up`.
 
 ## Contribution
 
