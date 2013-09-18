@@ -203,11 +203,6 @@
    (let ((foo (f-expand "foo" f-sandbox-path)))
      (should (equal (f-slash foo) foo)))))
 
-(ert-deftest f-slash-test/different-path-separator ()
-  (with-mock
-   (stub f-path-separator => "\\")
-   (should (equal "path\\to\\file\\" (f-slash "path\\to\\file")))))
-
 
 ;;;; f-full
 

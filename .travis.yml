@@ -18,7 +18,7 @@ before_install:
 env:
   - EMACS=emacs23
   - EMACS=emacs24
-  # - EMACS=emacs-snapshot
+  - EMACS=emacs-snapshot
 script:
   - make compile
   - make test
