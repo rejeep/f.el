@@ -1,3 +1,5 @@
+;;;; f-exists?
+
 (ert-deftest f-exists?-test/directory-does-exist ()
   (with-sandbox
    (f-mkdir "foo")
@@ -11,6 +13,9 @@
 (ert-deftest f-exists?-test/does-not-exists ()
   (with-sandbox
    (should-not (f-exists? "foo.txt"))))
+
+
+;;;; f-directory?/f-dir?
 
 (ert-deftest f-directory?-test/is-directory ()
   (with-sandbox
@@ -27,6 +32,9 @@
    (f-mkdir "foo")
    (should (f-dir? "foo"))))
 
+
+;;;; f-file?
+
 (ert-deftest f-file?-test/is-file ()
   (with-sandbox
    (f-touch "foo.txt")
@@ -36,6 +44,9 @@
   (with-sandbox
    (f-mkdir "foo")
    (should-not (f-file? "foo"))))
+
+
+;;;; f-symlink?
 
 (ert-deftest f-symlink?-test/is-symlink ()
   (with-sandbox
@@ -48,6 +59,9 @@
    (f-touch "foo.txt")
    (should-not (f-symlink? "foo.txt"))))
 
+
+;;;; f-readable?
+
 (ert-deftest f-readable?-test/is-readable ()
   (with-sandbox
    (f-touch "foo.txt")
@@ -59,6 +73,9 @@
    (f-touch "foo.txt")
    (chmod "foo.txt" "000")
    (should-not (f-readable? "foo.txt"))))
+
+
+;;;; f-writable?
 
 (ert-deftest f-writeable?-test/is-readable ()
   (with-sandbox
@@ -84,17 +101,26 @@
    (chmod "foo.txt" "200")
    (should-not (f-executable? "foo.txt"))))
 
+
+;;;; f-absolute?
+
 (ert-deftest f-absolute?-test/is-absolute ()
   (should (f-absolute? "/full/path/to/dir")))
 
 (ert-deftest f-absolute?-test/is-relative ()
   (should-not (f-absolute? "path/to/dir")))
 
+
+;;;; f-relative?
+
 (ert-deftest f-relative?-test/is-relative ()
   (should (f-relative? "path/to/dir")))
 
 (ert-deftest f-relative?-test/is-absolute ()
   (should-not (f-relative? "/full/path/to/dir")))
+
+
+;;;; f-root?
 
 (ert-deftest f-root?-test/is-root ()
   (should (f-root? "/")))
@@ -104,6 +130,9 @@
 
 (ert-deftest f-root?-test/is-root-weird-syntax ()
   (should (f-root? "/bin/..")))
+
+
+;;;; f-ext?
 
 (ert-deftest f-ext?-test/ext-does-match ()
   (with-sandbox
@@ -124,6 +153,9 @@
   (with-sandbox
    (f-touch "foo")
    (should-not (f-ext? "foo"))))
+
+
+;;;; f-same?/f-equal?
 
 (ert-deftest f-same?/relative-equal ()
   (with-sandbox

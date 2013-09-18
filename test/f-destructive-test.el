@@ -1,3 +1,5 @@
+;;;; f-mkdir
+
 (ert-deftest f-mkdir-test/single-level ()
   (with-sandbox
    (f-mkdir "foo")
@@ -14,6 +16,9 @@
    (f-mkdir "foo" "bar")
    (f-mkdir "foo" "bar" "baz")
    (should-exist "foo/bar/baz")))
+
+
+;;;; f-delete
 
 (ert-deftest f-delete-test/file-in-directory ()
   (with-sandbox
@@ -38,11 +43,17 @@
    (f-delete "foo/bar.txt" t)
    (should-not-exist "foo/bar.txt")))
 
+
+;;;; f-symlink
+
 (ert-deftest f-symlink-test/make-link-to-file ()
   (with-sandbox
    (f-touch "foo.txt")
    (f-symlink "foo.txt" "foo.link")
    (should (f-symlink? "foo.link"))))
+
+
+;;;; f-move
 
 (ert-deftest f-move-test/move-relative-path ()
   (with-sandbox
@@ -73,6 +84,9 @@
     (f-expand "foo.txt" f-sandbox-path)
     (f-expand "bar.txt" f-sandbox-path))
    (should-exist "bar.txt" "FOO")))
+
+
+;;;; f-copy
 
 (ert-deftest f-copy-test/copy-relative-file ()
   (with-sandbox
@@ -105,6 +119,9 @@
     (f-expand "foo" f-sandbox-path)
     (f-expand "bar" f-sandbox-path))
    (should-exist "foo/file.txt" "FILE")))
+
+
+;;;; f-touch
 
 (ert-deftest f-touch-test/file-does-not-exist-relative-path ()
   (with-sandbox

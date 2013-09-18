@@ -1,3 +1,5 @@
+;;;; f-size
+
 (ert-deftest f-size-test/empty-file ()
   (with-sandbox
    (f-touch "foo.txt")

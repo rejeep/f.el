@@ -1,3 +1,5 @@
+;;;; f-glob
+
 (ert-deftest f-glob-test/without-path ()
   (with-sandbox
    (f-touch "foo.el")
@@ -17,6 +19,9 @@
    (should
     (equal
      (mapcar 'f-filename (f-glob "*.el" "bar")) '("qux.el")))))
+
+
+;;;; f-entries/f--entries
 
 (ert-deftest f-entries-test/no-directories-or-files ()
   (with-sandbox
@@ -74,6 +79,9 @@
           (all-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el" "qux.coffee" "bar" "qux")))))
      (should (equal (-sort 'string< (f--entries "foo" 'ignore)) all-files))
      (should (equal (-sort 'string< (f--entries "foo" (equal (f-ext it) "el") t)) el-files)))))
+
+
+;;;; f-directories/f--directories
 
 (ert-deftest f-directories-test/no-directories-or-files ()
   (with-sandbox
@@ -134,6 +142,9 @@
      (should (equal (-sort 'string< (f--directories "foo" 'ignore :recursive)) all-dirs))
      (should (equal (-sort 'string< (f--directories "foo" (equal (f-filename it) "test") t)) test-dirs)))))
 
+
+;;;; f-files/f--files
+
 (ert-deftest f-files-test/no-files-or-files ()
   (with-sandbox
    (f-mkdir "foo")
@@ -191,15 +202,23 @@
      (should (equal (-sort 'string< (f--entries "foo" 'ignore)) all-files))
      (should (equal (-sort 'string< (f--entries "foo" (equal (f-ext it) "el") t)) el-files)))))
 
+
+;;;; f-path-separator
+
 (ert-deftest f-path-separator-test ()
   ;; was previously based on `default-directory', make sure we don't
   ;; need it.
   (let (default-directory)
     (should (equal (f-path-separator) "/"))))
 
+
+;;;; f-root
+
 (ert-deftest f-root-test ()
   (should (equal (f-root) "/")))
 
+
+;;;; f-up/f--up
 (ert-deftest f-up-test/false ()
   (with-sandbox
    (should (equal (f-root) (f-up (lambda (path) nil))))))
