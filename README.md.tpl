@@ -447,8 +447,9 @@ See: `file-expand-wildcards`
 
 ```lisp
 (f-entries "path/to/dir")
-(f-entries "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
+(f-entries "path/to/dir" (lambda (file) (s-matches? "test" file)))
 (f-entries "path/to/dir" nil t)
+(f-entries "path/to/dir" (s-matches? "test" file))
 ```
 
 ### f-directories `(path &optional fn recursive)`
@@ -457,8 +458,9 @@ See: `file-expand-wildcards`
 
 ```lisp
 (f-directories "path/to/dir")
-(f-directories "path/to/dir" (lambda (dir) ((f-filename dir) "test")))
+(f-directories "path/to/dir" (lambda (dir) (equal (f-filename dir) "test")))
 (f-directories "path/to/dir" nil t)
+(f--directories "path/to/dir" (equal (f-filename dir) "test"))
 ```
 
 ### f-files `(path &optional fn recursive)`
@@ -469,6 +471,7 @@ See: `file-expand-wildcards`
 (f-files "path/to/dir")
 (f-files "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-files "path/to/dir" nil t)
+(f--files "path/to/dir" (equal (f-ext file) "el"))
 ```
 
 ### f-root `()`
@@ -495,6 +498,9 @@ See: `file-expand-wildcards`
 
 ### v0.11.0
 
+* Anaphoric function `f--entries` of `f-entries`.
+* Anaphoric function `f--files` of `f-files`.
+* Anaphoric function `f--directories` of `f-directories`.
 * Add `f-up`.
 
 ### v0.10.0
