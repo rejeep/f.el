@@ -61,6 +61,20 @@
      (--map (f-relative it "foo") (f-entries "foo" nil t))
      '("bar.el" "bar" "bar/qux" "bar/baz.el" "bar/qux/hey.el")))))
 
+(ert-deftest f-entries-test/anaphoric ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-write "foo/bar.el")
+   (f-mkdir "foo/bar")
+   (f-write "foo/baz.el")
+   (f-write "foo/qux.coffee")
+   (f-mkdir "foo/qux")
+   (let* ((foo-path (f-expand "foo" f-sandbox-path))
+          (el-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el"))))
+          (all-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el" "qux.coffee" "bar" "qux")))))
+     (should (equal (-sort 'string< (f--entries "foo" 'ignore)) all-files))
+     (should (equal (-sort 'string< (f--entries "foo" (equal (f-ext it) "el") t)) el-files)))))
+
 (ert-deftest f-directories-test/no-directories-or-files ()
   (with-sandbox
    (f-mkdir "foo")
@@ -106,6 +120,20 @@
      (--map (f-relative it "foo") (f-directories "foo" nil t))
      '("bar" "bar/qux")))))
 
+(ert-deftest f-directories-test/anaphoric ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-mkdir "foo/test")
+   (f-mkdir "foo/baz")
+   (f-mkdir "foo/baz/test")
+   (f-write "foo/test/baz.el")
+   (f-write "foo/baz/test/qux.el")
+   (let* ((foo-path (f-expand "foo" f-sandbox-path))
+          (test-dirs (-sort 'string< (--map (f-expand it foo-path) '("test" "baz/test"))))
+          (all-dirs (-sort 'string< (--map (f-expand it foo-path) '("test" "baz" "baz/test")))))
+     (should (equal (-sort 'string< (f--directories "foo" 'ignore :recursive)) all-dirs))
+     (should (equal (-sort 'string< (f--directories "foo" (equal (f-filename it) "test") t)) test-dirs)))))
+
 (ert-deftest f-files-test/no-files-or-files ()
   (with-sandbox
    (f-mkdir "foo")
@@ -150,6 +178,18 @@
     (equal
      (--map (f-relative it "foo") (f-files "foo" nil t))
      '("bar.el" "bar/baz.el" "bar/qux/hey.el")))))
+
+(ert-deftest f-files-test/anaphoric ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-write "foo/bar.el")
+   (f-write "foo/baz.el")
+   (f-write "foo/qux.coffee")
+   (let* ((foo-path (f-expand "foo" f-sandbox-path))
+          (el-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el"))))
+          (all-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el" "qux.coffee")))))
+     (should (equal (-sort 'string< (f--entries "foo" 'ignore)) all-files))
+     (should (equal (-sort 'string< (f--entries "foo" (equal (f-ext it) "el") t)) el-files)))))
 
 (ert-deftest f-path-separator-test ()
   ;; was previously based on `default-directory', make sure we don't
