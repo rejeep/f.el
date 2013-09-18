@@ -38,7 +38,7 @@
 (ert-deftest f-dirname-test/file-relative ()
   (with-sandbox
    (f-mkdir "foo" "bar" "baz")
-   (f-write "foo/bar/baz/qux.txt")
+   (f-touch "foo/bar/baz/qux.txt")
    (should (equal (f-dirname "foo/bar/baz/qux.txt") "foo/bar/baz/"))))
 
 (ert-deftest f-dirname-test/directory-absolute ()
@@ -52,7 +52,7 @@
 (ert-deftest f-dirname-test/file-absolute ()
   (with-sandbox
    (f-mkdir "foo" "bar" "baz")
-   (f-write "foo/bar/baz/qux.txt")
+   (f-touch "foo/bar/baz/qux.txt")
    (should
     (equal
      (f-dirname (f-expand "foo/bar/baz/qux.txt" f-sandbox-path))
@@ -128,7 +128,7 @@
 
 (ert-deftest f-canonical-test/symlink ()
   (with-sandbox
-   (f-write "foo")
+   (f-touch "foo")
    (f-symlink "foo" "bar")
    (should
     (equal

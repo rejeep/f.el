@@ -52,44 +52,13 @@
    (f-write-text "text" 'utf-8 "foo.txt")
    (should (equal (f-read-text "foo.txt") "text"))))
 
-;;; Obsolete functions
-(ert-deftest f-read-test/empty ()
+(ert-deftest f-read-text-test/alias ()
   (with-sandbox
-   (f-write "foo.txt")
-   (should (equal (f-read "foo.txt") ""))))
+   (f-write-bytes (unibyte-string 226 152 185 32 226 152 186) "foo.txt")
+   (should (equal (f-read-text "foo.txt") (f-read "foo.txt")))))
 
-(ert-deftest f-read-test/with-content ()
+(ert-deftest f-write-text-test/alias ()
   (with-sandbox
-   (f-write "foo.txt" "FOO")
-   (should (equal (f-read "foo.txt") "FOO"))))
-
-(ert-deftest f-write-test/no-content-relative-path ()
-  (with-sandbox
-   (f-write "foo.txt")
-   (should-exist "foo.txt")))
-
-(ert-deftest f-write-test/no-content-absolute-path ()
-  (with-sandbox
-   (let* ((dirname (expand-file-name "bar" f-sandbox-path))
-          (filename (expand-file-name "foo.txt" dirname)))
-     (make-directory dirname)
-     (f-write filename)
-     (should-exist "bar/foo.txt"))))
-
-(ert-deftest f-write-test/with-content ()
-  (with-sandbox
-   (f-write "foo.txt" "FOO")
-   (should-exist "foo.txt" "FOO")))
-
-(ert-deftest f-write-test/override ()
-  (with-sandbox
-   (f-write "foo.txt" "FOO")
-   (f-write "foo.txt" "BAR")
-   (should-exist "foo.txt" "BAR")))
-
-(ert-deftest f-write-test/append ()
-  (with-sandbox
-   (f-write "foo.txt" "FOO")
-   (should-exist "foo.txt" "FOO")
-   (f-write "foo.txt" "BAR" 'append)
-   (should-exist "foo.txt" "FOOBAR")))
+   (f-write-text (unibyte-string 1 2 3 4 5) 'utf-8 "foo.txt")
+   (f-write (unibyte-string 1 2 3 4 5) 'utf-8 "bar.txt")
+   (should (equal (f-read "foo.txt") (f-read "bar.txt")))))

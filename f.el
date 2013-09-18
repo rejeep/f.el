@@ -106,17 +106,6 @@ ending slash."
 
 ;;;; I/O
 
-(defun f-read (path)
-  "Return content of PATH."
-  (with-temp-buffer
-    (insert-file-contents-literally path)
-    (buffer-substring-no-properties
-     (point-min)
-     (point-max))))
-
-(make-obsolete
- 'f-read "Use `f-read-text' instead for proper coding conversion" "0.6")
-
 (defun f-read-bytes (path)
   "Read binary data from PATH.
 
@@ -127,6 +116,7 @@ Return the binary data as unibyte string."
     (insert-file-contents-literally path)
     (buffer-substring-no-properties (point-min) (point-max))))
 
+(defalias 'f-read 'f-read-text)
 (defun f-read-text (path &optional coding)
   "Read text with PATH, using CODING.
 
@@ -135,17 +125,7 @@ CODING defaults to `utf-8'.
 Return the decoded text as multibyte string."
   (decode-coding-string (f-read-bytes path) (or coding 'utf-8)))
 
-(defun f-write (path &optional content append)
-  "Write CONTENT or nothing to PATH. If no content, just create file."
-  (with-temp-file path
-    (when append
-      (insert-file-contents-literally path)
-      (goto-char (point-max)))
-    (if content (insert content))))
-
-(make-obsolete
- 'f-write "Use `f-write-text' instead for proper coding conversion" "0.6")
-
+(defalias 'f-write 'f-write-text)
 (defun f-write-text (text coding path)
   "Write TEXT with CODING to PATH.
 

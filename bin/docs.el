@@ -32,4 +32,4 @@
    (lambda (fn doc)
      (setq content (s-replace (concat "{{" fn "}}") doc content)))
    f-fn-doc-mapping)
-  (f-write f-readme-file content))
+  (f-write content 'utf-8 f-readme-file))

@@ -1,19 +1,19 @@
 (ert-deftest f-glob-test/without-path ()
   (with-sandbox
-   (f-write "foo.el")
-   (f-write "baz.el")
+   (f-touch "foo.el")
+   (f-touch "baz.el")
    (f-mkdir "bar")
-   (f-write "bar/qux.el")
+   (f-touch "bar/qux.el")
    (should
     (equal
      (mapcar 'f-filename (f-glob "*.el")) '("baz.el" "foo.el")))))
 
 (ert-deftest f-glob-test/with-path ()
   (with-sandbox
-   (f-write "foo.el")
-   (f-write "baz.el")
+   (f-touch "foo.el")
+   (f-touch "baz.el")
    (f-mkdir "bar")
-   (f-write "bar/qux.el")
+   (f-touch "bar/qux.el")
    (should
     (equal
      (mapcar 'f-filename (f-glob "*.el" "bar")) '("qux.el")))))
@@ -26,8 +26,8 @@
 (ert-deftest f-entries-test/with-files-and-directories ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.txt")
-   (f-write "foo/baz.txt")
+   (f-touch "foo/bar.txt")
+   (f-touch "foo/baz.txt")
    (f-mkdir "foo/qux")
    (should
     (equal
@@ -37,9 +37,9 @@
 (ert-deftest f-entries-test/with-callback-function ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.el")
-   (f-write "foo/baz.el")
-   (f-write "foo/qux.coffee")
+   (f-touch "foo/bar.el")
+   (f-touch "foo/baz.el")
+   (f-touch "foo/qux.coffee")
    (let ((fn
           (lambda (entry)
             (equal (f-ext entry) "el"))))
@@ -51,11 +51,11 @@
 (ert-deftest f-entries-test/recursive ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.el")
+   (f-touch "foo/bar.el")
    (f-mkdir "foo/bar")
-   (f-write "foo/bar/baz.el")
+   (f-touch "foo/bar/baz.el")
    (f-mkdir "foo/bar/qux")
-   (f-write "foo/bar/qux/hey.el")
+   (f-touch "foo/bar/qux/hey.el")
    (should
     (equal
      (--map (f-relative it "foo") (f-entries "foo" nil t))
@@ -64,10 +64,10 @@
 (ert-deftest f-entries-test/anaphoric ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.el")
+   (f-touch "foo/bar.el")
    (f-mkdir "foo/bar")
-   (f-write "foo/baz.el")
-   (f-write "foo/qux.coffee")
+   (f-touch "foo/baz.el")
+   (f-touch "foo/qux.coffee")
    (f-mkdir "foo/qux")
    (let* ((foo-path (f-expand "foo" f-sandbox-path))
           (el-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el"))))
@@ -83,8 +83,8 @@
 (ert-deftest f-directories-test/with-files-and-directories ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.txt")
-   (f-write "foo/baz.txt")
+   (f-touch "foo/bar.txt")
+   (f-touch "foo/baz.txt")
    (f-mkdir "foo/qux")
    (should
     (equal
@@ -97,8 +97,8 @@
    (f-mkdir "foo/test")
    (f-mkdir "foo/baz")
    (f-mkdir "foo/baz/test")
-   (f-write "foo/test/baz.el")
-   (f-write "foo/baz/test/qux.el")
+   (f-touch "foo/test/baz.el")
+   (f-touch "foo/baz/test/qux.el")
    (let ((fn
           (lambda (entry)
             (equal (f-filename entry) "test"))))
@@ -110,11 +110,11 @@
 (ert-deftest f-directories-test/recursive ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.el")
+   (f-touch "foo/bar.el")
    (f-mkdir "foo/bar")
-   (f-write "foo/bar/baz.el")
+   (f-touch "foo/bar/baz.el")
    (f-mkdir "foo/bar/qux")
-   (f-write "foo/bar/qux/hey.el")
+   (f-touch "foo/bar/qux/hey.el")
    (should
     (equal
      (--map (f-relative it "foo") (f-directories "foo" nil t))
@@ -126,8 +126,8 @@
    (f-mkdir "foo/test")
    (f-mkdir "foo/baz")
    (f-mkdir "foo/baz/test")
-   (f-write "foo/test/baz.el")
-   (f-write "foo/baz/test/qux.el")
+   (f-touch "foo/test/baz.el")
+   (f-touch "foo/baz/test/qux.el")
    (let* ((foo-path (f-expand "foo" f-sandbox-path))
           (test-dirs (-sort 'string< (--map (f-expand it foo-path) '("test" "baz/test"))))
           (all-dirs (-sort 'string< (--map (f-expand it foo-path) '("test" "baz" "baz/test")))))
@@ -142,8 +142,8 @@
 (ert-deftest f-files-test/with-files-and-files ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.txt")
-   (f-write "foo/baz.txt")
+   (f-touch "foo/bar.txt")
+   (f-touch "foo/baz.txt")
    (f-mkdir "foo/qux")
    (should
     (equal
@@ -156,8 +156,8 @@
    (f-mkdir "foo/test")
    (f-mkdir "foo/baz")
    (f-mkdir "foo/baz/test")
-   (f-write "foo/test/baz.el")
-   (f-write "foo/baz/test/qux.el")
+   (f-touch "foo/test/baz.el")
+   (f-touch "foo/baz/test/qux.el")
    (let ((fn
           (lambda (entry)
             (equal (f-ext entry) "el"))))
@@ -169,11 +169,11 @@
 (ert-deftest f-files-test/recursive ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.el")
+   (f-touch "foo/bar.el")
    (f-mkdir "foo/bar")
-   (f-write "foo/bar/baz.el")
+   (f-touch "foo/bar/baz.el")
    (f-mkdir "foo/bar/qux")
-   (f-write "foo/bar/qux/hey.el")
+   (f-touch "foo/bar/qux/hey.el")
    (should
     (equal
      (--map (f-relative it "foo") (f-files "foo" nil t))
@@ -182,9 +182,9 @@
 (ert-deftest f-files-test/anaphoric ()
   (with-sandbox
    (f-mkdir "foo")
-   (f-write "foo/bar.el")
-   (f-write "foo/baz.el")
-   (f-write "foo/qux.coffee")
+   (f-touch "foo/bar.el")
+   (f-touch "foo/baz.el")
+   (f-touch "foo/qux.coffee")
    (let* ((foo-path (f-expand "foo" f-sandbox-path))
           (el-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el"))))
           (all-files (-sort 'string< (--map (f-expand it foo-path) '("baz.el" "bar.el" "qux.coffee")))))

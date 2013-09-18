@@ -235,8 +235,11 @@ CODING defaults to `utf-8'.
 
 Return the decoded text as multibyte string.
 
+Alias: `f-read`
+
 ```lisp
 (f-read-text "path/to/file.txt" 'utf-8)
+(f-read "path/to/file.txt" 'utf-8)
 ```
 
 ### f-write-text `(text coding path)`
@@ -246,8 +249,11 @@ Write TEXT with CODING to PATH.
 TEXT is a multibyte string.  CODING is a coding system to encode
 TEXT with.  PATH is a file name to write to.
 
+Alias: `f-write`
+
 ```lisp
 (f-write-text "Hello world" 'utf-8 "path/to/file.txt")
+(f-write "Hello world" 'utf-8 "path/to/file.txt")
 ```
 
 ### f-mkdir `(&rest dirs)`
@@ -524,6 +530,8 @@ Traverse up as long as FN returns nil, starting at DIR.
 
 ### v0.11.0
 
+* Remove deprecation for `f-read` and `f-write` and make them aliases
+  to `f-read-text` and `f-write-text` respectively.
 * Anaphoric function `f--entries` of `f-entries`.
 * Anaphoric function `f--files` of `f-files`.
 * Anaphoric function `f--directories` of `f-directories`.
