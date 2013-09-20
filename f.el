@@ -266,7 +266,7 @@ false otherwise."
   (unless (f-same? path-a path-b)
     (f-same?
      path-a
-     (f--up
+     (f-up
       (lambda (path)
         (f-same? path path-a))
       path-b))))
@@ -276,7 +276,7 @@ false otherwise."
   (unless (f-same? path-a path-b)
     (f-same?
      path-b
-     (f--up
+     (f-up
       (lambda (path)
         (f-same? path path-b))
       path-a))))
