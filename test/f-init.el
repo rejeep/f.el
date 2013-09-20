@@ -20,7 +20,7 @@
         (--select (and (listp it) (eq (car it) 'defun)) f-history)))
   (-each (-map 'cdr f-functions) 'fmakunbound))
 
-(load (expand-file-name "f" f-test/root-path))
+(load (expand-file-name "f" f-test/root-path) :noerror :nomessage)
 
 (unless (require 'ert nil t)
   (require 'ert (expand-file-name "ert" f-test/vendor-path)))
