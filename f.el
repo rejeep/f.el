@@ -264,12 +264,22 @@ false otherwise."
 (defun f-ancestor-of? (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
   (unless (f-same? path-a path-b)
-    (f-same? path-a (f--up (f-same? it path-a) path-b))))
+    (f-same?
+     path-a
+     (f--up
+      (lambda (path)
+        (f-same? path path-a))
+      path-b))))
 
 (defun f-descendant-of? (path-a path-b)
- "Return t if PATH-A is desendant of PATH-B."
+  "Return t if PATH-A is desendant of PATH-B."
   (unless (f-same? path-a path-b)
-    (f-same? path-b (f--up (f-same? it path-b) path-a))))
+    (f-same?
+     path-b
+     (f--up
+      (lambda (path)
+        (f-same? path path-b))
+      path-a))))
 
 
 ;;;; Stats
