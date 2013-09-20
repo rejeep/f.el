@@ -581,15 +581,15 @@ Traverse up as long as FN returns nil, starting at DIR.
 * Add `f-parent-of?`
 * Add `f-child-of?`
 * Remove deprecation for `f-read` and `f-write` and make them aliases
-  to `f-read-text` and `f-write-text` respectively.
-* Anaphoric function `f--entries` of `f-entries`.
-* Anaphoric function `f--files` of `f-files`.
-* Anaphoric function `f--directories` of `f-directories`.
-* Add `f-up`.
+  to `f-read-text` and `f-write-text` respectively
+* Add anaphoric function `f--entries` for `f-entries`
+* Add anaphoric function `f--files` for `f-files`
+* Add anaphoric function `f--directories` of `f-directories`
+* Add `f-up` and anaphoric version `f--up`
 
 ### v0.10.0
 
-* Add `f-root`.
+* Add `f-root`
 * Fix `f-root?` bug for weird syntax
 
 ### v0.9.0
