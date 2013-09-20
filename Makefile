@@ -3,7 +3,13 @@ CASK ?= cask
 
 all: test
 
-test:
+test: clean-elc
+	${MAKE} unit
+	${MAKE} compile
+	${MAKE} unit
+	${MAKE} clean-elc
+
+unit:
 	${CASK} exec ert-runner
 
 docs:
@@ -15,4 +21,4 @@ compile:
 clean-elc:
 	rm f.elc
 
-.PHONY:	all test docs
+.PHONY:	all test docs unit
