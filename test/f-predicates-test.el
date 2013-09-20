@@ -275,3 +275,36 @@
    (should-not (f-ancestor-of? "foo/bar/baz" "foo/bar/baz"))
    (should-not (f-ancestor-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))))
 
+
+;;;; f-descendant-of?
+
+(ert-deftest f-descendant-of?-test/is-descendant ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should (equal t (f-descendant-of? "foo/bar" "foo")))
+   (should (equal t (f-descendant-of? "foo/bar/baz" "foo")))
+   (should (equal t (f-descendant-of? "foo/bar/baz/qux" "foo")))
+   (should (equal t (f-descendant-of? "foo/bar/baz" "foo/bar")))
+   (should (equal t (f-descendant-of? "foo/bar/baz/qux" "foo/bar")))
+   (should (equal t (f-descendant-of? "foo/bar/baz/qux" "foo/bar/baz")))
+   (should (equal t (f-descendant-of? (f-expand (car (f-directories (f-root))) (f-root)) (f-root))))))
+
+(ert-deftest f-descendant-of?-test/is-not-descendant ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should-not (f-descendant-of? "foo" "foo/bar"))
+   (should-not (f-descendant-of? "foo" "foo/bar/baz"))
+   (should-not (f-descendant-of? "foo" "foo/bar/baz/qux"))
+   (should-not (f-descendant-of? "foo/bar" "foo/bar/baz"))
+   (should-not (f-descendant-of? "foo/bar" "foo/bar/baz/qux"))
+   (should-not (f-descendant-of? "foo/bar/baz" "foo/bar/baz/qux"))
+   (should-not (f-descendant-of? (f-root) (f-expand (car (f-directories (f-root))) (f-root))))))
+
+(ert-deftest f-descendant-of?-test/is-same ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should-not (f-descendant-of? "foo" "foo"))
+   (should-not (f-descendant-of? "foo/bar" "foo/bar"))
+   (should-not (f-descendant-of? "foo/bar/baz" "foo/bar/baz"))
+   (should-not (f-descendant-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))
+   (should-not (f-descendant-of? (f-root) (f-root)))))

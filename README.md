@@ -65,6 +65,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-parent-of?](#f-parent-of-path-a-path-b) `(path-a path-b)`
 * [f-child-of?](#f-child-of-path-a-path-b) `(path-a path-b)`
 * [f-ancestor-of?](#f-ancestor-of-path-a-path-b) `(path-a path-b)`
+* [f-descendant-of?](#f-descendant-of-path-a-path-b) `(path-a path-b)`
 
 ### Stats
 
@@ -464,6 +465,17 @@ Return t if PATH-A is ancestor of PATH-B.
 (f-ancestor-of? "/path/to" "/path/to") ;; => nil
 ```
 
+### f-descendant-of? `(path-a path-b)`
+
+Return t if PATH-A is desendant of PATH-B.
+
+```lisp
+(f-descendant-of? "/path/to/dir" "/path/to") ;; => t
+(f-descendant-of? "/path/to/dir" "/path") ;; => t
+(f-descendant-of? "/path/to" "/path/to/dir") ;; => nil
+(f-descendant-of? "/path/to" "/path/to") ;; => nil
+```
+
 ### f-size `(path)`
 
 Return size of PATH.
@@ -564,6 +576,7 @@ Traverse up as long as FN returns nil, starting at DIR.
 
 ### v0.11.0
 
+* Add `f-descendant-of?`
 * Add `f-ancestor-of?`
 * Add `f-parent-of?`
 * Add `f-child-of?`
