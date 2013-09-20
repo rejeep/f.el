@@ -64,6 +64,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-same?](#f-same-path-a-path-b) `(path-a path-b)`
 * [f-parent-of?](#f-parent-of-path-a-path-b) `(path-a path-b)`
 * [f-child-of?](#f-child-of-path-a-path-b) `(path-a path-b)`
+* [f-ancestor-of?](#f-ancestor-of-path-a-path-b) `(path-a path-b)`
 
 ### Stats
 
@@ -433,6 +434,17 @@ Alias: `f-equal?`
 (f-child-of? "/path/to" "/path/to") ;; => nil
 ```
 
+### f-ancestor-of? `(path-a path-b)`
+
+{{f-ancestor-of?}}
+
+```lisp
+(f-ancestor-of? "/path/to" "/path/to/dir") ;; => t
+(f-ancestor-of? "/path" "/path/to/dir") ;; => t
+(f-ancestor-of? "/path/to/dir" "/path/to") ;; => nil
+(f-ancestor-of? "/path/to" "/path/to") ;; => nil
+```
+
 ### f-size `(path)`
 
 {{f-size}}
@@ -526,6 +538,7 @@ See: `file-expand-wildcards`
 
 ### v0.11.0
 
+* Add `f-ancestor-of?`
 * Add `f-parent-of?`
 * Add `f-child-of?`
 * Remove deprecation for `f-read` and `f-write` and make them aliases

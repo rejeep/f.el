@@ -259,6 +259,11 @@ false otherwise."
   "Return t if PATH-A is child of PATH-B."
   (f-same? (f-parent path-a) path-b))
 
+(defun f-ancestor-of? (path-a path-b)
+  "Return t if PATH-A is ancestor of PATH-B."
+  (unless (f-same? path-a path-b)
+    (f-same? path-a (f--up (f-same? it path-a) path-b))))
+
 
 ;;;; Stats
 
