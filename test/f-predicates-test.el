@@ -192,3 +192,29 @@
 (ert-deftest f-equal?/alias ()
   (with-sandbox
    (should (f-equal? "foo" "foo"))))
+
+
+;;;; f-parent-of?
+
+(ert-deftest f-parent-of?-test/is-parent ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should (equal t (f-parent-of? "foo" "foo/bar")))
+   (should (equal t (f-parent-of? "foo/bar" "foo/bar/baz")))
+   (should (equal t (f-parent-of? "foo/bar/baz" "foo/bar/baz/qux")))))
+
+(ert-deftest f-parent-of?-test/is-not-parent ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should-not (f-parent-of? "foo/bar" "foo"))
+   (should-not (f-parent-of? "foo/bar/baz" "foo/bar"))
+   (should-not (f-parent-of? "foo/bar/baz/qux" "foo/bar/baz"))))
+
+(ert-deftest f-parent-of?-test/is-same ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should-not (f-parent-of? "foo" "foo"))
+   (should-not (f-parent-of? "foo/bar" "foo/bar"))
+   (should-not (f-parent-of? "foo/bar/baz" "foo/bar/baz"))
+   (should-not (f-parent-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))))
+
