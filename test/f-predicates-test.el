@@ -216,7 +216,8 @@
    (should-not (f-parent-of? "foo" "foo"))
    (should-not (f-parent-of? "foo/bar" "foo/bar"))
    (should-not (f-parent-of? "foo/bar/baz" "foo/bar/baz"))
-   (should-not (f-parent-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))))
+   (should-not (f-parent-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))
+   (should-not (f-parent-of? (f-root) (f-root)))))
 
 
 ;;;; f-child-of?
@@ -241,7 +242,8 @@
    (should-not (f-child-of? "foo" "foo"))
    (should-not (f-child-of? "foo/bar" "foo/bar"))
    (should-not (f-child-of? "foo/bar/baz" "foo/bar/baz"))
-   (should-not (f-child-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))))
+   (should-not (f-child-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))
+   (should-not (f-child-of? (f-root) (f-root)))))
 
 
 ;;;; f-ancestor-of?
@@ -254,7 +256,8 @@
    (should (equal t (f-ancestor-of? "foo" "foo/bar/baz/qux")))
    (should (equal t (f-ancestor-of? "foo/bar" "foo/bar/baz")))
    (should (equal t (f-ancestor-of? "foo/bar" "foo/bar/baz/qux")))
-   (should (equal t (f-ancestor-of? "foo/bar/baz" "foo/bar/baz/qux")))))
+   (should (equal t (f-ancestor-of? "foo/bar/baz" "foo/bar/baz/qux")))
+   (should (equal t (f-ancestor-of? (f-root) (f-expand (car (f-directories (f-root))) (f-root)))))))
 
 (ert-deftest f-ancestor-of?-test/is-not-ancestor ()
   (with-sandbox
@@ -265,7 +268,7 @@
    (should-not (f-ancestor-of? "foo/bar/baz" "foo/bar"))
    (should-not (f-ancestor-of? "foo/bar/baz/qux" "foo/bar"))
    (should-not (f-ancestor-of? "foo/bar/baz/qux" "foo/bar/baz"))
-   (should-not (f-ancestor-of? (f-root) (f-expand (car (f-directories (f-root))) (f-root))))))
+   (should-not (f-ancestor-of? (f-expand (car (f-directories (f-root))) (f-root)) (f-root)))))
 
 (ert-deftest f-ancestor-of?-test/is-same ()
   (with-sandbox
@@ -273,7 +276,8 @@
    (should-not (f-ancestor-of? "foo" "foo"))
    (should-not (f-ancestor-of? "foo/bar" "foo/bar"))
    (should-not (f-ancestor-of? "foo/bar/baz" "foo/bar/baz"))
-   (should-not (f-ancestor-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))))
+   (should-not (f-ancestor-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))
+   (should-not (f-ancestor-of? (f-root) (f-root)))))
 
 
 ;;;; f-descendant-of?

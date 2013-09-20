@@ -253,11 +253,13 @@ false otherwise."
 
 (defun f-parent-of? (path-a path-b)
   "Return t if PATH-A is parent of PATH-B."
-  (f-same? path-a (f-parent path-b)))
+  (unless (f-same? path-a path-b)
+    (f-same? path-a (f-parent path-b))))
 
 (defun f-child-of? (path-a path-b)
   "Return t if PATH-A is child of PATH-B."
-  (f-same? (f-parent path-a) path-b))
+  (unless (f-same? path-a path-b)
+    (f-same? (f-parent path-a) path-b)))
 
 (defun f-ancestor-of? (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
