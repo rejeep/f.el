@@ -63,6 +63,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-ext?](#f-ext-path-ext) `(path ext)`
 * [f-same?](#f-same-path-a-path-b) `(path-a path-b)`
 * [f-parent-of?](#f-parent-of-path-a-path-b) `(path-a path-b)`
+* [f-child-of?](#f-child-of-path-a-path-b) `(path-a path-b)`
 
 ### Stats
 
@@ -441,6 +442,16 @@ Return t if PATH-A is parent of PATH-B.
 (f-parent-of? "/path/to" "/path/to") ;; => nil
 ```
 
+### f-child-of? `(path-a path-b)`
+
+Return t if PATH-A is child of PATH-B.
+
+```lisp
+(f-child-of? "/path/to" "/path/to/dir") ;; => nil
+(f-child-of? "/path/to/dir" "/path/to") ;; => t
+(f-child-of? "/path/to" "/path/to") ;; => nil
+```
+
 ### f-size `(path)`
 
 Return size of PATH.
@@ -542,6 +553,7 @@ Traverse up as long as FN returns nil, starting at DIR.
 ### v0.11.0
 
 * Add `f-parent-of?`
+* Add `f-child-of?`
 * Remove deprecation for `f-read` and `f-write` and make them aliases
   to `f-read-text` and `f-write-text` respectively.
 * Anaphoric function `f--entries` of `f-entries`.

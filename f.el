@@ -255,6 +255,10 @@ false otherwise."
   "Return t if PATH-A is parent of PATH-B."
   (f-same? path-a (f-parent path-b)))
 
+(defun f-child-of? (path-a path-b)
+  "Return t if PATH-A is child of PATH-B."
+  (f-same? (f-parent path-a) path-b))
+
 
 ;;;; Stats
 

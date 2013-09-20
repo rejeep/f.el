@@ -218,3 +218,28 @@
    (should-not (f-parent-of? "foo/bar/baz" "foo/bar/baz"))
    (should-not (f-parent-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))))
 
+
+;;;; f-child-of?
+
+(ert-deftest f-child-of?-test/is-child ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should (equal t (f-child-of? "foo/bar" "foo")))
+   (should (equal t (f-child-of? "foo/bar/baz" "foo/bar")))
+   (should (equal t (f-child-of? "foo/bar/baz/qux" "foo/bar/baz")))))
+
+(ert-deftest f-child-of?-test/is-not-child ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should-not (f-child-of? "foo" "foo/bar"))
+   (should-not (f-child-of? "foo/bar" "foo/bar/baz"))
+   (should-not (f-child-of? "foo/bar/baz" "foo/bar/baz/qux"))))
+
+(ert-deftest f-child-of?-test/is-same ()
+  (with-sandbox
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (should-not (f-child-of? "foo" "foo"))
+   (should-not (f-child-of? "foo/bar" "foo/bar"))
+   (should-not (f-child-of? "foo/bar/baz" "foo/bar/baz"))
+   (should-not (f-child-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))))
+
