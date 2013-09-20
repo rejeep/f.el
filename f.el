@@ -106,17 +106,6 @@ ending slash."
 
 ;;;; I/O
 
-(defun f-read (path)
-  "Return content of PATH."
-  (with-temp-buffer
-    (insert-file-contents-literally path)
-    (buffer-substring-no-properties
-     (point-min)
-     (point-max))))
-
-(make-obsolete
- 'f-read "Use `f-read-text' instead for proper coding conversion" "0.6")
-
 (defun f-read-bytes (path)
   "Read binary data from PATH.
 
@@ -127,6 +116,7 @@ Return the binary data as unibyte string."
     (insert-file-contents-literally path)
     (buffer-substring-no-properties (point-min) (point-max))))
 
+(defalias 'f-read 'f-read-text)
 (defun f-read-text (path &optional coding)
   "Read text with PATH, using CODING.
 
@@ -135,17 +125,7 @@ CODING defaults to `utf-8'.
 Return the decoded text as multibyte string."
   (decode-coding-string (f-read-bytes path) (or coding 'utf-8)))
 
-(defun f-write (path &optional content append)
-  "Write CONTENT or nothing to PATH. If no content, just create file."
-  (with-temp-file path
-    (when append
-      (insert-file-contents-literally path)
-      (goto-char (point-max)))
-    (if content (insert content))))
-
-(make-obsolete
- 'f-write "Use `f-write-text' instead for proper coding conversion" "0.6")
-
+(defalias 'f-write 'f-write-text)
 (defun f-write-text (text coding path)
   "Write TEXT with CODING to PATH.
 
@@ -271,6 +251,36 @@ false otherwise."
    (f-canonical (f-expand path-a))
    (f-canonical (f-expand path-b))))
 
+(defun f-parent-of? (path-a path-b)
+  "Return t if PATH-A is parent of PATH-B."
+  (unless (f-same? path-a path-b)
+    (f-same? path-a (f-parent path-b))))
+
+(defun f-child-of? (path-a path-b)
+  "Return t if PATH-A is child of PATH-B."
+  (unless (f-same? path-a path-b)
+    (f-same? (f-parent path-a) path-b)))
+
+(defun f-ancestor-of? (path-a path-b)
+  "Return t if PATH-A is ancestor of PATH-B."
+  (unless (f-same? path-a path-b)
+    (f-same?
+     path-a
+     (f-up
+      (lambda (path)
+        (f-same? path path-a))
+      path-b))))
+
+(defun f-descendant-of? (path-a path-b)
+  "Return t if PATH-A is desendant of PATH-B."
+  (unless (f-same? path-a path-b)
+    (f-same?
+     path-b
+     (f-up
+      (lambda (path)
+        (f-same? path path-b))
+      path-a))))
+
 
 ;;;; Stats
 
@@ -304,7 +314,7 @@ directory, return sum of all files in PATH."
   (file-expand-wildcards
    (f-join (or path default-directory) pattern)))
 
-(defun f--entries (path recursive)
+(defun f--collect-entries (path recursive)
   (let (result
         (entries
          (-reject
@@ -320,10 +330,19 @@ directory, return sum of all files in PATH."
                   (setq result (cons entry result))
                 (when (f-directory? entry)
                   (setq result (cons entry result))
-                  (setq result (append result (f--entries entry recursive))))))
+                  (setq result (append result (f--collect-entries entry recursive))))))
             entries))
           (t (setq result entries)))
     result))
+
+(defmacro f--entries (path body &optional recursive)
+  "Anaphoric version of `f-entries'."
+  `(f-entries
+    ,path
+    (lambda (path)
+      (let ((it path))
+        ,body))
+    ,recursive))
 
 (defun f-entries (path &optional fn recursive)
   "Find all files and directories in PATH.
@@ -331,17 +350,35 @@ directory, return sum of all files in PATH."
 FN - called for each found file and directory. If FN returns a thruthy
 value, file or directory will be included.
 RECURSIVE - Search for files and directories recursive."
-  (let ((entries (f--entries path recursive)))
+  (let ((entries (f--collect-entries path recursive)))
     (if fn (-select fn entries) entries)))
+
+(defmacro f--directories (path body &optional recursive)
+  "Anaphoric version of `f-directories'."
+  `(f-directories
+    ,path
+    (lambda (path)
+      (let ((it path))
+        ,body))
+    ,recursive))
 
 (defun f-directories (path &optional fn recursive)
   "Find all directories in PATH. See `f-entries`."
-  (let ((directories (-select 'f-directory? (f--entries path recursive))))
+  (let ((directories (-select 'f-directory? (f--collect-entries path recursive))))
     (if fn (-select fn directories) directories)))
+
+(defmacro f--files (path body &optional recursive)
+  "Anaphoric version of `f-files'."
+  `(f-files
+    ,path
+    (lambda (path)
+      (let ((it path))
+        ,body))
+    ,recursive))
 
 (defun f-files (path &optional fn recursive)
   "Find all files in PATH. See `f-entries`."
-  (let ((files (-select 'f-file? (f--entries path recursive))))
+  (let ((files (-select 'f-file? (f--collect-entries path recursive))))
     (if fn (-select fn files) files)))
 
 (defun f-root ()
@@ -350,6 +387,29 @@ RECURSIVE - Search for files and directories recursive."
     (while (not (f-root? dir))
       (setq dir (f-parent dir)))
     dir))
+
+(defmacro f--up (body &optional dir)
+  "Anaphoric version of `f-up'."
+  `(f-up
+    (lambda (path)
+      (let ((it path))
+        ,body))
+    ,dir))
+
+(defun f-up (fn &optional dir)
+  "Traverse up as long as FN returns nil, starting at DIR."
+  (unless dir
+    (setq dir default-directory))
+  (when (f-relative? dir)
+    (setq dir (f-expand dir)))
+  (unless (f-exists? dir)
+    (error "File %s does not exist" dir))
+  (let ((parent (f-parent dir)))
+    (if (f-root? parent)
+        parent
+      (if (funcall fn dir)
+          dir
+        (f-up fn parent)))))
 
 (provide 'f)
 

@@ -62,6 +62,10 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-root?](#f-root-path) `(path)`
 * [f-ext?](#f-ext-path-ext) `(path ext)`
 * [f-same?](#f-same-path-a-path-b) `(path-a path-b)`
+* [f-parent-of?](#f-parent-of-path-a-path-b) `(path-a path-b)`
+* [f-child-of?](#f-child-of-path-a-path-b) `(path-a path-b)`
+* [f-ancestor-of?](#f-ancestor-of-path-a-path-b) `(path-a path-b)`
+* [f-descendant-of?](#f-descendant-of-path-a-path-b) `(path-a path-b)`
 
 ### Stats
 
@@ -76,6 +80,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-root](#f-root-) `()`
+* [f-up](#f-up-fn-optional-dir) `(fn &optional dir)`
 
 ## Documentation and examples
 
@@ -234,8 +239,11 @@ CODING defaults to `utf-8'.
 
 Return the decoded text as multibyte string.
 
+Alias: `f-read`
+
 ```lisp
 (f-read-text "path/to/file.txt" 'utf-8)
+(f-read "path/to/file.txt" 'utf-8)
 ```
 
 ### f-write-text `(text coding path)`
@@ -245,8 +253,11 @@ Write TEXT with CODING to PATH.
 TEXT is a multibyte string.  CODING is a coding system to encode
 TEXT with.  PATH is a file name to write to.
 
+Alias: `f-write`
+
 ```lisp
 (f-write-text "Hello world" 'utf-8 "path/to/file.txt")
+(f-write "Hello world" 'utf-8 "path/to/file.txt")
 ```
 
 ### f-mkdir `(&rest dirs)`
@@ -423,6 +434,48 @@ Alias: `f-equal?`
 (f-same? "/path/to/foo.txt" "/path/to/bar.txt") ;; => nil
 ```
 
+### f-parent-of? `(path-a path-b)`
+
+Return t if PATH-A is parent of PATH-B.
+
+```lisp
+(f-parent-of? "/path/to" "/path/to/dir") ;; => t
+(f-parent-of? "/path/to/dir" "/path/to") ;; => nil
+(f-parent-of? "/path/to" "/path/to") ;; => nil
+```
+
+### f-child-of? `(path-a path-b)`
+
+Return t if PATH-A is child of PATH-B.
+
+```lisp
+(f-child-of? "/path/to" "/path/to/dir") ;; => nil
+(f-child-of? "/path/to/dir" "/path/to") ;; => t
+(f-child-of? "/path/to" "/path/to") ;; => nil
+```
+
+### f-ancestor-of? `(path-a path-b)`
+
+Return t if PATH-A is ancestor of PATH-B.
+
+```lisp
+(f-ancestor-of? "/path/to" "/path/to/dir") ;; => t
+(f-ancestor-of? "/path" "/path/to/dir") ;; => t
+(f-ancestor-of? "/path/to/dir" "/path/to") ;; => nil
+(f-ancestor-of? "/path/to" "/path/to") ;; => nil
+```
+
+### f-descendant-of? `(path-a path-b)`
+
+Return t if PATH-A is desendant of PATH-B.
+
+```lisp
+(f-descendant-of? "/path/to/dir" "/path/to") ;; => t
+(f-descendant-of? "/path/to/dir" "/path") ;; => t
+(f-descendant-of? "/path/to" "/path/to/dir") ;; => nil
+(f-descendant-of? "/path/to" "/path/to") ;; => nil
+```
+
 ### f-size `(path)`
 
 Return size of PATH.
@@ -472,8 +525,9 @@ RECURSIVE - Search for files and directories recursive.
 
 ```lisp
 (f-entries "path/to/dir")
-(f-entries "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
+(f-entries "path/to/dir" (lambda (file) (s-matches? "test" file)))
 (f-entries "path/to/dir" nil t)
+(f-entries "path/to/dir" (s-matches? "test" file))
 ```
 
 ### f-directories `(path &optional fn recursive)`
@@ -482,8 +536,9 @@ Find all directories in PATH. See `f-entries`.
 
 ```lisp
 (f-directories "path/to/dir")
-(f-directories "path/to/dir" (lambda (dir) ((f-filename dir) "test")))
+(f-directories "path/to/dir" (lambda (dir) (equal (f-filename dir) "test")))
 (f-directories "path/to/dir" nil t)
+(f--directories "path/to/dir" (equal (f-filename dir) "test"))
 ```
 
 ### f-files `(path &optional fn recursive)`
@@ -494,6 +549,7 @@ Find all files in PATH. See `f-entries`.
 (f-files "path/to/dir")
 (f-files "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-files "path/to/dir" nil t)
+(f--files "path/to/dir" (equal (f-ext file) "el"))
 ```
 
 ### f-root `()`
@@ -504,11 +560,36 @@ Return absolute root.
 (f-root) ;; => "/"
 ```
 
+### f-up `(fn &optional dir)`
+
+Traverse up as long as FN returns nil, starting at DIR.
+
+```lisp
+(f-up
+ (lambda (path)
+   (f-exists? ".git" path))
+ start-dir)
+(f--up (f-exists? ".git" it) start-dir) ;; same as above
+```
+
 ## Changelog
+
+### v0.11.0
+
+* Add `f-descendant-of?`
+* Add `f-ancestor-of?`
+* Add `f-parent-of?`
+* Add `f-child-of?`
+* Remove deprecation for `f-read` and `f-write` and make them aliases
+  to `f-read-text` and `f-write-text` respectively
+* Add anaphoric function `f--entries` for `f-entries`
+* Add anaphoric function `f--files` for `f-files`
+* Add anaphoric function `f--directories` of `f-directories`
+* Add `f-up` and anaphoric version `f--up`
 
 ### v0.10.0
 
-* Add `f-root`.
+* Add `f-root`
 * Fix `f-root?` bug for weird syntax
 
 ### v0.9.0
@@ -608,6 +689,8 @@ Here's an example of a function that finds the Git project root.
           dir
         (find-git-root parent)))))
 ```
+
+Now, try writing it even simpler yourself. Hint, check out `f-up`.
 
 ## Contribution
 

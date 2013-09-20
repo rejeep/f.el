@@ -1,25 +1,8 @@
-(require 'cl)
-(require 'el-mock)
-
 (defvar f-sandbox-path
   (expand-file-name "sandbox" (file-name-directory load-file-name)))
 
-(defmacro f-flet (specs &rest body)
-  (declare (indent 1) (debug t))
-  (let ((flet (if (fboundp 'cl-flet) 'cl-flet 'flet)))
-    `(,flet ,specs ,@body)))
-
 (defmacro with-default-directory (&rest body)
   `(let ((default-directory "/default/directory")) ,@body))
-
-(defmacro with-no-messages (&rest body)
-  `(let ((messages))
-     (f-flet ((message
-             (format-string &rest args)
-             (add-to-list 'messages (format format-string args) t)))
-       ,@body
-       (should-not messages))))
-
 
 (defmacro with-sandbox (&rest body)
   `(let ((default-directory f-sandbox-path))
@@ -29,7 +12,7 @@
             (delete-directory file t)
           (delete-file file)))
       (directory-files f-sandbox-path t "^[^\\.\\.?]"))
-     (with-no-messages ,@body)))
+     ,@body))
 
 (defun should-exist (filename &optional content)
   (let ((path (expand-file-name filename f-sandbox-path)))
