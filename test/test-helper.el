@@ -11,7 +11,8 @@
         (if (file-directory-p file)
             (delete-directory file t)
           (delete-file file)))
-      (directory-files f-sandbox-path t "^[^\\.\\.?]"))))
+      (directory-files f-sandbox-path t "^[^\\.\\.?]"))
+     ,@body))
 
 (defun should-exist (filename &optional content)
   (let ((path (expand-file-name filename f-sandbox-path)))
