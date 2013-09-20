@@ -19,6 +19,6 @@ compile:
 	${CASK} exec ${EMACS} -Q -batch -f batch-byte-compile f.el
 
 clean-elc:
-	rm f.elc
+	rm -f f.elc
 
 .PHONY:	all test docs unit
