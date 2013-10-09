@@ -121,6 +121,7 @@ Alias: `f-parent`
 ```lisp
 (f-dirname "path/to/file.ext") ;; => "path/to"
 (f-dirname "path/to/directory") ;; => "path/to"
+(f-dirname "/") ;; => nil
 ```
 
 ### f-ext `(path)`

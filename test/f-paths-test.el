@@ -81,6 +81,10 @@
    (f-mkdir "foo" "bar" "baz")
    (should (equal (f-parent "foo/bar/baz") "foo/bar/"))))
 
+(ert-deftest f-dirname-test/root ()
+  (with-sandbox
+   (should-not (f-parent (f-root)))))
+
 
 ;;;; f-ext
 

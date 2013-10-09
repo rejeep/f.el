@@ -57,9 +57,10 @@
 (defun f-dirname (path)
   "Return the parent directory to PATH."
   (let ((parent (file-name-directory (f-expand path default-directory))))
-    (if (f-relative? path)
-        (f-relative parent)
-      (directory-file-name parent))))
+    (unless (f-same? path parent)
+      (if (f-relative? path)
+          (f-relative parent)
+        (directory-file-name parent)))))
 
 (defun f-ext (path)
   "Return the file extension of PATH."
@@ -233,7 +234,7 @@ If FORCE is t, a directory will be deleted recursively."
 
 (defun f-root? (path)
   "Return t if PATH is root directory, false otherwise."
-  (f-same? path (f-parent path)))
+  (not (f-parent path)))
 
 (defun f-ext? (path &optional ext)
   "Return t if extension of PATH is EXT, false otherwise.
