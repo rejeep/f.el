@@ -398,7 +398,7 @@ RECURSIVE - Search for files and directories recursive."
   (unless (f-exists? dir)
     (error "File %s does not exist" dir))
   (let ((parent (f-parent dir)))
-    (if (f-root? parent)
+    (if (and parent (f-root? parent))
         parent
       (if (funcall fn dir)
           dir
