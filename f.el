@@ -306,8 +306,7 @@ directory, return sum of all files in PATH."
 
 (defun f-path-separator ()
   "Return path separator."
-  (let ((x (f-expand "x" "y")))
-    (substring x (- (length x) 2) (- (length x) 1))))
+  (substring (f-join "x" "y") 1 2))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."

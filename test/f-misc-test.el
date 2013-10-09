@@ -206,9 +206,7 @@
 ;;;; f-path-separator
 
 (ert-deftest f-path-separator-test ()
-  ;; was previously based on `default-directory', make sure we don't
-  ;; need it.
-  (let (default-directory)
+  (unless (eq system-type 'windows-nt)
     (should (equal (f-path-separator) "/"))))
 
 
