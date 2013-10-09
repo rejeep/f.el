@@ -381,13 +381,6 @@ RECURSIVE - Search for files and directories recursive."
   (let ((files (-select 'f-file? (f--collect-entries path recursive))))
     (if fn (-select fn files) files)))
 
-(defun f-root ()
-  "Return absolute root."
-  (let ((dir default-directory))
-    (while (not (f-root? dir))
-      (setq dir (f-parent dir)))
-    dir))
-
 (defmacro f--up (body &optional dir)
   "Anaphoric version of `f-up'."
   `(f-up
@@ -410,6 +403,10 @@ RECURSIVE - Search for files and directories recursive."
       (if (funcall fn dir)
           dir
         (f-up fn parent)))))
+
+(defun f-root ()
+  "Return absolute root."
+  (f--up (f-root? it)))
 
 (provide 'f)
 
