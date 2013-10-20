@@ -502,7 +502,7 @@ See: `file-expand-wildcards`
 (f-entries "path/to/dir")
 (f-entries "path/to/dir" (lambda (file) (s-matches? "test" file)))
 (f-entries "path/to/dir" nil t)
-(f-entries "path/to/dir" (s-matches? "test" file))
+(f--entries "path/to/dir" (s-matches? "test" file))
 ```
 
 ### f-directories `(path &optional fn recursive)`
