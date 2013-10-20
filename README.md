@@ -121,6 +121,7 @@ Alias: `f-parent`
 ```lisp
 (f-dirname "path/to/file.ext") ;; => "path/to"
 (f-dirname "path/to/directory") ;; => "path/to"
+(f-dirname "/") ;; => nil
 ```
 
 ### f-ext `(path)`
@@ -573,6 +574,10 @@ Traverse up as long as FN returns nil, starting at DIR.
 ```
 
 ## Changelog
+
+### v0.12.0
+
+* `f-parent` returns nil if argument is root
 
 ### v0.11.0
 

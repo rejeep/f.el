@@ -57,9 +57,10 @@
 (defun f-dirname (path)
   "Return the parent directory to PATH."
   (let ((parent (file-name-directory (f-expand path default-directory))))
-    (if (f-relative? path)
-        (f-relative parent)
-      (directory-file-name parent))))
+    (unless (f-same? path parent)
+      (if (f-relative? path)
+          (f-relative parent)
+        (directory-file-name parent)))))
 
 (defun f-ext (path)
   "Return the file extension of PATH."
@@ -233,7 +234,7 @@ If FORCE is t, a directory will be deleted recursively."
 
 (defun f-root? (path)
   "Return t if PATH is root directory, false otherwise."
-  (f-same? path (f-parent path)))
+  (not (f-parent path)))
 
 (defun f-ext? (path &optional ext)
   "Return t if extension of PATH is EXT, false otherwise.
@@ -253,13 +254,13 @@ false otherwise."
 
 (defun f-parent-of? (path-a path-b)
   "Return t if PATH-A is parent of PATH-B."
-  (unless (f-same? path-a path-b)
-    (f-same? path-a (f-parent path-b))))
+  (--when-let (f-parent path-b)
+    (f-same? path-a it)))
 
 (defun f-child-of? (path-a path-b)
   "Return t if PATH-A is child of PATH-B."
-  (unless (f-same? path-a path-b)
-    (f-same? (f-parent path-a) path-b)))
+  (--when-let (f-parent path-a)
+    (f-same? it path-b)))
 
 (defun f-ancestor-of? (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
@@ -306,8 +307,7 @@ directory, return sum of all files in PATH."
 
 (defun f-path-separator ()
   "Return path separator."
-  (let ((x (f-expand "x" "y")))
-    (substring x (- (length x) 2) (- (length x) 1))))
+  (substring (f-join "x" "y") 1 2))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."
@@ -381,13 +381,6 @@ RECURSIVE - Search for files and directories recursive."
   (let ((files (-select 'f-file? (f--collect-entries path recursive))))
     (if fn (-select fn files) files)))
 
-(defun f-root ()
-  "Return absolute root."
-  (let ((dir default-directory))
-    (while (not (f-root? dir))
-      (setq dir (f-parent dir)))
-    dir))
-
 (defmacro f--up (body &optional dir)
   "Anaphoric version of `f-up'."
   `(f-up
@@ -405,11 +398,15 @@ RECURSIVE - Search for files and directories recursive."
   (unless (f-exists? dir)
     (error "File %s does not exist" dir))
   (let ((parent (f-parent dir)))
-    (if (f-root? parent)
+    (if (and parent (f-root? parent))
         parent
       (if (funcall fn dir)
           dir
         (f-up fn parent)))))
+
+(defun f-root ()
+  "Return absolute root."
+  (f-up 'f-root?))
 
 (provide 'f)
 

@@ -121,6 +121,7 @@ Alias: `f-parent`
 ```lisp
 (f-dirname "path/to/file.ext") ;; => "path/to"
 (f-dirname "path/to/directory") ;; => "path/to"
+(f-dirname "/") ;; => nil
 ```
 
 ### f-ext `(path)`
@@ -501,7 +502,7 @@ See: `file-expand-wildcards`
 (f-entries "path/to/dir")
 (f-entries "path/to/dir" (lambda (file) (s-matches? "test" file)))
 (f-entries "path/to/dir" nil t)
-(f-entries "path/to/dir" (s-matches? "test" file))
+(f--entries "path/to/dir" (s-matches? "test" file))
 ```
 
 ### f-directories `(path &optional fn recursive)`
@@ -547,6 +548,10 @@ See: `file-expand-wildcards`
 ```
 
 ## Changelog
+
+### v0.12.0
+
+* `f-parent` returns nil if argument is root
 
 ### v0.11.0
 
