@@ -406,7 +406,7 @@ RECURSIVE - Search for files and directories recursive."
 
 (defun f-root ()
   "Return absolute root."
-  (f--up (f-root? it)))
+  (f-up 'f-root?))
 
 (provide 'f)
 
