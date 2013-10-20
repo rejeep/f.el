@@ -575,6 +575,10 @@ Traverse up as long as FN returns nil, starting at DIR.
 
 ## Changelog
 
+### v0.12.0
+
+* `f-parent` returns nil if argument is root
+
 ### v0.11.0
 
 * Add `f-descendant-of?`
