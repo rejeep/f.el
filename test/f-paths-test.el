@@ -207,6 +207,25 @@
    (let ((foo (f-expand "foo" f-sandbox-path)))
      (should (equal (f-slash foo) foo)))))
 
+(ert-deftest f-slash-test/symlink-to-file ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-symlink "foo" "bar")
+   (let ((bar (f-expand "bar" f-sandbox-path)))
+     (should (equal (f-slash bar) bar)))))
+
+(ert-deftest f-slash-test/symlink-to-directory ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-symlink "foo" "bar")
+   (let ((bar (f-expand "bar" f-sandbox-path)))
+     (should (equal (f-slash bar) (concat bar "/"))))))
+
+(ert-deftest f-slash-test/non-existing-file-or-directory ()
+  (with-sandbox
+   (let ((foo (f-expand "foo" f-sandbox-path)))
+     (should (equal (f-slash foo) foo)))))
+
 
 ;;;; f-full
 

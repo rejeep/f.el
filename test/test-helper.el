@@ -8,9 +8,9 @@
   `(let ((default-directory f-sandbox-path))
      (mapc
       (lambda (file)
-        (if (file-directory-p file)
-            (delete-directory file t)
-          (delete-file file)))
+        (if (or (file-regular-p file) (file-symlink-p file))
+            (delete-file file)
+          (delete-directory file t)))
       (directory-files f-sandbox-path t "^[^\\.\\.?]"))
      ,@body))
 

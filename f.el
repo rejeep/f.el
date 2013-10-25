@@ -96,7 +96,8 @@
 
 Some functions, such as `call-process' requires there to be an
 ending slash."
-  (if (or (f-file? path) (s-ends-with? (f-path-separator) path))
+  (if (or (not (f-dir? path))
+          (s-ends-with? (f-path-separator) path))
       path
     (s-concat path (f-path-separator))))
 
