@@ -211,7 +211,7 @@ If FORCE is t, a directory will be deleted recursively."
 
 (defun f-symlink? (path)
   "Return t if PATH is symlink, false otherwise."
-  (file-symlink-p path))
+  (not (not (file-symlink-p path))))
 
 (defun f-readable? (path)
   "Return t if PATH is readable, false otherwise."

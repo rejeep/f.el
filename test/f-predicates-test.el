@@ -52,12 +52,12 @@
   (with-sandbox
    (f-touch "foo.txt")
    (f-symlink "foo.txt" "foo.link")
-   (should (f-symlink? "foo.link"))))
+   (should (eq (f-symlink? "foo.link") t))))
 
 (ert-deftest f-symlink?-test/is-not-symlink ()
   (with-sandbox
    (f-touch "foo.txt")
-   (should-not (f-symlink? "foo.txt"))))
+   (should (eq (f-symlink? "foo.txt") nil))))
 
 
 ;;;; f-readable?
