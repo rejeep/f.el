@@ -169,7 +169,7 @@ DATA is a unibyte string.  PATH is a file name to write to."
   "Delete PATH, which can be file or directory.
 
 If FORCE is t, a directory will be deleted recursively."
-  (if (f-file? path)
+  (if (or (f-file? path) (f-symlink? path))
       (delete-file path)
     (delete-directory path force)))
 

@@ -43,6 +43,22 @@
    (f-delete "foo/bar.txt" t)
    (should-not-exist "foo/bar.txt")))
 
+(ert-deftest f-delete-test/symlink-to-file ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-symlink "foo" "bar")
+   (f-delete "bar")
+   (should-exist "foo")
+   (should-not-exist "bar")))
+
+(ert-deftest f-delete-test/symlink-to-directory ()
+  (with-sandbox
+   (f-mkdir "foo")
+   (f-symlink "foo" "bar")
+   (f-delete "bar")
+   (should-exist "foo")
+   (should-not-exist "bar")))
+
 
 ;;;; f-symlink
 
