@@ -528,7 +528,7 @@ RECURSIVE - Search for files and directories recursive.
 (f-entries "path/to/dir")
 (f-entries "path/to/dir" (lambda (file) (s-matches? "test" file)))
 (f-entries "path/to/dir" nil t)
-(f--entries "path/to/dir" (s-matches? "test" file))
+(f--entries "path/to/dir" (s-matches? "test" it))
 ```
 
 ### f-directories `(path &optional fn recursive)`
@@ -539,7 +539,7 @@ Find all directories in PATH. See `f-entries`.
 (f-directories "path/to/dir")
 (f-directories "path/to/dir" (lambda (dir) (equal (f-filename dir) "test")))
 (f-directories "path/to/dir" nil t)
-(f--directories "path/to/dir" (equal (f-filename dir) "test"))
+(f--directories "path/to/dir" (equal (f-filename it) "test"))
 ```
 
 ### f-files `(path &optional fn recursive)`
@@ -550,7 +550,7 @@ Find all files in PATH. See `f-entries`.
 (f-files "path/to/dir")
 (f-files "path/to/dir" (lambda (file) (equal (f-ext file) "el")))
 (f-files "path/to/dir" nil t)
-(f--files "path/to/dir" (equal (f-ext file) "el"))
+(f--files "path/to/dir" (equal (f-ext it) "el"))
 ```
 
 ### f-root `()`
