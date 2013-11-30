@@ -573,6 +573,10 @@ See: `file-expand-wildcards`
 
 ## Changelog
 
+### v0.13.0
+
+* Add `f-uniquify` and `f-uniquify-alist` (by @Fuco1)
+
 ### v0.12.0
 
 * `f-parent` returns nil if argument is root
