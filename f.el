@@ -105,6 +105,34 @@ ending slash."
   "Return absolute path to PATH, with ending slash."
   (f-slash (f-long path)))
 
+(defun f--uniquify (paths)
+  "Helper for `f-uniquify' and `f-uniquify-alist'."
+  (let* ((files-length (length paths))
+         (uniq-filenames (--map (cons it (f-filename it)) paths))
+         (uniq-filenames-next (-group-by 'cdr uniq-filenames)))
+    (while (/= files-length (length uniq-filenames-next))
+      (setq uniq-filenames-next
+            (-group-by 'cdr
+                       (--mapcat
+                        (let ((conf-files (cdr it)))
+                          (if (> (length conf-files) 1)
+                              (--map (cons (car it) (concat (f-filename (s-chop-suffix (cdr it) (car it))) (f-path-separator) (cdr it))) conf-files)
+                            conf-files))
+                        uniq-filenames-next))))
+    uniq-filenames-next))
+
+(defun f-uniquify (files)
+  "Return unique suffixes of PATHS.
+
+This function expects no duplicate paths."
+  (-map 'car (f--uniquify files)))
+
+(defun f-uniquify-alist (files)
+  "Return alist mapping PATHS to unique suffixes of PATHS.
+
+This function expects no duplicate paths."
+  (-map 'cadr (f--uniquify files)))
+
 
 ;;;; I/O
 
