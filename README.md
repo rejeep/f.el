@@ -31,6 +31,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-canonical](#f-canonical-path) `(path)`
 * [f-slash](#f-slash-path) `(path)`
 * [f-full](#f-full-path) `(path)`
+* [f-uniquify](#f-uniquify-paths) `(paths)`
 
 ### I/O
 
@@ -210,6 +211,19 @@ Return absolute path to PATH, with ending slash.
 (f-slash "~/path/to/file") ;; => /home/path/to/file
 (f-slash "~/path/to/dir") ;; => /home/path/to/dir/
 (f-slash "~/path/to/dir/") ;; => /home/path/to/dir/
+```
+
+### f-uniquify `(paths)`
+
+Return unique suffixes of PATHS.
+
+This function expects no duplicate paths.
+
+```lisp
+(f-uniquify '("/foo/bar" "/foo/baz" "/foo/quux")) ;; => '("bar" "baz" "quux")
+(f-uniquify '("/foo/bar" "/www/bar" "/foo/quux")) ;; => '("foo/bar" "www/bar" "quux")
+(f-uniquify '("/foo/bar" "/www/bar" "/www/bar/quux")) ;; => '("foo/bar" "www/bar" "quux")
+(f-uniquify '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz")) ;; => '("foo/bar" "www/bar" "foo/baz" "home/www/baz" "foo/www/baz" "foo")
 ```
 
 ### f-read-bytes `(path)`

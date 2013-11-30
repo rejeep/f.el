@@ -272,3 +272,18 @@
   (with-sandbox
    (f-touch "foo")
    (should (equal (f-full (f-short "foo")) (f-expand "foo" f-sandbox-path)))))
+
+;;;; f-uniquify
+
+(ert-deftest f-uniquify/no-conflict ()
+  (should (equal (f-uniquify '("/foo/bar" "/foo/baz" "/foo/quux")) '("bar" "baz" "quux"))))
+
+(ert-deftest f-uniquify/single-conflict ()
+  (should (equal (f-uniquify '("/foo/bar" "/www/bar" "/foo/quux")) '("foo/bar" "www/bar" "quux"))))
+
+(ert-deftest f-uniquify/single-conflict-shared-subpath ()
+  (should (equal (f-uniquify '("/foo/bar" "/www/bar" "/www/bar/quux")) '("foo/bar" "www/bar" "quux"))))
+
+(ert-deftest f-uniquify/recursive-conflict ()
+  (should (equal (f-uniquify '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz")) 
+                 '("foo/bar" "www/bar" "foo/baz" "home/www/baz" "foo/www/baz" "foo"))))
