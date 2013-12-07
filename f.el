@@ -444,7 +444,11 @@ RECURSIVE - Search for files and directories recursive."
     ,path))
 
 (defun f-traverse-upwards (fn &optional path)
-  "Traverse up as long as FN returns nil, starting at PATH."
+  "Traverse up as long as FN returns nil, starting at PATH.
+
+If FN returns a non-nil value, the path sent as argument to FN is
+returned. If no function callback return a non-nil value, nil is
+returned."
   (unless path
     (setq path default-directory))
   (when (f-relative? path)
