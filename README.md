@@ -622,6 +622,11 @@ returned.
 
 ## Changelog
 
+### v0.14.0
+
+* Add `f-traverse-upwards` and its anaphoric version `f--traverse-upwards`
+* Deprecate `f-up` and its anaphoric version `f--up`
+
 ### v0.13.0
 
 * Add `f-uniquify` and `f-uniquify-alist` (by @Fuco1)
