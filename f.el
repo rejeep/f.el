@@ -418,6 +418,8 @@ RECURSIVE - Search for files and directories recursive."
         ,body))
     ,dir))
 
+(make-obsolete 'f-up 'f-traverse-upwards "0.14.0")
+
 (defun f-up (fn &optional dir)
   "Traverse up as long as FN returns nil, starting at DIR."
   (unless dir
@@ -432,6 +434,27 @@ RECURSIVE - Search for files and directories recursive."
       (if (funcall fn dir)
           dir
         (f-up fn parent)))))
+
+(defmacro f--traverse-upwards (body &optional path)
+  "Anaphoric version of `f-traverse-upwards'."
+  `(f-traverse-upwards
+    (lambda (dir)
+      (let ((it dir))
+        ,body))
+    ,path))
+
+(defun f-traverse-upwards (fn &optional path)
+  "Traverse up as long as FN returns nil, starting at PATH."
+  (unless path
+    (setq path default-directory))
+  (when (f-relative? path)
+    (setq path (f-expand path)))
+  (unless (f-exists? path)
+    (error "File %s does not exist" path))
+  (if (funcall fn path)
+      path
+    (unless (f-root? path)
+      (f-traverse-upwards fn (f-parent path)))))
 
 (defun f-root ()
   "Return absolute root."

@@ -250,3 +250,97 @@
     (equal
      (f--up (equal (f-filename it) "bar") (f-join "bar" "baz"))
      (f-expand "bar" f-sandbox-path)))))
+
+
+;;;; f-traverse-upwards/f--traverse-upwards
+
+;; TODO: A lot of the tests here look similar. Any way to do some refactoring?
+
+(ert-deftest f-traverse-upwards-test/no-start-path-specified ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-mkdir "bar" "baz")
+   (f-touch (f-join "bar" "baz" "qux"))
+   (let ((default-directory (f-join f-sandbox-path "bar" "baz" "qux")))
+     (should
+      (equal
+       f-sandbox-path
+       (f-traverse-upwards
+        (lambda (path)
+          (f-file? (f-expand "foo" path)))))))))
+
+(ert-deftest f-traverse-upwards-test/specified-path-does-not-exist ()
+  (should-error (f-traverse-upwards 'ignore "does-not-exist")))
+
+(ert-deftest f-traverse-upwards-test/specified-path-is-file ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-mkdir "bar" "baz")
+   (f-touch (f-join "bar" "baz" "qux"))
+   (should
+    (equal
+     f-sandbox-path
+     (f-traverse-upwards
+      (lambda (path)
+        (f-file? (f-expand "foo" path)))
+      (f-join "bar" "baz" "qux"))))))
+
+(ert-deftest f-traverse-upwards-test/specified-path-is-directory ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-mkdir "bar" "baz")
+   (should
+    (equal
+     f-sandbox-path
+     (f-traverse-upwards
+      (lambda (path)
+        (f-file? (f-expand "foo" path)))
+      (f-join f-sandbox-path "bar" "baz"))))))
+
+(ert-deftest f-traverse-upwards-test/specified-path-is-relative ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-mkdir "bar" "baz")
+   (should
+    (equal
+     f-sandbox-path
+     (f-traverse-upwards
+      (lambda (path)
+        (f-file? (f-expand "foo" path)))
+      (f-join "bar" "baz"))))))
+
+(ert-deftest f-traverse-upwards-test/specified-path-matches-fn ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-mkdir "bar" "baz")
+   (should
+    (equal
+     (f-join f-sandbox-path "bar" "baz")
+     (f-traverse-upwards
+      (lambda (path)
+        (equal (f-filename path) "baz"))
+      (f-join f-sandbox-path "bar" "baz"))))))
+
+(ert-deftest f-traverse-upwards-test/searching-for-root ()
+  (should (f-root? (f-traverse-upwards 'f-root?))))
+
+(ert-deftest f-traverse-upwards-test/no-path-in-traversal-matches ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-mkdir "bar" "baz")
+   (should-not
+    (f-traverse-upwards
+     (lambda (path)
+       (equal (f-filename path) "qux"))
+     (f-join f-sandbox-path "bar" "baz")))))
+
+(ert-deftest f--traverse-upwards-test ()
+  (with-sandbox
+   (f-touch "foo")
+   (f-mkdir "bar" "baz")
+   (should
+    (equal
+     f-sandbox-path
+     (f--traverse-upwards
+      (f-file? (f-expand "foo" it))
+      (f-join f-sandbox-path "bar" "baz"))))))
