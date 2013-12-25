@@ -45,6 +45,13 @@
      args)
     (if relative (f-relative path) path)))
 
+(defun f-split (path)
+  "Split PATH and return list containing parts."
+  (let ((parts (s-split (f-path-separator) path 'omit-nulls)))
+    (if (f-absolute? path)
+        (push (f-path-separator) parts)
+      parts)))
+
 (defun f-expand (path &optional dir)
   "Expand PATH relative to DIR (or `default-directory')."
   (directory-file-name (expand-file-name path dir)))

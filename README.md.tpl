@@ -19,6 +19,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### Paths
 
 * [f-join](#f-join-rest-args) `(&rest args)`
+* [f-split](#f-split-path) `(path)`
 * [f-expand](#f-expand-path-optional-dir) `(path &optional dir)`
 * [f-filename](#f-filename-path) `(path)`
 * [f-dirname](#f-dirname-path) `(path)`
@@ -95,6 +96,16 @@ Or you can just dump `f.el` in your load path somewhere.
 (f-join "path") ;; => "path"
 (f-join "path" "to") ;; => "path/to"
 (f-join "/" "path" "to" "heaven") ;; => "/path/to/heaven"
+```
+
+### f-split `(path)`
+
+{{f-split}}
+
+```lisp
+(f-split "path") ;; => '("path")
+(f-split "path/to") ;; => '("path" "to")
+(f-split "/path/to/heaven") ;; => '("/" "path" "to" "heaven")
 ```
 
 ### f-expand `(path &optional dir)`

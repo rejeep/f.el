@@ -16,6 +16,25 @@
   (should (equal (f-join "/" "path" "to" "file") "/path/to/file")))
 
 
+;;;; f-split
+
+(ert-deftest f-split-test/single-path-relative ()
+  (should (equal (f-split "path") '("path"))))
+
+(ert-deftest f-split-test/single-path-absolute ()
+  (should (equal (f-split "/path") '("/" "path"))))
+
+(ert-deftest f-split-test/multiple-paths-relative ()
+  (should (equal (f-split "path/to/file") '("path" "to" "file"))))
+
+(ert-deftest f-split-test/multiple-paths-absolute ()
+  (should (equal (f-split "/path/to/file") '("/" "path" "to" "file"))))
+
+(ert-deftest f-split-test/inverse-of-join ()
+  (should (equal (f-split (apply 'f-join (f-split "/path/to/file")))
+                 '("/" "path" "to" "file"))))
+
+
 ;;;; f-expand
 
 (ert-deftest f-expand-test/no-dir ()
