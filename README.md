@@ -633,6 +633,10 @@ returned.
 
 ## Changelog
 
+### v0.15.0
+
+* Add `f-split`
+
 ### v0.14.0
 
 * Add `f-traverse-upwards` and its anaphoric version `f--traverse-upwards`
