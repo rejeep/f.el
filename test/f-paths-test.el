@@ -10,9 +10,7 @@
   (should (equal (f-join "path" "to" "file") "path/to/file")))
 
 (ert-deftest f-join-test/multiple-paths-absolute ()
-  (should (equal (f-join "/path" "to" "file") "/path/to/file")))
-
-(ert-deftest f-join-test/multiple-paths-absolute-2 ()
+  (should (equal (f-join "/path" "to" "file") "/path/to/file"))
   (should (equal (f-join "/" "path" "to" "file") "/path/to/file")))
 
 
