@@ -294,22 +294,18 @@ false otherwise."
 (defun f-ancestor-of? (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
   (unless (f-same? path-a path-b)
-    (f-same?
-     path-a
-     (f-up
-      (lambda (path)
-        (f-same? path path-a))
-      path-b))))
+    (not (null (f-traverse-upwards
+                (lambda (path)
+                  (f-same? path path-a))
+                path-b)))))
 
 (defun f-descendant-of? (path-a path-b)
   "Return t if PATH-A is desendant of PATH-B."
   (unless (f-same? path-a path-b)
-    (f-same?
-     path-b
-     (f-up
-      (lambda (path)
-        (f-same? path path-b))
-      path-a))))
+    (not (null (f-traverse-upwards
+                (lambda (path)
+                  (f-same? path path-b))
+                path-a)))))
 
 
 ;;;; Stats
@@ -462,7 +458,7 @@ returned."
 
 (defun f-root ()
   "Return absolute root."
-  (f-up 'f-root?))
+  (f-traverse-upwards 'f-root?))
 
 (provide 'f)
 
