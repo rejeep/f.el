@@ -94,7 +94,7 @@ Join ARGS to a single path.
 ```lisp
 (f-join "path") ;; => "path"
 (f-join "path" "to") ;; => "path/to"
-(f-join "path" "to" "heaven") ;; => "path/to/heaven"
+(f-join "/" "path" "to" "heaven") ;; => "/path/to/heaven"
 ```
 
 ### f-expand `(path &optional dir)`
