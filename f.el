@@ -224,6 +224,23 @@ DATA is a unibyte string.  PATH is a file name to write to."
         (set-buffer-multibyte nil)
         (insert data)))))
 
+(defalias 'f-append 'f-append-text)
+(defun f-append-text (text coding path)
+  "Append TEXT with CODING to PATH.
+
+If PATH does not exist, it is created."
+  (f-append-bytes (encode-coding-string text coding) path))
+
+(defun f-append-bytes (data path)
+  "Append binary DATA to PATH.
+
+If PATH does not exist, it is created."
+  (let ((content
+         (if (f-file? path)
+             (f-read-bytes path)
+           "")))
+    (f-write-bytes (concat content data) path)))
+
 
 ;;;; Destructive
 

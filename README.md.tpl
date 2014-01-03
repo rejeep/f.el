@@ -42,6 +42,8 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-write-bytes](#f-write-bytes-data-path) `(data path)`
 * [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
 * [f-write-text](#f-write-text-text-coding-path)`(text coding path)`
+* [f-append-text](#f-append-text-text-coding-path)`(text coding path)`
+* [f-append-bytes](#f-append-data-path)`(text coding path)`
 
 ### Destructive
 
@@ -295,6 +297,25 @@ Alias: `f-write`
 ```lisp
 (f-write-text "Hello world" 'utf-8 "path/to/file.txt")
 (f-write "Hello world" 'utf-8 "path/to/file.txt")
+```
+
+### f-append-text `(text coding path)`
+
+{{f-append-text}}
+
+Alias: `f-append`
+
+```lisp
+(f-append-text "Hello world" 'utf-8 "path/to/file.txt")
+(f-append "Hello world" 'utf-8 "path/to/file.txt")
+```
+
+### f-append-bytes `(data path)`
+
+{{f-append-bytes}}
+
+```lisp
+(f-append-bytes "path/to/file" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))
 ```
 
 ### f-mkdir `(&rest dirs)`
