@@ -85,6 +85,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-root](#f-root-) `()`
 * [f-up](#f-up-fn-optional-dir) `(fn &optional dir)`
 * [f-traverse-upwards](#f-traverse-upwards-fn-optional-path) `(fn &optional path)`
+* [f-with-sandbox](#f-with-sandbox-path-or-paths-rest-body) `(path-or-paths &rest body)`
 
 ## Documentation and examples
 
@@ -629,6 +630,20 @@ returned.
    (f-exists? ".git" path))
  start-path)
 (f--traverse-upwards (f-exists? ".git" it) start-path) ;; same as above
+```
+
+### f-with-sandbox `(path-or-paths &rest body)`
+
+Only allow PATH-OR-PATHS and decendants to be modified in BODY.
+
+```lisp
+(f-with-sandbox foo-path
+  (f-touch (f-expand "foo" foo-path)))
+(f-with-sandbox (list foo-path bar-path)
+  (f-touch (f-expand "foo" foo-path))
+  (f-touch (f-expand "bar" bar-path)))
+(f-with-sandbox foo-path
+  (f-touch (f-expand "bar" bar-path))) ;; "Destructive operation outside sandbox"
 ```
 
 ## Changelog
