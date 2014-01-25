@@ -301,18 +301,14 @@ false otherwise."
 (defun f-ancestor-of? (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
   (unless (f-same? path-a path-b)
-    (not (null (f-traverse-upwards
-                (lambda (path)
-                  (f-same? path path-a))
-                path-b)))))
+    (s-starts-with? (f-full path-a)
+                    (f-full path-b))))
 
 (defun f-descendant-of? (path-a path-b)
   "Return t if PATH-A is desendant of PATH-B."
   (unless (f-same? path-a path-b)
-    (not (null (f-traverse-upwards
-                (lambda (path)
-                  (f-same? path path-b))
-                path-a)))))
+    (s-starts-with? (f-full path-b)
+                    (f-full path-a))))
 
 
 ;;;; Stats

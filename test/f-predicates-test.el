@@ -291,7 +291,8 @@
    (should (equal t (f-descendant-of? "foo/bar/baz" "foo/bar")))
    (should (equal t (f-descendant-of? "foo/bar/baz/qux" "foo/bar")))
    (should (equal t (f-descendant-of? "foo/bar/baz/qux" "foo/bar/baz")))
-   (should (equal t (f-descendant-of? (f-expand (car (f-directories (f-root))) (f-root)) (f-root))))))
+   (should (equal t (f-descendant-of? (f-expand (car (f-directories (f-root))) (f-root)) (f-root))))
+   (should (equal t (f-descendant-of? "/foo/bar/baz/qux" "/foo/bar/baz")))))
 
 (ert-deftest f-descendant-of?-test/is-not-descendant ()
   (with-sandbox
@@ -302,7 +303,8 @@
    (should-not (f-descendant-of? "foo/bar" "foo/bar/baz"))
    (should-not (f-descendant-of? "foo/bar" "foo/bar/baz/qux"))
    (should-not (f-descendant-of? "foo/bar/baz" "foo/bar/baz/qux"))
-   (should-not (f-descendant-of? (f-root) (f-expand (car (f-directories (f-root))) (f-root))))))
+   (should-not (f-descendant-of? (f-root) (f-expand (car (f-directories (f-root))) (f-root))))
+   (should-not (f-descendant-of? "/foo/bar/baz" "/foo/bar/baz/qux"))))
 
 (ert-deftest f-descendant-of?-test/is-same ()
   (with-sandbox
