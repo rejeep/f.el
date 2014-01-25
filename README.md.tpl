@@ -614,6 +614,10 @@ Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-pat
 
 ## Changelog
 
+### v0.16.0
+
+* Add `f-with-sandbox`
+
 ### v0.15.0
 
 * Add `f-split`

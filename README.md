@@ -648,6 +648,10 @@ Only allow PATH-OR-PATHS and decendants to be modified in BODY.
 
 ## Changelog
 
+### v0.16.0
+
+* Add `f-with-sandbox`
+
 ### v0.15.0
 
 * Add `f-split`
