@@ -1,4 +1,4 @@
-;;; f.el --- Modern API for working with files and directories
+;;; f.el --- Modern API for working with files and directories -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2013 Johan Andersson
 
