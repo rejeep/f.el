@@ -1,17 +1,20 @@
 (defvar f-sandbox-path
   (expand-file-name "sandbox" (file-name-directory load-file-name)))
 
+(defvar f-trash-path
+  (expand-file-name "trash" (file-name-directory load-file-name)))
+
 (defmacro with-default-directory (&rest body)
   `(let ((default-directory "/default/directory")) ,@body))
 
 (defmacro with-sandbox (&rest body)
   `(let ((default-directory f-sandbox-path))
      (mapc
-      (lambda (file)
-        (if (or (file-regular-p file) (file-symlink-p file))
-            (delete-file file)
-          (delete-directory file t)))
-      (directory-files f-sandbox-path t "^[^\\.\\.?]"))
+      (lambda (path)
+        (when (file-exists-p path)
+          (delete-directory path 'recursive))
+        (make-directory path))
+      (list f-sandbox-path f-trash-path))
      ,@body))
 
 (defun should-exist (filename &optional content)
