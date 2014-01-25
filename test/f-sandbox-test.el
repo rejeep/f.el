@@ -1,4 +1,4 @@
-;;; f-guard-test.el --- F: Guard tests  -*- lexical-binding: t; -*-
+;;; f-sandbox-test.el --- F: Sandbox tests  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014 Johan Andersson
 
@@ -28,134 +28,134 @@
 
 
 (eval-when-compile
-  (defvar f-sandbox-path)
-  (defvar f-trash-path))
+  (defvar f-test/playground-path)
+  (defvar f-test/trash-path))
 
 
 ;;;; f-write-bytes
 
 (ert-deftest f-guard-test/f-write-bytes/same ()
-  (with-sandbox
-   (let ((path (f-expand "foo.txt" f-sandbox-path)))
+  (with-playground
+   (let ((path (f-expand "foo.txt" f-test/playground-path)))
      (f-with-sandbox path
        (let ((bytes (unibyte-string 1 2 3)))
          (f-write-bytes bytes path)
          (should-exist path bytes))))))
 
 (ert-deftest f-guard-test/f-write-bytes/inside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (let ((bytes (unibyte-string 1 2 3)))
        (f-write-bytes bytes "foo.txt")
        (should-exist "foo.txt" bytes)))))
 
 (ert-deftest f-guard-test/f-write-bytes/outside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (let ((bytes (unibyte-string 1 2 3))
-           (default-directory f-trash-path))
+           (default-directory f-test/trash-path))
        (should-error (f-write-bytes bytes "foo.txt") :type 'f-guard-error)))))
 
 
 ;;;; f-write-text
 
 (ert-deftest f-guard-test/f-write-text/same ()
-  (with-sandbox
-   (let ((path (f-expand "foo.txt" f-sandbox-path)))
+  (with-playground
+   (let ((path (f-expand "foo.txt" f-test/playground-path)))
      (f-with-sandbox path
        (f-write-text "foo" 'utf-8 path)
        (should-exist path "foo")))))
 
 (ert-deftest f-guard-test/f-write-text/inside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (f-write-text "foo" 'utf-8 "foo.txt")
      (should-exist "foo.txt" "foo"))))
 
 (ert-deftest f-guard-test/f-write-text/outside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
-     (let ((default-directory f-trash-path))
+  (with-playground
+   (f-with-sandbox f-test/playground-path
+     (let ((default-directory f-test/trash-path))
        (should-error (f-write-text "foo" 'utf-8 "foo.txt") :type 'f-guard-error)))))
 
 
 ;;;; f-mkdir
 
 (ert-deftest f-guard-test/f-mkdir/same ()
-  (with-sandbox
-   (let ((path (f-expand "foo" f-sandbox-path)))
+  (with-playground
+   (let ((path (f-expand "foo" f-test/playground-path)))
      (f-with-sandbox path
        (f-mkdir path)
        (should-exist path)))))
 
 (ert-deftest f-guard-test/f-mkdir/inside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (f-mkdir "foo")
      (should-exist "foo"))))
 
 (ert-deftest f-guard-test/f-mkdir/outside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
-     (let ((default-directory f-trash-path))
+  (with-playground
+   (f-with-sandbox f-test/playground-path
+     (let ((default-directory f-test/trash-path))
        (should-error (f-mkdir "foo") :type 'f-guard-error)))))
 
 
 ;;;; f-delete
 
 (ert-deftest f-guard-test/f-delete/same ()
-  (with-sandbox
-   (let ((path (f-expand "foo" f-sandbox-path)))
+  (with-playground
+   (let ((path (f-expand "foo" f-test/playground-path)))
      (f-touch path)
      (f-with-sandbox path
        (f-delete path)
        (should-not-exist path)))))
 
 (ert-deftest f-guard-test/f-delete/inside ()
-  (with-sandbox
+  (with-playground
    (f-touch "foo")
-   (f-with-sandbox f-sandbox-path
+   (f-with-sandbox f-test/playground-path
      (f-delete "foo")
      (should-not-exist "foo"))))
 
 (ert-deftest f-guard-test/f-delete/outside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
-     (let ((default-directory f-trash-path))
+  (with-playground
+   (f-with-sandbox f-test/playground-path
+     (let ((default-directory f-test/trash-path))
        (should-error (f-delete "foo") :type 'f-guard-error)))))
 
 
 ;;;; f-symlink
 
 (ert-deftest f-guard-test/f-symlink/same ()
-  (with-sandbox
-   (let ((path-foo (f-expand "foo" f-sandbox-path))
-         (path-bar (f-expand "bar" f-sandbox-path)))
+  (with-playground
+   (let ((path-foo (f-expand "foo" f-test/playground-path))
+         (path-bar (f-expand "bar" f-test/playground-path)))
      (f-with-sandbox (list path-foo path-bar)
        (f-touch path-foo)
        (f-symlink path-foo path-bar)
        (should-exist path-bar)))))
 
 (ert-deftest f-guard-test/f-symlink/inside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (f-touch "foo")
      (f-symlink "foo" "bar")
      (should-exist "bar"))))
 
 (ert-deftest f-guard-test/f-symlink/outside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
-     (let ((default-directory f-trash-path))
+  (with-playground
+   (f-with-sandbox f-test/playground-path
+     (let ((default-directory f-test/trash-path))
        (should-error (f-symlink "foo" "bar") :type 'f-guard-error)))))
 
 
 ;;;; f-move
 
 (ert-deftest f-guard-test/f-move/same ()
-  (with-sandbox
-   (let ((path-foo (f-expand "foo" f-sandbox-path))
-         (path-bar (f-expand "bar" f-sandbox-path)))
+  (with-playground
+   (let ((path-foo (f-expand "foo" f-test/playground-path))
+         (path-bar (f-expand "bar" f-test/playground-path)))
      (f-with-sandbox (list path-foo path-bar)
        (f-touch path-foo)
        (f-move path-foo path-bar)
@@ -163,26 +163,26 @@
        (should-not-exist path-foo)))))
 
 (ert-deftest f-guard-test/f-move/inside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (f-touch "foo")
      (f-move "foo" "bar")
      (should-exist "bar")
      (should-not-exist "foo"))))
 
 (ert-deftest f-guard-test/f-move/outside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
-     (let ((default-directory f-trash-path))
+  (with-playground
+   (f-with-sandbox f-test/playground-path
+     (let ((default-directory f-test/trash-path))
        (should-error (f-move "foo" "bar") :type 'f-guard-error)))))
 
 
 ;;;; f-copy
 
 (ert-deftest f-guard-test/f-copy/inside ()
-  (with-sandbox
-   (let ((path-foo (f-expand "foo" f-sandbox-path))
-         (path-bar (f-expand "bar" f-sandbox-path)))
+  (with-playground
+   (let ((path-foo (f-expand "foo" f-test/playground-path))
+         (path-bar (f-expand "bar" f-test/playground-path)))
      (f-with-sandbox (list path-foo path-bar)
        (f-touch path-foo)
        (f-copy path-foo path-bar)
@@ -190,40 +190,42 @@
        (should-exist path-bar)))))
 
 (ert-deftest f-guard-test/f-copy/inside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (f-touch "foo")
      (f-copy "foo" "bar")
      (should-exist "foo")
      (should-exist "bar"))))
 
 (ert-deftest f-guard-test/f-copy/outside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
-     (let ((default-directory f-trash-path))
+  (with-playground
+   (f-with-sandbox f-test/playground-path
+     (let ((default-directory f-test/trash-path))
        (should-error (f-copy "foo" "bar") :type 'f-guard-error)))))
 
 
 ;;;; f-touch
 
 (ert-deftest f-guard-test/f-touch/same ()
-  (with-sandbox
-   (let ((path (f-expand "foo" f-sandbox-path)))
+  (with-playground
+   (let ((path (f-expand "foo" f-test/playground-path)))
      (f-with-sandbox path
        (f-touch path)
        (should-exist path)))))
 
 (ert-deftest f-guard-test/f-touch/inside ()
-  (with-sandbox
-   (f-with-sandbox f-sandbox-path
+  (with-playground
+   (f-with-sandbox f-test/playground-path
      (f-touch "foo")
      (should-exist "foo"))))
 
 (ert-deftest f-guard-test/f-touch/outside ()
-  (with-sandbox
-   (f-touch (f-expand "foo" f-trash-path))
-   (f-with-sandbox f-sandbox-path
-     (let ((default-directory f-trash-path))
+  (with-playground
+   (f-touch (f-expand "foo" f-test/trash-path))
+   (f-with-sandbox f-test/playground-path
+     (let ((default-directory f-test/trash-path))
        (should-error (f-touch "foo") :type 'f-guard-error)))))
 
-;;; f-guard-test.el ends here
+(provide 'f-sandbox-test)
+
+;;; f-sandbox-test.el ends here

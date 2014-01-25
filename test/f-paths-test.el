@@ -1,3 +1,31 @@
+;;; f-paths-test.el --- F: Path related tests  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2013-2014 Johan Andersson
+
+;; Author: Johan Andersson <johan.rejeep@gmail.com>
+;; Maintainer: Johan Andersson <johan.rejeep@gmail.com>
+;; URL: http://github.com/cask/cask
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;; Code:
+
+
 ;;;; f-join
 
 (ert-deftest f-join-test/single-path-relative ()
@@ -68,47 +96,47 @@
 ;;;; f-dirname
 
 (ert-deftest f-dirname-test/directory-relative ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo" "bar" "baz")
    (should (equal (f-dirname "foo/bar/baz") "foo/bar/"))))
 
 (ert-deftest f-dirname-test/file-relative ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo" "bar" "baz")
    (f-touch "foo/bar/baz/qux.txt")
    (should (equal (f-dirname "foo/bar/baz/qux.txt") "foo/bar/baz/"))))
 
 (ert-deftest f-dirname-test/directory-absolute ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo" "bar" "baz")
    (should
     (equal
-     (f-dirname (f-expand "foo/bar/baz" f-sandbox-path))
-     (f-expand "foo/bar/" f-sandbox-path)))))
+     (f-dirname (f-expand "foo/bar/baz" f-test/playground-path))
+     (f-expand "foo/bar/" f-test/playground-path)))))
 
 (ert-deftest f-dirname-test/file-absolute ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo" "bar" "baz")
    (f-touch "foo/bar/baz/qux.txt")
    (should
     (equal
-     (f-dirname (f-expand "foo/bar/baz/qux.txt" f-sandbox-path))
-     (f-expand "foo/bar/baz/" f-sandbox-path)))))
+     (f-dirname (f-expand "foo/bar/baz/qux.txt" f-test/playground-path))
+     (f-expand "foo/bar/baz/" f-test/playground-path)))))
 
 (ert-deftest f-dirname-test/file-with-ending-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo" "bar" "baz")
    (should
     (equal
      (f-dirname "foo/bar/baz/") "foo/bar/"))))
 
 (ert-deftest f-dirname-test/parent-alias ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo" "bar" "baz")
    (should (equal (f-parent "foo/bar/baz") "foo/bar/"))))
 
 (ert-deftest f-dirname-test/root ()
-  (with-sandbox
+  (with-playground
    (should-not (f-parent (f-root)))))
 
 
@@ -186,118 +214,118 @@
 ;;;; f-cannonical
 
 (ert-deftest f-canonical-test/path ()
-  (should (equal (f-canonical f-sandbox-path) f-sandbox-path)))
+  (should (equal (f-canonical f-test/playground-path) f-test/playground-path)))
 
 (ert-deftest f-canonical-test/symlink ()
-  (with-sandbox
+  (with-playground
    (f-touch "foo")
    (f-symlink "foo" "bar")
    (should
     (equal
-     (f-expand "foo" f-sandbox-path)
-     (f-canonical (f-expand "bar" f-sandbox-path))))))
+     (f-expand "foo" f-test/playground-path)
+     (f-canonical (f-expand "bar" f-test/playground-path))))))
 
 
 ;;;; f-slash
 
 (ert-deftest f-slash-test/absolute-no-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (let ((foo (f-expand "foo" f-sandbox-path)))
+   (let ((foo (f-expand "foo" f-test/playground-path)))
      (should (equal (f-slash foo) (concat foo "/"))))))
 
 (ert-deftest f-slash-test/absolute-with-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (let ((foo (f-expand "foo" f-sandbox-path)))
+   (let ((foo (f-expand "foo" f-test/playground-path)))
      (should (equal (f-slash (concat foo "/")) (concat foo "/"))))))
 
 (ert-deftest f-slash-test/relative-no-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
    (should (equal (f-slash "foo") "foo/"))))
 
 (ert-deftest f-slash-test/relative-with-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
    (should (equal (f-slash "foo/") "foo/"))))
 
 (ert-deftest f-slash-test/relative-file ()
-  (with-sandbox
+  (with-playground
    (f-touch "foo")
    (should (equal (f-slash "foo") "foo"))))
 
 (ert-deftest f-slash-test/absolute-file ()
-  (with-sandbox
+  (with-playground
    (f-touch "foo")
-   (let ((foo (f-expand "foo" f-sandbox-path)))
+   (let ((foo (f-expand "foo" f-test/playground-path)))
      (should (equal (f-slash foo) foo)))))
 
 (ert-deftest f-slash-test/symlink-to-file ()
-  (with-sandbox
+  (with-playground
    (f-touch "foo")
    (f-symlink "foo" "bar")
-   (let ((bar (f-expand "bar" f-sandbox-path)))
+   (let ((bar (f-expand "bar" f-test/playground-path)))
      (should (equal (f-slash bar) bar)))))
 
 (ert-deftest f-slash-test/symlink-to-directory ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
    (f-symlink "foo" "bar")
-   (let ((bar (f-expand "bar" f-sandbox-path)))
+   (let ((bar (f-expand "bar" f-test/playground-path)))
      (should (equal (f-slash bar) (concat bar "/"))))))
 
 (ert-deftest f-slash-test/non-existing-file-or-directory ()
-  (with-sandbox
-   (let ((foo (f-expand "foo" f-sandbox-path)))
+  (with-playground
+   (let ((foo (f-expand "foo" f-test/playground-path)))
      (should (equal (f-slash foo) foo)))))
 
 
 ;;;; f-full
 
 (ert-deftest f-full-test/relative-no-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (should (equal (f-full "foo") (concat (f-expand "foo" f-sandbox-path) "/")))))
+   (should (equal (f-full "foo") (concat (f-expand "foo" f-test/playground-path) "/")))))
 
 (ert-deftest f-full-test/relative-with-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (should (equal (f-full "foo/") (concat (f-expand "foo" f-sandbox-path) "/")))))
+   (should (equal (f-full "foo/") (concat (f-expand "foo" f-test/playground-path) "/")))))
 
 (ert-deftest f-full-test/relative-tilde ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (should (equal (f-full (f-short (f-expand "foo" f-sandbox-path)))
-                  (concat (f-expand "foo" f-sandbox-path) "/")))))
+   (should (equal (f-full (f-short (f-expand "foo" f-test/playground-path)))
+                  (concat (f-expand "foo" f-test/playground-path) "/")))))
 
 (ert-deftest f-full-test/absolute-no-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (let ((foo (f-expand "foo" f-sandbox-path)))
+   (let ((foo (f-expand "foo" f-test/playground-path)))
      (should (equal (f-full foo) (concat foo "/"))))))
 
 (ert-deftest f-full-test/absolute-with-slash ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (let ((foo (f-expand "foo" f-sandbox-path)))
+   (let ((foo (f-expand "foo" f-test/playground-path)))
      (should (equal (f-full (concat foo "/")) (concat foo "/"))))))
 
 (ert-deftest f-full-test/absolute-tilde ()
-  (with-sandbox
+  (with-playground
    (f-mkdir "foo")
-   (let ((foo (f-expand "foo" f-sandbox-path)))
+   (let ((foo (f-expand "foo" f-test/playground-path)))
      (should (equal (f-full (f-short foo)) (concat foo "/"))))))
 
 (ert-deftest f-full-test/file ()
-  (with-sandbox
+  (with-playground
    (f-touch "foo")
-   (should (equal (f-full "foo") (f-expand "foo" f-sandbox-path)))))
+   (should (equal (f-full "foo") (f-expand "foo" f-test/playground-path)))))
 
 (ert-deftest f-full-test/file-tilde ()
-  (with-sandbox
+  (with-playground
    (f-touch "foo")
-   (should (equal (f-full (f-short "foo")) (f-expand "foo" f-sandbox-path)))))
+   (should (equal (f-full (f-short "foo")) (f-expand "foo" f-test/playground-path)))))
 
 ;;;; f-uniquify
 
@@ -328,3 +356,7 @@
 (ert-deftest f-uniquify-alist/recursive-conflict ()
   (should (equal (f-uniquify-alist '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz"))
                  '(("/foo/bar" . "foo/bar") ("/home/www/bar" . "www/bar") ("/foo/baz" . "foo/baz") ("/home/www/baz" . "home/www/baz") ("/opt/foo/www/baz" . "foo/www/baz") ("/var/foo" . "foo")) )))
+
+(provide 'f-paths-test)
+
+;;; f-paths-test.el ends here
