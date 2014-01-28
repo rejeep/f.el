@@ -125,10 +125,9 @@ If PATH is not allowed to be modified, throw error."
 
 Some functions, such as `call-process' requires there to be an
 ending slash."
-  (if (or (not (f-dir? path))
-          (s-ends-with? (f-path-separator) path))
-      path
-    (s-concat path (f-path-separator))))
+  (if (f-dir? path)
+      (file-name-as-directory path)
+    path))
 
 (defun f-full (path)
   "Return absolute path to PATH, with ending slash."
