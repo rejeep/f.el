@@ -5,7 +5,7 @@
 
 ;; Author: Johan Andersson <johan.rejeep@gmail.com>
 ;; Maintainer: Johan Andersson <johan.rejeep@gmail.com>
-;; URL: http://github.com/cask/cask
+;; URL: http://github.com/rejeep/f.el
 
 ;; This file is NOT part of GNU Emacs.
 
