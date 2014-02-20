@@ -240,7 +240,7 @@ If FORCE is t, a directory will be deleted recursively."
   (f--destructive to (rename-file from to t)))
 
 (defun f-copy (from to)
-  "Copy file or directory."
+  "Copy file or directory FROM to TO."
   (f--destructive to
     (if (f-file? from)
         (copy-file from to)
