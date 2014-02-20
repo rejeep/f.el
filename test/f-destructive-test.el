@@ -148,21 +148,43 @@
    (should-exist "foo.txt" "FOO")
    (should-exist "bar.txt" "FOO")))
 
-(ert-deftest f-copy-test/copy-relative-dir ()
+(ert-deftest f-copy-test/copy-relative-dir-exists ()
+  (with-playground
+   (f-mkdir "foo")
+   (f-mkdir "bar")
+   (f-write "FILE" 'utf-8 "foo/file.txt")
+   (f-copy "foo" "bar")
+   (should-exist "foo/file.txt" "FILE")
+   (should-exist "bar/foo/file.txt" "FILE")))
+
+(ert-deftest f-copy-test/copy-relative-dir-does-not-exist ()
   (with-playground
    (f-mkdir "foo")
    (f-write "FILE" 'utf-8 "foo/file.txt")
    (f-copy "foo" "bar")
-   (should-exist "foo/file.txt" "FILE")))
+   (should-exist "foo/file.txt" "FILE")
+   (should-exist "bar/foo/file.txt" "FILE")))
 
-(ert-deftest f-copy-test/copy-absolute-dir ()
+(ert-deftest f-copy-test/copy-absolute-dir-exists ()
+  (with-playground
+   (f-mkdir "foo")
+   (f-mkdir "bar")
+   (f-write "FILE" 'utf-8 "foo/file.txt")
+   (f-copy
+    (f-expand "foo" f-test/playground-path)
+    (f-expand "bar" f-test/playground-path))
+   (should-exist "foo/file.txt" "FILE")
+   (should-exist "bar/foo/file.txt" "FILE")))
+
+(ert-deftest f-copy-test/copy-absolute-dir-does-not-exist ()
   (with-playground
    (f-mkdir "foo")
    (f-write "FILE" 'utf-8 "foo/file.txt")
    (f-copy
     (f-expand "foo" f-test/playground-path)
     (f-expand "bar" f-test/playground-path))
-   (should-exist "foo/file.txt" "FILE")))
+   (should-exist "foo/file.txt" "FILE")
+   (should-exist "bar/foo/file.txt" "FILE")))
 
 
 ;;;; f-touch
