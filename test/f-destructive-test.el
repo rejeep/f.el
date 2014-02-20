@@ -163,7 +163,7 @@
    (f-write "FILE" 'utf-8 "foo/file.txt")
    (f-copy "foo" "bar")
    (should-exist "foo/file.txt" "FILE")
-   (should-exist "bar/foo/file.txt" "FILE")))
+   (should-exist "bar/file.txt" "FILE")))
 
 (ert-deftest f-copy-test/copy-absolute-dir-exists ()
   (with-playground
@@ -184,7 +184,7 @@
     (f-expand "foo" f-test/playground-path)
     (f-expand "bar" f-test/playground-path))
    (should-exist "foo/file.txt" "FILE")
-   (should-exist "bar/foo/file.txt" "FILE")))
+   (should-exist "bar/file.txt" "FILE")))
 
 
 ;;;; f-touch

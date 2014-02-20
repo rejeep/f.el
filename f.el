@@ -250,9 +250,12 @@ If FORCE is t, a directory will be deleted recursively."
       ;; `to'. We want the Emacs 24 behavior.
       (if (> emacs-major-version 23)
           (copy-directory from to)
-        (let ((new-to (f-expand (f-filename from) to)))
-          (apply 'f-mkdir (f-split to))
-          (copy-directory from new-to))))))
+        (if (f-dir? to)
+            (progn
+              (apply 'f-mkdir (f-split to))
+              (let ((new-to (f-expand (f-filename from) to)))
+                (copy-directory from new-to)))
+          (copy-directory from to))))))
 
 (defun f-touch (path)
   "Update PATH last modification date or create if it does not exist."
