@@ -91,6 +91,17 @@ If PATH is not allowed to be modified, throw error."
           (f-relative parent)
         (directory-file-name parent)))))
 
+(defun f-common-parent (paths)
+  "Return the deepest common parent directory of PATHS."
+  (let* ((paths (-map 'f-split paths))
+         (common (caar paths))
+         (re nil))
+    (while (--all? (equal (car it) common) paths)
+      (setq paths (-map 'cdr paths))
+      (push common re)
+      (setq common (caar paths)))
+    (if re (concat (apply 'f-join (nreverse re)) "/") "")))
+
 (defun f-ext (path)
   "Return the file extension of PATH."
   (file-name-extension path))

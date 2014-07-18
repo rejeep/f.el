@@ -23,6 +23,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-expand](#f-expand-path-optional-dir) `(path &optional dir)`
 * [f-filename](#f-filename-path) `(path)`
 * [f-dirname](#f-dirname-path) `(path)`
+* [f-common-parent](#f-common-parent-paths) `(paths)`
 * [f-ext](#f-ext-path) `(path)`
 * [f-no-ext](#f-no-ext-path) `(path)`
 * [f-base](#f-base-path) `(path)`
@@ -137,6 +138,16 @@ Alias: `f-parent`
 (f-dirname "path/to/file.ext") ;; => "path/to"
 (f-dirname "path/to/directory") ;; => "path/to"
 (f-dirname "/") ;; => nil
+```
+
+### f-common-parent `(paths)`
+
+Return the deepest common parent directory of FILES.
+
+```lisp
+(f-common-parent '("foo/bar/baz" "foo/bar/qux" "foo/bar/mux")) ;; => "foo/bar/"
+(f-common-parent '("/foo/bar/baz" "/foo/bar/qux" "/foo/bax/mux")) ;; => "/foo/"
+(f-common-parent '("foo/bar/baz" "quack/bar/qux" "lack/bar/mux")) ;; => ""
 ```
 
 ### f-ext `(path)`
@@ -342,7 +353,7 @@ Move or rename FROM to TO.
 
 ### f-copy `(from to)`
 
-Copy file or directory.
+Copy file or directory FROM to TO.
 
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")
