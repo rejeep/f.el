@@ -73,6 +73,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### Stats
 
 * [f-size](#f-size-path) `(path)`
+* [f-target](#f-target-symlink-optional-non-recursive) `(symlink &optional non-recursive)`
 
 ### Misc
 

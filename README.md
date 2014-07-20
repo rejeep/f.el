@@ -73,6 +73,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### Stats
 
 * [f-size](#f-size-path) `(path)`
+* [f-target](#f-target-symlink-optional-non-recursive) `(symlink &optional non-recursive)`
 
 ### Misc
 
@@ -342,7 +343,7 @@ Move or rename FROM to TO.
 
 ### f-copy `(from to)`
 
-Copy file or directory.
+Copy file or directory FROM to TO.
 
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")

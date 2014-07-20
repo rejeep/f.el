@@ -358,6 +358,17 @@ directory, return sum of all files in PATH."
       (-sum (-map 'f-size (f-files path nil t)))
     (nth 7 (file-attributes path))))
 
+(defun f-target (symlink &optional non-recursive)
+  "Return the file SYMLINK points to, recursively.
+
+If SYMLINK is not a symbolic link, just return SYMLINK.
+
+If NON-RECURSIVE is non-nil, resolve only the first indirection."
+  (if (file-symlink-p symlink)
+      (let ((target (car (file-attributes symlink))))
+        (if non-recursive target (f-target target non-recursive)))
+    symlink))
+
 
 ;;;; Misc
 
