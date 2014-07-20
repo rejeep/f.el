@@ -45,6 +45,29 @@
    (f-write "BAZ" 'utf-8 "bar/baz.txt")
    (should (equal (f-size "bar") 6))))
 
+
+;;;; f-target
+
+(ert-deftest f-target-test/non-symlink ()
+  (with-playground
+   (f-touch "foo.txt")
+   (should (equal (f-target "foo.txt") "foo.txt"))))
+
+(ert-deftest f-target-test/recursive ()
+  (with-playground
+   (f-touch "foo.txt")
+   (f-symlink "foo.txt" "bar")
+   (f-symlink "bar" "baz")
+   (should (equal (f-target "baz") "foo.txt"))))
+
+(ert-deftest f-target-test/non-recursive ()
+  (with-playground
+   (f-touch "foo.txt")
+   (f-symlink "foo.txt" "bar")
+   (f-symlink "bar" "baz")
+   (should (equal (f-target "baz" :non-recursive) "bar"))
+   (should (equal (f-target "bar" :non-recursive) "foo.txt"))))
+
 (provide 'f-stats-test)
 
 ;;; f-stats-test.el ends here
