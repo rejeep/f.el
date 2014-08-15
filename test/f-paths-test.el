@@ -140,6 +140,19 @@
    (should-not (f-parent (f-root)))))
 
 
+;;;; f-common-parent
+(ert-deftest f-common-parent/directory-relative ()
+  (should (equal (f-common-parent '("foo/bar/baz" "foo/bar/qux" "foo/bar/mux")) "foo/bar/"))
+  (should (equal (f-common-parent '("foo/bar/baz" "foo/bar/qux" "foo/bax/mux")) "foo/")))
+
+(ert-deftest f-common-parent/directory-absolute ()
+  (should (equal (f-common-parent '("/foo/bar/baz" "/foo/bar/qux" "/foo/bar/mux")) "/foo/bar/"))
+  (should (equal (f-common-parent '("/foo/bar/baz" "/foo/bar/qux" "/foo/bax/mux")) "/foo/")))
+
+(ert-deftest f-common-parent/no-common-parent ()
+  (should (equal (f-common-parent '("foo/bar/baz" "foo/bar/qux" "fo/bar/mux")) "")))
+
+
 ;;;; f-ext
 
 (ert-deftest f-ext-test/no-extension ()
