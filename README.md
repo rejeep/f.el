@@ -142,7 +142,7 @@ Alias: `f-parent`
 
 ### f-common-parent `(paths)`
 
-Return the deepest common parent directory of FILES.
+Return the deepest common parent directory of PATHS.
 
 ```lisp
 (f-common-parent '("foo/bar/baz" "foo/bar/qux" "foo/bar/mux")) ;; => "foo/bar/"
