@@ -659,6 +659,10 @@ Only allow PATH-OR-PATHS and decendants to be modified in BODY.
 
 ## Changelog
 
+### v0.17.0
+
+* Add `f-common-parent` (by @Fuco1)
+
 ### v0.16.0
 
 * Add `f-with-sandbox`
