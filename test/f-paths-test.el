@@ -152,6 +152,13 @@
 (ert-deftest f-common-parent/no-common-parent ()
   (should (equal (f-common-parent '("foo/bar/baz" "foo/bar/qux" "fo/bar/mux")) "")))
 
+(ert-deftest f-common-parent/single-file ()
+  (should (equal (f-common-parent '("foo/bar/baz")) "foo/bar/"))
+  (should (equal (f-common-parent '("baz")) "./")))
+
+(ert-deftest f-common-parent/empty-list ()
+  (should (equal (f-common-parent nil) nil)))
+
 
 ;;;; f-ext
 
