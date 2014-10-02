@@ -233,9 +233,9 @@ ending slash.
 Return absolute path to PATH, with ending slash.
 
 ```lisp
-(f-slash "~/path/to/file") ;; => /home/path/to/file
-(f-slash "~/path/to/dir") ;; => /home/path/to/dir/
-(f-slash "~/path/to/dir/") ;; => /home/path/to/dir/
+(f-full "~/path/to/file") ;; => /home/path/to/file
+(f-full "~/path/to/dir") ;; => /home/path/to/dir/
+(f-full "~/path/to/dir/") ;; => /home/path/to/dir/
 ```
 
 ### f-uniquify `(paths)`
