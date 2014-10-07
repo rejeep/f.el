@@ -281,7 +281,7 @@ Write binary DATA to PATH.
 DATA is a unibyte string.  PATH is a file name to write to.
 
 ```lisp
-(f-write-bytes "path/to/binary/data" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))
+(f-write-bytes (unibyte-string 72 101 108 108 111 32 119 111 114 108 100) "path/to/binary/data")
 ```
 
 ### f-read-text `(path &optional coding)`
