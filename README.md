@@ -39,7 +39,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### I/O
 
 * [f-read-bytes](#f-read-bytes-path) `(path)`
-* [f-write-bytes](#f-write-bytes-path) `(path)`
+* [f-write-bytes](#f-write-bytes-data-path) `(data path)`
 * [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
 * [f-write-text](#f-write-text-text-coding-path)`(text coding path)`
 
@@ -266,19 +266,19 @@ This function expects no duplicate paths.
 
 ### f-read-bytes `(path)`
 
-Write binary DATA to PATH.
+Read binary data from PATH.
 
-DATA is a unibyte string.  PATH is a file name to write to.
+Return the binary data as unibyte string.
 
 ```lisp
 (f-read-bytes "path/to/binary/data")
 ```
 
-### f-write-bytes `(path)`
+### f-write-bytes `(data path)`
 
-{Write binary DATA to PATH.
+Write binary DATA to PATH.
 
-DATA is a unibyte string.  PATH is a file name to write to.}
+DATA is a unibyte string.  PATH is a file name to write to.
 
 ```lisp
 (f-write-bytes "path/to/binary/data" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))

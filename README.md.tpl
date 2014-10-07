@@ -39,7 +39,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### I/O
 
 * [f-read-bytes](#f-read-bytes-path) `(path)`
-* [f-write-bytes](#f-write-bytes-path) `(path)`
+* [f-write-bytes](#f-write-bytes-data-path) `(data path)`
 * [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
 * [f-write-text](#f-write-text-text-coding-path)`(text coding path)`
 
@@ -259,15 +259,15 @@ Alias: `f-abbrev`
 
 ### f-read-bytes `(path)`
 
-{{f-write-bytes}}
+{{f-read-bytes}}
 
 ```lisp
 (f-read-bytes "path/to/binary/data")
 ```
 
-### f-write-bytes `(path)`
+### f-write-bytes `(data path)`
 
-{{{f-write-bytes}}}
+{{f-write-bytes}}
 
 ```lisp
 (f-write-bytes "path/to/binary/data" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))
