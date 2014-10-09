@@ -26,7 +26,7 @@
 ;;; Code:
 
 (require 'undercover)
-(undercover "/f\\.el$")
+(undercover "f.el")
 
 (defvar f-test/test-path
   (directory-file-name (file-name-directory load-file-name))
