@@ -185,30 +185,78 @@
 
 ;;;; f-same?/f-equal?
 
-(ert-deftest f-same?/relative-equal ()
+(ert-deftest f-same?/does-not-exist ()
   (with-playground
+   (should-not (f-same? "foo" "foo"))))
+
+(ert-deftest f-same?/relative-equal-file ()
+  (with-playground
+   (f-touch "foo")
    (should (f-same? "foo" "foo"))))
 
-(ert-deftest f-same?/relative-not-equal ()
+(ert-deftest f-same?/relative-equal-directory ()
   (with-playground
+   (f-mkdir "foo")
+   (should (f-same? "foo" "foo"))))
+
+(ert-deftest f-same?/relative-not-equal-files ()
+  (with-playground
+   (f-touch "foo")
+   (f-touch "bar")
    (should-not (f-same? "foo" "bar"))))
 
-(ert-deftest f-same?/absolute-equal ()
+(ert-deftest f-same?/relative-not-equal-directories ()
   (with-playground
+   (f-mkdir "foo")
+   (f-mkdir "bar")
+   (should-not (f-same? "foo" "bar"))))
+
+(ert-deftest f-same?/absolute-equal-file ()
+  (with-playground
+   (f-touch (f-expand "foo" f-test/playground-path))
    (should (f-same? (f-expand "foo" f-test/playground-path)
                     (f-expand "foo" f-test/playground-path)))))
 
-(ert-deftest f-same?/absolute-not-equal ()
+(ert-deftest f-same?/absolute-equal-directory ()
   (with-playground
+   (f-mkdir (f-expand "foo" f-test/playground-path))
+   (should (f-same? (f-expand "foo" f-test/playground-path)
+                    (f-expand "foo" f-test/playground-path)))))
+
+(ert-deftest f-same?/absolute-not-equal-files ()
+  (with-playground
+   (f-touch (f-expand "foo" f-test/playground-path))
+   (f-touch (f-expand "bar" f-test/playground-path))
    (should-not (f-same? (f-expand "foo" f-test/playground-path)
                         (f-expand "bar" f-test/playground-path)))))
 
-(ert-deftest f-same?/relative-and-absolute-equal ()
+(ert-deftest f-same?/absolute-not-equal-directories ()
   (with-playground
+   (f-mkdir (f-expand "foo" f-test/playground-path))
+   (f-mkdir (f-expand "bar" f-test/playground-path))
+   (should-not (f-same? (f-expand "foo" f-test/playground-path)
+                        (f-expand "bar" f-test/playground-path)))))
+
+(ert-deftest f-same?/relative-and-absolute-equal-file ()
+  (with-playground
+   (f-touch "foo")
    (should (f-same? "foo" (f-expand "foo" f-test/playground-path)))))
+
+(ert-deftest f-same?/relative-and-absolute-equal-directory ()
+  (with-playground
+   (f-mkdir "foo")
+   (should (f-same? "foo" (f-expand "foo" f-test/playground-path)))))
+
+(ert-deftest f-same?/relative-and-absolute-not-equal-files ()
+  (with-playground
+   (f-touch "foo")
+   (f-touch "bar")
+   (should-not (f-same? "foo" (f-expand "bar" f-test/playground-path)))))
 
 (ert-deftest f-same?/relative-and-absolute-not-equal ()
   (with-playground
+   (f-mkdir "foo")
+   (f-mkdir "bar")
    (should-not (f-same? "foo" (f-expand "bar" f-test/playground-path)))))
 
 (ert-deftest f-same?/symlink ()
@@ -219,6 +267,7 @@
 
 (ert-deftest f-equal?/alias ()
   (with-playground
+   (f-touch "foo")
    (should (f-equal? "foo" "foo"))))
 
 
