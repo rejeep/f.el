@@ -272,6 +272,15 @@ If FORCE is t, a directory will be deleted recursively."
                 (copy-directory from new-to)))
           (copy-directory from to))))))
 
+(defun f-copy-contents (from to)
+  "Copy contents in directory FROM, to directory TO."
+  (unless (f-exists? to)
+    (error "Cannot copy contents to non existing directory %s" to))
+  (unless (f-dir? from)
+    (error "Cannot copy contents as %s is a file" from))
+  (--each (f-entries from)
+    (f-copy it to)))
+
 (defun f-touch (path)
   "Update PATH last modification date or create if it does not exist."
   (f--destructive path

@@ -45,6 +45,7 @@
 
 (load (expand-file-name "f" f-test/root-path) 'noerror 'nomessage)
 
+(require 'ert-async)
 (unless (require 'ert nil t)
   (require 'ert (expand-file-name "ert" f-test/vendor-path)))
 
