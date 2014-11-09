@@ -427,6 +427,12 @@ The extension, in a file name, is the part that follows the last
 
 (defalias 'f-descendant-of-p 'f-descendant-of?)
 
+(defun f-hidden? (path)
+  "Return t if PATH is hidden, nil otherwise."
+  (unless (f-exists? path)
+    (error "Path does not exist: %s" path))
+  (string= (substring path 0 1) "."))
+
 
 ;;;; Stats
 
