@@ -392,6 +392,30 @@
    (should-not (f-descendant-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))
    (should-not (f-descendant-of? (f-root) (f-root)))))
 
+
+;;;; f-hidden?
+
+(ert-deftest-async f-hidden?-test/does-not-exist (done)
+  (condition-case err
+      (f-hidden? "foo")
+    (error
+     (should (string= (error-message-string err) "Path does not exist: foo"))
+     (funcall done))))
+
+(ert-deftest f-hidden?-test/is-hidden ()
+  (with-playground
+   (f-touch ".foo")
+   (f-mkdir ".bar")
+   (should (f-hidden? ".foo"))
+   (should (f-hidden? ".bar"))))
+
+(ert-deftest f-hidden?-test/is-not-hidden ()
+  (with-playground
+   (f-touch "foo")
+   (f-mkdir "bar")
+   (should-not (f-hidden? "foo"))
+   (should-not (f-hidden? "bar"))))
+
 (provide 'f-predicates-test)
 
 ;;; f-predicates-test.el ends here

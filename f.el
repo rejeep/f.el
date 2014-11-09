@@ -372,6 +372,12 @@ false otherwise."
     (s-starts-with? (f-full path-b)
                     (f-full path-a))))
 
+(defun f-hidden? (path)
+  "Return t if PATH is hidden, nil otherwise."
+  (unless (f-exists? path)
+    (error "Path does not exist: %s" path))
+  (string= (substring path 0 1) "."))
+
 
 ;;;; Stats
 
