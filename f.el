@@ -344,9 +344,11 @@ false otherwise."
 (defalias 'f-equal? 'f-same?)
 (defun f-same? (path-a path-b)
   "Return t if PATH-A and PATH-b are references to same file."
-  (equal
-   (f-canonical (f-expand path-a))
-   (f-canonical (f-expand path-b))))
+  (when (and (f-exists? path-a)
+             (f-exists? path-b))
+    (equal
+     (f-canonical (f-expand path-a))
+     (f-canonical (f-expand path-b)))))
 
 (defun f-parent-of? (path-a path-b)
   "Return t if PATH-A is parent of PATH-B."
