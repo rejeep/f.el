@@ -1,4 +1,4 @@
-# f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el) [![Coverage Status](https://img.shields.io/coveralls/rejeep/f.el.svg)](https://coveralls.io/r/rejeep/f.el)
+# f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el)
 
 Much inspired by [@magnars](https://github.com/magnars)'s excellent
 [s.el](https://github.com/magnars/s.el) and
@@ -622,9 +622,10 @@ Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-pat
 ```lisp
 (f-up
  (lambda (path)
-   (f-exists? ".git" path))
- start-dir)
-(f--up (f-exists? ".git" it) start-dir) ;; same as above
+   (f-exists? (f-expand ".git" path)))
+ start-path)
+
+(f--up (f-exists? (f-expand ".git" it)) start-path) ;; same as above
 ```
 
 ### f-traverse-upwards `(fn &optional path)`
@@ -638,9 +639,10 @@ returned.
 ```lisp
 (f-traverse-upwards
  (lambda (path)
-   (f-exists? ".git" path))
+   (f-exists? (f-expand ".git" path)))
  start-path)
-(f--traverse-upwards (f-exists? ".git" it) start-path) ;; same as above
+
+(f--traverse-upwards (f-exists? (f-expand ".git" it)) start-path) ;; same as above
 ```
 
 ### f-with-sandbox `(path-or-paths &rest body)`

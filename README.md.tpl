@@ -592,9 +592,10 @@ Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-pat
 ```lisp
 (f-up
  (lambda (path)
-   (f-exists? ".git" path))
- start-dir)
-(f--up (f-exists? ".git" it) start-dir) ;; same as above
+   (f-exists? (f-expand ".git" path)))
+ start-path)
+
+(f--up (f-exists? (f-expand ".git" it)) start-path) ;; same as above
 ```
 
 ### f-traverse-upwards `(fn &optional path)`
@@ -604,9 +605,10 @@ Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-pat
 ```lisp
 (f-traverse-upwards
  (lambda (path)
-   (f-exists? ".git" path))
+   (f-exists? (f-expand ".git" path)))
  start-path)
-(f--traverse-upwards (f-exists? ".git" it) start-path) ;; same as above
+
+(f--traverse-upwards (f-exists? (f-expand ".git" it)) start-path) ;; same as above
 ```
 
 ### f-with-sandbox `(path-or-paths &rest body)`
