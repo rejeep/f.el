@@ -1,4 +1,4 @@
-# f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el)
+# f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el) [![Coverage Status](https://img.shields.io/coveralls/rejeep/f.el.svg)](https://coveralls.io/r/rejeep/f.el)
 
 Much inspired by [@magnars](https://github.com/magnars)'s excellent
 [s.el](https://github.com/magnars/s.el) and
