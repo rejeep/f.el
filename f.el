@@ -483,7 +483,7 @@ RECURSIVE - Search for files and directories recursive."
         parent
       (if (funcall fn dir)
           dir
-        (f-up fn parent)))))
+	(with-no-warnings (f-up fn parent))))))
 
 (defmacro f--traverse-upwards (body &optional path)
   "Anaphoric version of `f-traverse-upwards'."
