@@ -104,7 +104,12 @@ If PATH is not allowed to be modified, throw error."
         (setq paths (-map 'cdr paths))
         (push common re)
         (setq common (caar paths)))
-      (if re (concat (apply 'f-join (nreverse re)) "/") "")))))
+      (cond
+       ((null re) "")
+       ((and (= (length re) 1) (f-root? (car re)))
+        (f-root))
+       (:otherwise
+        (concat (apply 'f-join (nreverse re)) "/")))))))
 
 (defun f-ext (path)
   "Return the file extension of PATH."
