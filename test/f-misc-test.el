@@ -256,45 +256,7 @@
   (should (equal (f-root) "/")))
 
 
-;;;; f-up/f--up
-(ert-deftest f-up-test/false ()
-  (with-playground
-   (should (equal (f-root) (f-up (lambda (path) nil))))))
-
-(ert-deftest f-up-test/true ()
-  (with-playground
-   (should (equal f-test/playground-path (f-up (lambda (path) t))))))
-
-(ert-deftest f-up-test/traverse-up ()
-  (with-playground
-   (f-touch "foo")
-   (f-mkdir "bar" "baz")
-   (should
-    (equal
-     f-test/playground-path
-     (f-up
-      (lambda (path)
-        (f-file? (f-expand "foo" path)))
-      (f-join "bar" "baz"))))))
-
-(ert-deftest f-up-test/non-existing-directory ()
-  (with-playground
-   (should-error
-    (f-up 'ignore "err"))))
-
-(ert-deftest f-up-test/anaphoric ()
-  (with-playground
-   (f-touch "foo")
-   (f-mkdir "bar" "baz")
-   (should
-    (equal
-     (f--up (equal (f-filename it) "bar") (f-join "bar" "baz"))
-     (f-expand "bar" f-test/playground-path)))))
-
-
 ;;;; f-traverse-upwards/f--traverse-upwards
-
-;; TODO: A lot of the tests here look similar. Any way to do some refactoring?
 
 (ert-deftest f-traverse-upwards-test/no-start-path-specified ()
   (with-playground

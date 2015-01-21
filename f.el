@@ -557,31 +557,6 @@ RECURSIVE - Search for files and directories recursive."
   (let ((files (-select 'f-file? (f--collect-entries path recursive))))
     (if fn (-select fn files) files)))
 
-(defmacro f--up (body &optional dir)
-  "Anaphoric version of `f-up'."
-  `(f-up
-    (lambda (path)
-      (let ((it path))
-        ,body))
-    ,dir))
-
-(make-obsolete 'f-up 'f-traverse-upwards "0.14.0")
-
-(defun f-up (fn &optional dir)
-  "Traverse up as long as FN returns nil, starting at DIR."
-  (unless dir
-    (setq dir default-directory))
-  (when (f-relative? dir)
-    (setq dir (f-expand dir)))
-  (unless (f-exists? dir)
-    (error "File %s does not exist" dir))
-  (let ((parent (f-parent dir)))
-    (if (and parent (f-root? parent))
-        parent
-      (if (funcall fn dir)
-          dir
-       (with-no-warnings (f-up fn parent))))))
-
 (defmacro f--traverse-upwards (body &optional path)
   "Anaphoric version of `f-traverse-upwards'."
   `(f-traverse-upwards

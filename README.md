@@ -1,4 +1,4 @@
-# f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el)
+# f.el [![Build Status](https://api.travis-ci.org/rejeep/f.el.png?branch=master)](http://travis-ci.org/rejeep/f.el) [![Coverage Status](https://img.shields.io/coveralls/rejeep/f.el.svg)](https://coveralls.io/r/rejeep/f.el)
 
 Much inspired by [@magnars](https://github.com/magnars)'s excellent
 [s.el](https://github.com/magnars/s.el) and
@@ -90,7 +90,6 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-root](#f-root-) `()`
-* [f-up](#f-up-fn-optional-dir) `(fn &optional dir)`
 * [f-traverse-upwards](#f-traverse-upwards-fn-optional-path) `(fn &optional path)`
 * [f-with-sandbox](#f-with-sandbox-path-or-paths-rest-body) `(path-or-paths &rest body)`
 
@@ -118,7 +117,7 @@ Split PATH and return list containing parts.
 
 ### f-expand `(path &optional dir)`
 
-Expand PATH relative to DIR (or `default-directory').
+Expand PATH relative to DIR (or ‘default-directory’).
 
 ```lisp
 (f-expand "name") ;; => "/default/directory/name"
@@ -161,7 +160,7 @@ Return the deepest common parent directory of PATHS.
 Return the file extension of PATH.
 
 The extension, in a file name, is the part that follows the last
-'.', excluding version numbers and backup suffixes.
+’.’, excluding version numbers and backup suffixes.
 
 ```lisp
 (f-ext "path/to/file.ext") ;; => "ext"
@@ -207,7 +206,7 @@ Return PATH relative to DIR.
 
 ### f-short `(path)`
 
-Return abbrev of PATH. See `abbreviate-file-name'.
+Return abbrev of PATH. See ‘abbreviate-file-name’.
 
 Alias: `f-abbrev`
 
@@ -238,7 +237,7 @@ Return the canonical name of PATH.
 
 Append slash to PATH unless one already.
 
-Some functions, such as `call-process' requires there to be an
+Some functions, such as ‘call-process’ requires there to be an
 ending slash.
 
 ```lisp
@@ -307,7 +306,7 @@ DATA is a unibyte string.  PATH is a file name to write to.
 
 Read text with PATH, using CODING.
 
-CODING defaults to `utf-8'.
+CODING defaults to ‘utf-8’.
 
 Return the decoded text as multibyte string.
 
@@ -378,7 +377,7 @@ If FORCE is t, a directory will be deleted recursively.
 
 ### f-symlink `(source path)`
 
-Create a symlink to `source` from `path`.
+Create a symlink to ‘source‘ from ‘path‘.
 
 ```lisp
 (f-symlink "path/to/source" "path/to/link")
@@ -536,7 +535,8 @@ If EXT is nil or omitted, return t if PATH has any extension,
 false otherwise.
 
 The extension, in a file name, is the part that follows the last
-'.', excluding version numbers and backup suffixes.
+’.’, excluding version numbers and backup suffixes.
+
 Alias: `f-ext-p`
 
 ```lisp
@@ -632,9 +632,9 @@ directory, return sum of all files in PATH.
 
 Return the depth of PATH.
 
-At first, PATH is expanded with `f-expand'. Then the full path is used to
+At first, PATH is expanded with ‘f-expand’. Then the full path is used to
 detect the depth.
-'/' will be zero depth, '/usr' will be one depth. And so on.
+’/’ will be zero depth, ’/usr’ will be one depth. And so on.
 
 ```lisp
 (f-depth "/") ;; 0
@@ -686,7 +686,7 @@ RECURSIVE - Search for files and directories recursive.
 
 ### f-directories `(path &optional fn recursive)`
 
-Find all directories in PATH. See `f-entries`.
+Find all directories in PATH. See ‘f-entries‘.
 
 ```lisp
 (f-directories "path/to/dir")
@@ -697,7 +697,7 @@ Find all directories in PATH. See `f-entries`.
 
 ### f-files `(path &optional fn recursive)`
 
-Find all files in PATH. See `f-entries`.
+Find all files in PATH. See ‘f-entries‘.
 
 ```lisp
 (f-files "path/to/dir")
@@ -712,21 +712,6 @@ Return absolute root.
 
 ```lisp
 (f-root) ;; => "/"
-```
-
-### f-up `(fn &optional dir)`
-
-Traverse up as long as FN returns nil, starting at DIR.
-
-Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-path)
-
-```lisp
-(f-up
- (lambda (path)
-   (f-exists? (f-expand ".git" path)))
- start-path)
-
-(f--up (f-exists? (f-expand ".git" it)) start-path) ;; same as above
 ```
 
 ### f-traverse-upwards `(fn &optional path)`
@@ -761,10 +746,6 @@ Only allow PATH-OR-PATHS and decendants to be modified in BODY.
 ```
 
 ## Changelog
-
-### v0.18.2
-
-* Added `-p` aliases of all `?` functions.
 
 ### v0.18.0
 

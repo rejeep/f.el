@@ -90,7 +90,6 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-root](#f-root-) `()`
-* [f-up](#f-up-fn-optional-dir) `(fn &optional dir)`
 * [f-traverse-upwards](#f-traverse-upwards-fn-optional-path) `(fn &optional path)`
 * [f-with-sandbox](#f-with-sandbox-path-or-paths-rest-body) `(path-or-paths &rest body)`
 
@@ -668,21 +667,6 @@ See: `file-expand-wildcards`
 
 ```lisp
 (f-root) ;; => "/"
-```
-
-### f-up `(fn &optional dir)`
-
-{{f-up}}
-
-Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-path)
-
-```lisp
-(f-up
- (lambda (path)
-   (f-exists? (f-expand ".git" path)))
- start-path)
-
-(f--up (f-exists? (f-expand ".git" it)) start-path) ;; same as above
 ```
 
 ### f-traverse-upwards `(fn &optional path)`
