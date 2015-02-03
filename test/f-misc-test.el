@@ -230,6 +230,18 @@
      (should (equal (-sort 'string< (f--entries "foo" 'ignore)) all-files))
      (should (equal (-sort 'string< (f--entries "foo" (equal (f-ext it) "el") t)) el-files)))))
 
+(ert-deftest f--files-test/with-files-and-files ()
+  (with-playground
+   (f-mkdir "foo")
+   (f-touch "foo/bar.txt")
+   (f-touch "foo/baz.txt")
+   (f-mkdir "foo/qux")
+   (should
+    (equal
+     (f--files "foo" 'identity t)
+     (f-files "foo" nil t)))))
+
+
 
 ;;;; f-path-separator
 
