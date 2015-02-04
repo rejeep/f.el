@@ -105,25 +105,25 @@
 
 ;;;; f-writable?
 
-(ert-deftest f-writeable?-test/is-readable ()
+(ert-deftest f-writable?-test/is-writable ()
   (with-playground
    (f-touch "foo.txt")
    (chmod "foo.txt" "700")
    (should (f-writable? "foo.txt"))))
 
-(ert-deftest f-writeable?-test/is-not-readable ()
+(ert-deftest f-writable?-test/is-not-writable ()
   (with-playground
    (f-touch "foo.txt")
    (chmod "foo.txt" "400")
    (should-not (f-writable? "foo.txt"))))
 
-(ert-deftest f-writeable?-test/is-readable ()
+(ert-deftest f-executable?-test/is-executable ()
   (with-playground
    (f-touch "foo.txt")
    (chmod "foo.txt" "100")
    (should (f-executable? "foo.txt"))))
 
-(ert-deftest f-writeable?-test/is-not-readable ()
+(ert-deftest f-executable?-test/is-not-executable ()
   (with-playground
    (f-touch "foo.txt")
    (chmod "foo.txt" "200")
