@@ -26,6 +26,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-common-parent](#f-common-parent-paths) `(paths)`
 * [f-ext](#f-ext-path) `(path)`
 * [f-no-ext](#f-no-ext-path) `(path)`
+* [f-swap-ext](#f-swap-ext) `(path ext)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-file) `(path &optional file)`
 * [f-short](#f-short-path) `(path)`
@@ -167,6 +168,14 @@ Alias: `f-parent`
 (f-no-ext "path/to/file.ext") ;; => "path/to/file"
 (f-no-ext "path/to/directory") ;; => "path/to/directory"
 ```
+
+### f-swap-ext `(path ext)`
+
+{{f-swap-ext}}
+
+```lisp
+(f-swap-ext "path/to/file.ext" "org") ;; => "path/to/file.org"
+(f-swap-ext "path/to/file.ext" "") ;; => error
 
 ### f-base `(path)`
 
