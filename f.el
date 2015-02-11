@@ -119,6 +119,13 @@ If PATH is not allowed to be modified, throw error."
   "Return everything but the file extension of PATH."
   (file-name-sans-extension path))
 
+(defun f-swap-ext (path ext)
+  "Return PATH but with EXT as the new extension.
+EXT must not be nil or empty."
+  (if (s-blank? ext)
+      (error "extension cannot be empty or nil.")
+    (concat (f-no-ext path) "." ext)))
+
 (defun f-base (path)
   "Return the name of PATH, excluding the extension if file."
   (f-no-ext (f-filename path)))

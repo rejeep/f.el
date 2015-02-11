@@ -187,6 +187,16 @@
   (should (equal (f-no-ext "path/to/file.txt.org") "path/to/file.txt")))
 
 
+;;;; f-swap-ext
+
+(ert-deftest f-swap-ext-test/no-extension ()
+  (should-error (f-swap-ext "path/to/file.txt" "")))
+
+(ert-deftest f-swap-ext-test/with-extension ()
+  (should (equal (f-swap-ext "path/to/file.txt" "org")
+                 "path/to/file.org")))
+
+
 ;;;; f-base
 
 (ert-deftest f-base-test/no-extension ()
