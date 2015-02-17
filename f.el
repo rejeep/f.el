@@ -127,7 +127,7 @@ EXT must not be nil or empty."
     (concat (f-no-ext path) "." ext)))
 
 (defun f-base (path)
-  "Return the name of PATH, excluding the extension if file."
+  "Return the name of PATH, excluding the extension of file."
   (f-no-ext (f-filename path)))
 
 (defun f-relative (path &optional dir)
