@@ -177,10 +177,11 @@ EXT must not be nil or empty.
 ```lisp
 (f-swap-ext "path/to/file.ext" "org") ;; => "path/to/file.org"
 (f-swap-ext "path/to/file.ext" "") ;; => error
+```
 
 ### f-base `(path)`
 
-Return the name of PATH, excluding the extension if file.
+Return the name of PATH, excluding the extension of file.
 
 ```lisp
 (f-base "path/to/file.ext") ;; => "file"

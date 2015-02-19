@@ -176,6 +176,7 @@ Alias: `f-parent`
 ```lisp
 (f-swap-ext "path/to/file.ext" "org") ;; => "path/to/file.org"
 (f-swap-ext "path/to/file.ext" "") ;; => error
+```
 
 ### f-base `(path)`
 
