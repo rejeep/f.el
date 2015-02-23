@@ -405,8 +405,8 @@ Alias: `f-dir?`
 Return t if PATH is file, false otherwise.
 
 ```lisp
-(f-directory? "path/to/file.txt") ;; => t
-(f-directory? "path/to/dir") ;; => nil
+(f-file? "path/to/file.txt") ;; => t
+(f-file? "path/to/dir") ;; => nil
 ```
 
 ### f-symlink? `(path)`

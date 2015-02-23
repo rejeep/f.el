@@ -384,8 +384,8 @@ Alias: `f-dir?`
 {{f-file?}}
 
 ```lisp
-(f-directory? "path/to/file.txt") ;; => t
-(f-directory? "path/to/dir") ;; => nil
+(f-file? "path/to/file.txt") ;; => t
+(f-file? "path/to/dir") ;; => nil
 ```
 
 ### f-symlink? `(path)`
