@@ -75,6 +75,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### Stats
 
 * [f-size](#f-size-path) `(path)`
+* [f-depth](#f-depth-path) `(path)`
 
 ### Misc
 
@@ -523,6 +524,16 @@ Alias: `f-equal?`
 ```lisp
 (f-size "path/to/file.txt")
 (f-size "path/to/dir")
+```
+
+### f-depth `(path)`
+
+{{f-depth}}
+
+```lisp
+(f-depth "/") ;; 0
+(f-depth "/var/") ;; 1
+(f-depth "/usr/local/bin") ;; 3
 ```
 
 ### f-this-file `()`

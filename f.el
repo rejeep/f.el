@@ -385,6 +385,14 @@ directory, return sum of all files in PATH."
       (-sum (-map 'f-size (f-files path nil t)))
     (nth 7 (file-attributes path))))
 
+(defun f-depth (path)
+  "Return the depth of PATH.
+
+At first, PATH is expanded with `f-expand'. Then the full path is used to
+detect the depth.
+'/' will be zero depth, '/usr' will be one depth. And so on."
+  (- (length (f-split (f-expand path))) 1))
+
 
 ;;;; Misc
 
@@ -495,7 +503,7 @@ RECURSIVE - Search for files and directories recursive."
         parent
       (if (funcall fn dir)
           dir
-	(with-no-warnings (f-up fn parent))))))
+       (with-no-warnings (f-up fn parent))))))
 
 (defmacro f--traverse-upwards (body &optional path)
   "Anaphoric version of `f-traverse-upwards'."

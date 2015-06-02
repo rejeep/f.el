@@ -75,6 +75,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### Stats
 
 * [f-size](#f-size-path) `(path)`
+* [f-depth](#f-depth-path) `(path)`
 
 ### Misc
 
@@ -550,6 +551,20 @@ directory, return sum of all files in PATH.
 ```lisp
 (f-size "path/to/file.txt")
 (f-size "path/to/dir")
+```
+
+### f-depth `(path)`
+
+Return the depth of PATH.
+
+At first, PATH is expanded with `f-expand'. Then the full path is used to
+detect the depth.
+'/' will be zero depth, '/usr' will be one depth. And so on.
+
+```lisp
+(f-depth "/") ;; 0
+(f-depth "/var/") ;; 1
+(f-depth "/usr/local/bin") ;; 3
 ```
 
 ### f-this-file `()`
