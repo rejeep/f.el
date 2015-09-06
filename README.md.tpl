@@ -648,6 +648,11 @@ Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-pat
 
 ## Changelog
 
+### v0.18.0
+
+* Add `f-swap-ext` (by @phillord)
+* Add `f-depth` (by @cheunghy)
+
 ### v0.17.0
 
 * Add `f-common-parent` (by @Fuco1)
