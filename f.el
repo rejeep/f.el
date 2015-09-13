@@ -43,6 +43,11 @@
 
 Do not modify this variable.")
 
+(defvar f-slash-force-directory-file-name nil
+  "Forces f-slash to always return directory-file-name path.
+
+This variable should be scoped with let, if there is a need to work with not existing directories.")
+
 (defmacro f--destructive (path &rest body)
   "If PATH is allowed to be modified, yield BODY.
 
@@ -152,7 +157,8 @@ EXT must not be nil or empty."
 
 Some functions, such as `call-process' requires there to be an
 ending slash."
-  (if (f-dir? path)
+  (if (or f-slash-force-directory-file-name
+	  (f-dir? path))
       (file-name-as-directory path)
     path))
 

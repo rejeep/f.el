@@ -307,6 +307,15 @@
    (should-not (f-ancestor-of? "foo/bar/baz/qux" "foo/bar/baz/qux"))
    (should-not (f-ancestor-of? (f-root) (f-root)))))
 
+(ert-deftest f-ancestor-of?-test/is-not-ancestor-not-existing-partial-named ()
+  (with-playground
+   (f-mkdir "foo" "bar" "baz" "qux")
+   (let ((f-slash-force-directory-file-name t))
+     (should-not (f-ancestor-of? "fo" "foo"))
+     (should-not (f-ancestor-of? "fo" "foo/bar"))
+     (should-not (f-ancestor-of? "foo/ba" "foo/bar/baz"))
+     (should-not (f-ancestor-of? "foo/bar/ba" "foo/bar/baz/qux")))))
+
 
 ;;;; f-descendant-of?
 
