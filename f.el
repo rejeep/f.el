@@ -100,7 +100,7 @@ If PATH is not allowed to be modified, throw error."
     (let* ((paths (-map 'f-split paths))
            (common (caar paths))
            (re nil))
-      (while (--all? (equal (car it) common) paths)
+      (while (and (not (null (car paths))) (--all? (equal (car it) common) paths))
         (setq paths (-map 'cdr paths))
         (push common re)
         (setq common (caar paths)))
