@@ -159,6 +159,10 @@
   (should (equal (f-common-parent '("foo/bar/baz")) "foo/bar/"))
   (should (equal (f-common-parent '("baz")) "./")))
 
+(ert-deftest f-common-parent/same-path ()
+  (should (equal (f-common-parent '("foo/bar/baz" "foo/bar/baz")) "foo/bar/baz/"))
+  (should (equal (f-common-parent '("foo" "foo")) "foo/")))
+
 (ert-deftest f-common-parent/empty-list ()
   (should (equal (f-common-parent nil) nil)))
 
