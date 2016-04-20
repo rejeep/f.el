@@ -77,6 +77,11 @@
   (with-default-directory
    (should (equal (f-expand "foo" "/other") "/other/foo"))))
 
+(ert-deftest f-expand-test/skip-handlers ()
+  ;; If handlers are used, Tramp will try to connect but fail with an
+  ;; exception, hence this will fail.
+  (f-expand "foo:" "/"))
+
 
 ;;;; f-filename
 
