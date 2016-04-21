@@ -76,7 +76,8 @@ If PATH is not allowed to be modified, throw error."
 
 (defun f-expand (path &optional dir)
   "Expand PATH relative to DIR (or `default-directory')."
-  (directory-file-name (expand-file-name path dir)))
+  (let (file-name-handler-alist)
+    (directory-file-name (expand-file-name path dir))))
 
 (defun f-filename (path)
   "Return the name of PATH."
