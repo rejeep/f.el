@@ -113,7 +113,10 @@ If PATH is not allowed to be modified, throw error."
         (concat (apply 'f-join (nreverse re)) "/")))))))
 
 (defun f-ext (path)
-  "Return the file extension of PATH."
+  "Return the file extension of PATH.
+
+The extension, in a file name, is the part that follows the last
+'.', excluding version numbers and backup suffixes."
   (file-name-extension path))
 
 (defun f-no-ext (path)
@@ -340,7 +343,10 @@ If FORCE is t, a directory will be deleted recursively."
   "Return t if extension of PATH is EXT, false otherwise.
 
 If EXT is nil or omitted, return t if PATH has any extension,
-false otherwise."
+false otherwise.
+
+The extension, in a file name, is the part that follows the last
+'.', excluding version numbers and backup suffixes."
   (if ext
       (string= (f-ext path) ext)
     (not (eq (f-ext path) nil))))
