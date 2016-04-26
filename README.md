@@ -156,6 +156,9 @@ Return the deepest common parent directory of PATHS.
 
 Return the file extension of PATH.
 
+The extension, in a file name, is the part that follows the last
+'.', excluding version numbers and backup suffixes.
+
 ```lisp
 (f-ext "path/to/file.ext") ;; => "ext"
 (f-ext "path/to/directory") ;; => nil
@@ -480,6 +483,9 @@ Return t if extension of PATH is EXT, false otherwise.
 
 If EXT is nil or omitted, return t if PATH has any extension,
 false otherwise.
+
+The extension, in a file name, is the part that follows the last
+'.', excluding version numbers and backup suffixes.
 
 ```lisp
 (f-ext? "path/to/file.el" "el") ;; => t
