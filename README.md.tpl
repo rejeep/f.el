@@ -76,6 +76,9 @@ Or you can just dump `f.el` in your load path somewhere.
 
 * [f-size](#f-size-path) `(path)`
 * [f-depth](#f-depth-path) `(path)`
+* [f-change-time](#f-change-time) `(path)`
+* [f-modification-time](#f-modification-time) `(path)`
+* [f-access-time](#f-access-time) `(path)`
 
 ### Misc
 
@@ -534,6 +537,33 @@ Alias: `f-equal?`
 (f-depth "/") ;; 0
 (f-depth "/var/") ;; 1
 (f-depth "/usr/local/bin") ;; 3
+```
+
+### f-change-time `(path)`
+
+{{f-change-time}}
+
+```lisp
+(f-change-time "path/to/file.txt")
+(f-change-time "path/to/dir")
+```
+
+### f-modification-time `(path)`
+
+{{f-modification-time}}
+
+```lisp
+(f-modification-time "path/to/file.txt")
+(f-modification-time "path/to/dir")
+```
+
+### f-access-time `(path)`
+
+{{f-access-time}}
+
+```lisp
+(f-access-time "path/to/file.txt")
+(f-access-time "path/to/dir")
 ```
 
 ### f-this-file `()`
