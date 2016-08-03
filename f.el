@@ -172,7 +172,12 @@ ending slash."
 (defun f--uniquify (paths)
   "Helper for `f-uniquify' and `f-uniquify-alist'."
   (let* ((files-length (length paths))
-         (uniq-filenames (--map (cons it (f-filename it)) paths))
+         (path-name (lambda (path)
+                      (let ((base-name (f-filename path)))
+                        (if (string-equal (f-path-separator) (s-right 1 path))
+                            (concat base-name (f-path-separator))
+                          base-name))))
+         (uniq-filenames (--map (cons it (funcall path-name it)) paths))
          (uniq-filenames-next (-group-by 'cdr uniq-filenames)))
     (while (/= files-length (length uniq-filenames-next))
       (setq uniq-filenames-next
@@ -180,7 +185,7 @@ ending slash."
                        (--mapcat
                         (let ((conf-files (cdr it)))
                           (if (> (length conf-files) 1)
-                              (--map (cons (car it) (concat (f-filename (s-chop-suffix (cdr it) (car it))) (f-path-separator) (cdr it))) conf-files)
+                              (--map (cons (car it) (concat (funcall path-name (s-chop-suffix (cdr it) (car it))) (cdr it))) conf-files)
                             conf-files))
                         uniq-filenames-next))))
     uniq-filenames-next))
