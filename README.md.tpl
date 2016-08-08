@@ -373,7 +373,7 @@ Alias: `f-write`
 
 {{f-directory?}}
 
-Alias: `f-dir?`
+Aliases: `f-directory-p f-dir? f-dir-p`
 
 ```lisp
 (f-directory? "path/to/file.txt") ;; => nil
@@ -384,6 +384,8 @@ Alias: `f-dir?`
 
 {{f-file?}}
 
+Alias: `f-file-p`
+
 ```lisp
 (f-file? "path/to/file.txt") ;; => t
 (f-file? "path/to/dir") ;; => nil
@@ -392,6 +394,8 @@ Alias: `f-dir?`
 ### f-symlink? `(path)`
 
 {{f-symlink?}}
+
+Alias: `f-symlink-p`
 
 ```lisp
 (f-symlink? "path/to/file.txt") ;; => nil
@@ -403,6 +407,8 @@ Alias: `f-dir?`
 
 {{f-readable?}}
 
+Alias: `f-readable-p`
+
 ```lisp
 (f-readable? "path/to/file.txt")
 (f-readable? "path/to/dir")
@@ -411,6 +417,8 @@ Alias: `f-dir?`
 ### f-writable? `(path)`
 
 {{f-writable?}}
+
+Alias: `f-writable-p`
 
 ```lisp
 (f-writable? "path/to/file.txt")
@@ -421,6 +429,8 @@ Alias: `f-dir?`
 
 {{f-executable?}}
 
+Alias: `f-executable-p`
+
 ```lisp
 (f-executable? "path/to/file.txt")
 (f-executable? "path/to/dir")
@@ -429,6 +439,8 @@ Alias: `f-dir?`
 ### f-absolute? `(path)`
 
 {{f-absolute?}}
+
+Alias: `f-absolute-p`
 
 ```lisp
 (f-absolute? "path/to/dir") ;; => nil
@@ -439,6 +451,8 @@ Alias: `f-dir?`
 
 {{f-relative?}}
 
+Alias: `f-relative-p`
+
 ```lisp
 (f-relative? "path/to/dir") ;; => t
 (f-relative? "/full/path/to/dir") ;; => nil
@@ -448,6 +462,8 @@ Alias: `f-dir?`
 
 {{f-root?}}
 
+Alias: `f-root-p`
+
 ```lisp
 (f-root? "/") ;; => t
 (f-root? "/not/root") ;; => nil
@@ -456,6 +472,8 @@ Alias: `f-dir?`
 ### f-ext? `(path ext)`
 
 {{f-ext?}}
+
+Alias: `f-ext-p`
 
 ```lisp
 (f-ext? "path/to/file.el" "el") ;; => t
@@ -468,7 +486,7 @@ Alias: `f-dir?`
 
 {{f-same?}}
 
-Alias: `f-equal?`
+Aliases: `f-same-p f-equal? f-equal-p`
 
 ```lisp
 (f-same? "foo.txt" "foo.txt") ;; => t
@@ -478,6 +496,8 @@ Alias: `f-equal?`
 ### f-parent-of? `(path-a path-b)`
 
 {{f-parent-of?}}
+
+Alias: `f-parent-of-p`
 
 ```lisp
 (f-parent-of? "/path/to" "/path/to/dir") ;; => t
@@ -489,6 +509,8 @@ Alias: `f-equal?`
 
 {{f-child-of?}}
 
+Alias: `f-child-of-p`
+
 ```lisp
 (f-child-of? "/path/to" "/path/to/dir") ;; => nil
 (f-child-of? "/path/to/dir" "/path/to") ;; => t
@@ -498,6 +520,8 @@ Alias: `f-equal?`
 ### f-ancestor-of? `(path-a path-b)`
 
 {{f-ancestor-of?}}
+
+Alias: `f-ancestor-of-p`
 
 ```lisp
 (f-ancestor-of? "/path/to" "/path/to/dir") ;; => t
@@ -509,6 +533,8 @@ Alias: `f-equal?`
 ### f-descendant-of? `(path-a path-b)`
 
 {{f-descendant-of?}}
+
+Alias: `f-descendant-of-p`
 
 ```lisp
 (f-descendant-of? "/path/to/dir" "/path/to") ;; => t

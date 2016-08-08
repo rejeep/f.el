@@ -397,7 +397,7 @@ Return t if PATH exists, false otherwise.
 
 Return t if PATH is directory, false otherwise.
 
-Alias: `f-dir?`
+Aliases: `f-directory-p f-dir? f-dir-p`
 
 ```lisp
 (f-directory? "path/to/file.txt") ;; => nil
@@ -408,6 +408,8 @@ Alias: `f-dir?`
 
 Return t if PATH is file, false otherwise.
 
+Alias: `f-file-p`
+
 ```lisp
 (f-file? "path/to/file.txt") ;; => t
 (f-file? "path/to/dir") ;; => nil
@@ -416,6 +418,8 @@ Return t if PATH is file, false otherwise.
 ### f-symlink? `(path)`
 
 Return t if PATH is symlink, false otherwise.
+
+Alias: `f-symlink-p`
 
 ```lisp
 (f-symlink? "path/to/file.txt") ;; => nil
@@ -427,6 +431,8 @@ Return t if PATH is symlink, false otherwise.
 
 Return t if PATH is readable, false otherwise.
 
+Alias: `f-readable-p`
+
 ```lisp
 (f-readable? "path/to/file.txt")
 (f-readable? "path/to/dir")
@@ -435,6 +441,8 @@ Return t if PATH is readable, false otherwise.
 ### f-writable? `(path)`
 
 Return t if PATH is writable, false otherwise.
+
+Alias: `f-writable-p`
 
 ```lisp
 (f-writable? "path/to/file.txt")
@@ -445,6 +453,8 @@ Return t if PATH is writable, false otherwise.
 
 Return t if PATH is executable, false otherwise.
 
+Alias: `f-executable-p`
+
 ```lisp
 (f-executable? "path/to/file.txt")
 (f-executable? "path/to/dir")
@@ -453,6 +463,8 @@ Return t if PATH is executable, false otherwise.
 ### f-absolute? `(path)`
 
 Return t if PATH is absolute, false otherwise.
+
+Alias: `f-absolute-p`
 
 ```lisp
 (f-absolute? "path/to/dir") ;; => nil
@@ -463,6 +475,8 @@ Return t if PATH is absolute, false otherwise.
 
 Return t if PATH is relative, false otherwise.
 
+Alias: `f-relative-p`
+
 ```lisp
 (f-relative? "path/to/dir") ;; => t
 (f-relative? "/full/path/to/dir") ;; => nil
@@ -471,6 +485,8 @@ Return t if PATH is relative, false otherwise.
 ### f-root? `(path)`
 
 Return t if PATH is root directory, false otherwise.
+
+Alias: `f-root-p`
 
 ```lisp
 (f-root? "/") ;; => t
@@ -486,6 +502,7 @@ false otherwise.
 
 The extension, in a file name, is the part that follows the last
 '.', excluding version numbers and backup suffixes.
+Alias: `f-ext-p`
 
 ```lisp
 (f-ext? "path/to/file.el" "el") ;; => t
@@ -498,7 +515,7 @@ The extension, in a file name, is the part that follows the last
 
 Return t if PATH-A and PATH-b are references to same file.
 
-Alias: `f-equal?`
+Aliases: `f-same-p f-equal? f-equal-p`
 
 ```lisp
 (f-same? "foo.txt" "foo.txt") ;; => t
@@ -508,6 +525,8 @@ Alias: `f-equal?`
 ### f-parent-of? `(path-a path-b)`
 
 Return t if PATH-A is parent of PATH-B.
+
+Alias: `f-parent-of-p`
 
 ```lisp
 (f-parent-of? "/path/to" "/path/to/dir") ;; => t
@@ -519,6 +538,8 @@ Return t if PATH-A is parent of PATH-B.
 
 Return t if PATH-A is child of PATH-B.
 
+Alias: `f-child-of-p`
+
 ```lisp
 (f-child-of? "/path/to" "/path/to/dir") ;; => nil
 (f-child-of? "/path/to/dir" "/path/to") ;; => t
@@ -528,6 +549,8 @@ Return t if PATH-A is child of PATH-B.
 ### f-ancestor-of? `(path-a path-b)`
 
 Return t if PATH-A is ancestor of PATH-B.
+
+Alias: `f-ancestor-of-p`
 
 ```lisp
 (f-ancestor-of? "/path/to" "/path/to/dir") ;; => t
@@ -539,6 +562,8 @@ Return t if PATH-A is ancestor of PATH-B.
 ### f-descendant-of? `(path-a path-b)`
 
 Return t if PATH-A is desendant of PATH-B.
+
+Alias: `f-descendant-of-p`
 
 ```lisp
 (f-descendant-of? "/path/to/dir" "/path/to") ;; => t
@@ -692,6 +717,10 @@ Only allow PATH-OR-PATHS and decendants to be modified in BODY.
 ```
 
 ## Changelog
+
+### v0.18.2
+
+* Added `-p` aliases of all `?` functions.
 
 ### v0.18.0
 
