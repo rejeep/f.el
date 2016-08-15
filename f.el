@@ -302,42 +302,64 @@ If FORCE is t, a directory will be deleted recursively."
   "Return t if PATH exists, false otherwise."
   (file-exists-p path))
 
+(defalias 'f-exists-p 'f-exists?)
+
 (defalias 'f-dir? 'f-directory?)
+(defalias 'f-dir-p 'f-dir?)
+
 (defun f-directory? (path)
   "Return t if PATH is directory, false otherwise."
   (file-directory-p path))
+
+(defalias 'f-directory-p 'f-directory?)
 
 (defun f-file? (path)
   "Return t if PATH is file, false otherwise."
   (file-regular-p path))
 
+(defalias 'f-file-p 'f-file?)
+
 (defun f-symlink? (path)
   "Return t if PATH is symlink, false otherwise."
   (not (not (file-symlink-p path))))
+
+(defalias 'f-symlink-p 'f-symlink?)
 
 (defun f-readable? (path)
   "Return t if PATH is readable, false otherwise."
   (file-readable-p path))
 
+(defalias 'f-readable-p 'f-readable?)
+
 (defun f-writable? (path)
   "Return t if PATH is writable, false otherwise."
   (file-writable-p path))
+
+(defalias 'f-writable-p 'f-writable?)
 
 (defun f-executable? (path)
   "Return t if PATH is executable, false otherwise."
   (file-executable-p path))
 
+(defalias 'f-executable-p 'f-executable?)
+
 (defun f-absolute? (path)
   "Return t if PATH is absolute, false otherwise."
   (file-name-absolute-p path))
+
+(defalias 'f-absolute-p 'f-absolute?)
 
 (defun f-relative? (path)
   "Return t if PATH is relative, false otherwise."
   (not (f-absolute? path)))
 
+(defalias 'f-relative-p 'f-relative?)
+
 (defun f-root? (path)
   "Return t if PATH is root directory, false otherwise."
   (not (f-parent path)))
+
+(defalias 'f-root-p 'f-root?)
 
 (defun f-ext? (path &optional ext)
   "Return t if extension of PATH is EXT, false otherwise.
@@ -351,22 +373,32 @@ The extension, in a file name, is the part that follows the last
       (string= (f-ext path) ext)
     (not (eq (f-ext path) nil))))
 
+(defalias 'f-ext-p 'f-ext?)
+
 (defalias 'f-equal? 'f-same?)
+(defalias 'f-equal-p 'f-equal?)
+
 (defun f-same? (path-a path-b)
   "Return t if PATH-A and PATH-b are references to same file."
   (equal
    (f-canonical (f-expand path-a))
    (f-canonical (f-expand path-b))))
 
+(defalias 'f-same-p 'f-same?)
+
 (defun f-parent-of? (path-a path-b)
   "Return t if PATH-A is parent of PATH-B."
   (--when-let (f-parent path-b)
     (f-same? path-a it)))
 
+(defalias 'f-parent-of-p 'f-parent-of?)
+
 (defun f-child-of? (path-a path-b)
   "Return t if PATH-A is child of PATH-B."
   (--when-let (f-parent path-a)
     (f-same? it path-b)))
+
+(defalias 'f-child-of-p 'f-child-of?)
 
 (defun f-ancestor-of? (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
@@ -374,11 +406,15 @@ The extension, in a file name, is the part that follows the last
     (s-starts-with? (f-full path-a)
                     (f-full path-b))))
 
+(defalias 'f-ancestor-of-p 'f-ancestor-of?)
+
 (defun f-descendant-of? (path-a path-b)
   "Return t if PATH-A is desendant of PATH-B."
   (unless (f-same? path-a path-b)
     (s-starts-with? (f-full path-b)
                     (f-full path-a))))
+
+(defalias 'f-descendant-of-p 'f-descendant-of?)
 
 
 ;;;; Stats
