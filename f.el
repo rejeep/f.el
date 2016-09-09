@@ -566,8 +566,6 @@ returned."
     (setq path default-directory))
   (when (f-relative? path)
     (setq path (f-expand path)))
-  (unless (f-exists? path)
-    (error "File %s does not exist" path))
   (if (funcall fn path)
       path
     (unless (f-root? path)
