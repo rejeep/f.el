@@ -51,6 +51,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
 * [f-copy](#f-copy-from-to) `(from to)`
+* [f-copy-contenst](#f-copy-contents-from-to) `(from to)`
 * [f-touch](#f-touch-path) `(path)`
 
 ### Predicates
@@ -349,6 +350,14 @@ Alias: `f-write`
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")
 (f-copy "path/to/dir" "other/dir")
+```
+
+### f-copy-contents `(from to)`
+
+{{f-copy-contents}}
+
+```lisp
+(f-copy-contents "path/to/dir" "path/to/other/dir")
 ```
 
 ### f-touch `(path)`

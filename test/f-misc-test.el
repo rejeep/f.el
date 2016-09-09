@@ -309,9 +309,6 @@
         (lambda (path)
           (f-file? (f-expand "foo" path)))))))))
 
-(ert-deftest f-traverse-upwards-test/specified-path-does-not-exist ()
-  (should-error (f-traverse-upwards 'ignore "does-not-exist")))
-
 (ert-deftest f-traverse-upwards-test/specified-path-is-file ()
   (with-playground
    (f-touch "foo")
