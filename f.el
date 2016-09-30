@@ -127,7 +127,7 @@ The extension, in a file name, is the part that follows the last
   "Return PATH but with EXT as the new extension.
 EXT must not be nil or empty."
   (if (s-blank? ext)
-      (error "extension cannot be empty or nil")
+      (error "Extension cannot be empty or nil")
     (concat (f-no-ext path) "." ext)))
 
 (defun f-base (path)
