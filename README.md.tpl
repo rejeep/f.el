@@ -698,6 +698,12 @@ See: `file-expand-wildcards`
 
 ## Changelog
 
+### v0.19.0
+
+* Remove deprecated `f-up` function, use `f-traverse-upwards` instead
+* Add `f-append-text` and `f-append-bytes`
+* Add `f-hidden?`
+
 ### v0.18.0
 
 * Add `f-swap-ext` (by @phillord)

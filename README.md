@@ -206,7 +206,7 @@ Return PATH relative to DIR.
 
 ### f-short `(path)`
 
-Return abbrev of PATH. See ‘abbreviate-file-name’.
+Return abbrev of PATH.  See ‘abbreviate-file-name’.
 
 Alias: `f-abbrev`
 
@@ -258,7 +258,7 @@ Return absolute path to PATH, with ending slash.
 
 ### f-uniquify `(paths)`
 
-Return unique suffixes of PATHS.
+Return unique suffixes of FILES.
 
 This function expects no duplicate paths.
 
@@ -271,7 +271,7 @@ This function expects no duplicate paths.
 
 ### f-uniquify-alist `(paths)`
 
-Return alist mapping PATHS to unique suffixes of PATHS.
+Return alist mapping FILES to unique suffixes of FILES.
 
 This function expects no duplicate paths.
 
@@ -377,7 +377,7 @@ If FORCE is t, a directory will be deleted recursively.
 
 ### f-symlink `(source path)`
 
-Create a symlink to ‘source‘ from ‘path‘.
+Create a symlink to SOURCE from PATH.
 
 ```lisp
 (f-symlink "path/to/source" "path/to/link")
@@ -548,7 +548,7 @@ Alias: `f-ext-p`
 
 ### f-same? `(path-a path-b)`
 
-Return t if PATH-A and PATH-b are references to same file.
+Return t if PATH-A and PATH-B are references to same file.
 
 Aliases: `f-same-p f-equal? f-equal-p`
 
@@ -620,7 +620,7 @@ Return t if PATH is hidden, nil otherwise.
 
 Return size of PATH.
 
-If PATH is a file, return size of that file. If PATH is
+If PATH is a file, return size of that file.  If PATH is
 directory, return sum of all files in PATH.
 
 ```lisp
@@ -632,9 +632,9 @@ directory, return sum of all files in PATH.
 
 Return the depth of PATH.
 
-At first, PATH is expanded with ‘f-expand’. Then the full path is used to
+At first, PATH is expanded with ‘f-expand’.  Then the full path is used to
 detect the depth.
-’/’ will be zero depth, ’/usr’ will be one depth. And so on.
+’/’ will be zero depth,  ’/usr’ will be one depth.  And so on.
 
 ```lisp
 (f-depth "/") ;; 0
@@ -673,7 +673,7 @@ See: `file-expand-wildcards`
 
 Find all files and directories in PATH.
 
-FN - called for each found file and directory. If FN returns a thruthy
+FN - called for each found file and directory.  If FN returns a thruthy
 value, file or directory will be included.
 RECURSIVE - Search for files and directories recursive.
 
@@ -686,7 +686,7 @@ RECURSIVE - Search for files and directories recursive.
 
 ### f-directories `(path &optional fn recursive)`
 
-Find all directories in PATH. See ‘f-entries‘.
+Find all directories in PATH.  See ‘f-entries‘.
 
 ```lisp
 (f-directories "path/to/dir")
@@ -697,7 +697,7 @@ Find all directories in PATH. See ‘f-entries‘.
 
 ### f-files `(path &optional fn recursive)`
 
-Find all files in PATH. See ‘f-entries‘.
+Find all files in PATH.  See ‘f-entries‘.
 
 ```lisp
 (f-files "path/to/dir")
@@ -716,10 +716,10 @@ Return absolute root.
 
 ### f-traverse-upwards `(fn &optional path)`
 
-Traverse up as long as FN returns nil, starting at PATH.
+Traverse up as long as FN return nil, starting at PATH.
 
 If FN returns a non-nil value, the path sent as argument to FN is
-returned. If no function callback return a non-nil value, nil is
+returned.  If no function callback return a non-nil value, nil is
 returned.
 
 ```lisp
@@ -746,6 +746,12 @@ Only allow PATH-OR-PATHS and decendants to be modified in BODY.
 ```
 
 ## Changelog
+
+### v0.19.0
+
+* Remove deprecated `f-up` function, use `f-traverse-upwards` instead
+* Add `f-append-text` and `f-append-bytes`
+* Add `f-hidden?`
 
 ### v0.18.0
 
