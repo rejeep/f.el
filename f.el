@@ -181,13 +181,13 @@ ending slash."
     uniq-filenames-next))
 
 (defun f-uniquify (files)
-  "Return unique suffixes of PATHS.
+  "Return unique suffixes of FILES.
 
 This function expects no duplicate paths."
   (-map 'car (f--uniquify files)))
 
 (defun f-uniquify-alist (files)
-  "Return alist mapping PATHS to unique suffixes of PATHS.
+  "Return alist mapping FILES to unique suffixes of FILES.
 
 This function expects no duplicate paths."
   (-map 'cadr (f--uniquify files)))
