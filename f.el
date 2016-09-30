@@ -379,7 +379,7 @@ The extension, in a file name, is the part that follows the last
 (defalias 'f-equal-p 'f-equal?)
 
 (defun f-same? (path-a path-b)
-  "Return t if PATH-A and PATH-b are references to same file."
+  "Return t if PATH-A and PATH-B are references to same file."
   (equal
    (f-canonical (f-expand path-a))
    (f-canonical (f-expand path-b))))
