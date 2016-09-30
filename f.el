@@ -127,7 +127,7 @@ The extension, in a file name, is the part that follows the last
   "Return PATH but with EXT as the new extension.
 EXT must not be nil or empty."
   (if (s-blank? ext)
-      (error "extension cannot be empty or nil.")
+      (error "Extension cannot be empty or nil")
     (concat (f-no-ext path) "." ext)))
 
 (defun f-base (path)
@@ -140,7 +140,7 @@ EXT must not be nil or empty."
 
 (defalias 'f-abbrev 'f-short)
 (defun f-short (path)
-  "Return abbrev of PATH. See `abbreviate-file-name'."
+  "Return abbrev of PATH.  See `abbreviate-file-name'."
   (abbreviate-file-name path))
 
 (defun f-long (path)
@@ -181,13 +181,13 @@ ending slash."
     uniq-filenames-next))
 
 (defun f-uniquify (files)
-  "Return unique suffixes of PATHS.
+  "Return unique suffixes of FILES.
 
 This function expects no duplicate paths."
   (-map 'car (f--uniquify files)))
 
 (defun f-uniquify-alist (files)
-  "Return alist mapping PATHS to unique suffixes of PATHS.
+  "Return alist mapping FILES to unique suffixes of FILES.
 
 This function expects no duplicate paths."
   (-map 'cadr (f--uniquify files)))
@@ -263,7 +263,7 @@ If FORCE is t, a directory will be deleted recursively."
       (delete-directory path force))))
 
 (defun f-symlink (source path)
-  "Create a symlink to `source` from `path`."
+  "Create a symlink to SOURCE from PATH."
   (f--destructive path (make-symbolic-link source path)))
 
 (defun f-move (from to)
@@ -379,7 +379,7 @@ The extension, in a file name, is the part that follows the last
 (defalias 'f-equal-p 'f-equal?)
 
 (defun f-same? (path-a path-b)
-  "Return t if PATH-A and PATH-b are references to same file."
+  "Return t if PATH-A and PATH-B are references to same file."
   (equal
    (f-canonical (f-expand path-a))
    (f-canonical (f-expand path-b))))
@@ -422,7 +422,7 @@ The extension, in a file name, is the part that follows the last
 (defun f-size (path)
   "Return size of PATH.
 
-If PATH is a file, return size of that file. If PATH is
+If PATH is a file, return size of that file.  If PATH is
 directory, return sum of all files in PATH."
   (if (f-directory? path)
       (-sum (-map 'f-size (f-files path nil t)))
@@ -431,9 +431,9 @@ directory, return sum of all files in PATH."
 (defun f-depth (path)
   "Return the depth of PATH.
 
-At first, PATH is expanded with `f-expand'. Then the full path is used to
+At first, PATH is expanded with `f-expand'.  Then the full path is used to
 detect the depth.
-'/' will be zero depth, '/usr' will be one depth. And so on."
+'/' will be zero depth,  '/usr' will be one depth.  And so on."
   (- (length (f-split (f-expand path))) 1))
 
 
@@ -489,7 +489,7 @@ detect the depth.
 (defun f-entries (path &optional fn recursive)
   "Find all files and directories in PATH.
 
-FN - called for each found file and directory. If FN returns a thruthy
+FN - called for each found file and directory.  If FN returns a thruthy
 value, file or directory will be included.
 RECURSIVE - Search for files and directories recursive."
   (let ((entries (f--collect-entries path recursive)))
@@ -505,7 +505,7 @@ RECURSIVE - Search for files and directories recursive."
     ,recursive))
 
 (defun f-directories (path &optional fn recursive)
-  "Find all directories in PATH. See `f-entries`."
+  "Find all directories in PATH.  See `f-entries`."
   (let ((directories (-select 'f-directory? (f--collect-entries path recursive))))
     (if fn (-select fn directories) directories)))
 
@@ -519,7 +519,7 @@ RECURSIVE - Search for files and directories recursive."
     ,recursive))
 
 (defun f-files (path &optional fn recursive)
-  "Find all files in PATH. See `f-entries`."
+  "Find all files in PATH.  See `f-entries`."
   (let ((files (-select 'f-file? (f--collect-entries path recursive))))
     (if fn (-select fn files) files)))
 
@@ -557,10 +557,10 @@ RECURSIVE - Search for files and directories recursive."
     ,path))
 
 (defun f-traverse-upwards (fn &optional path)
-  "Traverse up as long as FN returns nil, starting at PATH.
+  "Traverse up as long as FN return nil, starting at PATH.
 
 If FN returns a non-nil value, the path sent as argument to FN is
-returned. If no function callback return a non-nil value, nil is
+returned.  If no function callback return a non-nil value, nil is
 returned."
   (unless path
     (setq path default-directory))
