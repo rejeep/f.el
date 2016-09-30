@@ -43,6 +43,8 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-write-bytes](#f-write-bytes-data-path) `(data path)`
 * [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
 * [f-write-text](#f-write-text-text-coding-path)`(text coding path)`
+* [f-append-text](#f-append-text-text-coding-path)`(text coding path)`
+* [f-append-bytes](#f-append-data-path)`(text coding path)`
 
 ### Destructive
 
@@ -51,6 +53,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
 * [f-copy](#f-copy-from-to) `(from to)`
+* [f-copy-contenst](#f-copy-contents-from-to) `(from to)`
 * [f-touch](#f-touch-path) `(path)`
 
 ### Predicates
@@ -71,6 +74,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-child-of?](#f-child-of-path-a-path-b) `(path-a path-b)`
 * [f-ancestor-of?](#f-ancestor-of-path-a-path-b) `(path-a path-b)`
 * [f-descendant-of?](#f-descendant-of-path-a-path-b) `(path-a path-b)`
+* [f-hidden?](#f-hidden-path) `(path)`
 
 ### Stats
 
@@ -86,7 +90,6 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-root](#f-root-) `()`
-* [f-up](#f-up-fn-optional-dir) `(fn &optional dir)`
 * [f-traverse-upwards](#f-traverse-upwards-fn-optional-path) `(fn &optional path)`
 * [f-with-sandbox](#f-with-sandbox-path-or-paths-rest-body) `(path-or-paths &rest body)`
 
@@ -114,7 +117,7 @@ Split PATH and return list containing parts.
 
 ### f-expand `(path &optional dir)`
 
-Expand PATH relative to DIR (or `default-directory').
+Expand PATH relative to DIR (or ‘default-directory’).
 
 ```lisp
 (f-expand "name") ;; => "/default/directory/name"
@@ -157,7 +160,7 @@ Return the deepest common parent directory of PATHS.
 Return the file extension of PATH.
 
 The extension, in a file name, is the part that follows the last
-'.', excluding version numbers and backup suffixes.
+’.’, excluding version numbers and backup suffixes.
 
 ```lisp
 (f-ext "path/to/file.ext") ;; => "ext"
@@ -203,7 +206,7 @@ Return PATH relative to DIR.
 
 ### f-short `(path)`
 
-Return abbrev of PATH. See `abbreviate-file-name'.
+Return abbrev of PATH.  See ‘abbreviate-file-name’.
 
 Alias: `f-abbrev`
 
@@ -234,7 +237,7 @@ Return the canonical name of PATH.
 
 Append slash to PATH unless one already.
 
-Some functions, such as `call-process' requires there to be an
+Some functions, such as ‘call-process’ requires there to be an
 ending slash.
 
 ```lisp
@@ -255,7 +258,7 @@ Return absolute path to PATH, with ending slash.
 
 ### f-uniquify `(paths)`
 
-Return unique suffixes of PATHS.
+Return unique suffixes of FILES.
 
 This function expects no duplicate paths.
 
@@ -268,7 +271,7 @@ This function expects no duplicate paths.
 
 ### f-uniquify-alist `(paths)`
 
-Return alist mapping PATHS to unique suffixes of PATHS.
+Return alist mapping FILES to unique suffixes of FILES.
 
 This function expects no duplicate paths.
 
@@ -303,7 +306,7 @@ DATA is a unibyte string.  PATH is a file name to write to.
 
 Read text with PATH, using CODING.
 
-CODING defaults to `utf-8'.
+CODING defaults to ‘utf-8’.
 
 Return the decoded text as multibyte string.
 
@@ -326,6 +329,29 @@ Alias: `f-write`
 ```lisp
 (f-write-text "Hello world" 'utf-8 "path/to/file.txt")
 (f-write "Hello world" 'utf-8 "path/to/file.txt")
+```
+
+### f-append-text `(text coding path)`
+
+Append TEXT with CODING to PATH.
+
+If PATH does not exist, it is created.
+
+Alias: `f-append`
+
+```lisp
+(f-append-text "Hello world" 'utf-8 "path/to/file.txt")
+(f-append "Hello world" 'utf-8 "path/to/file.txt")
+```
+
+### f-append-bytes `(data path)`
+
+Append binary DATA to PATH.
+
+If PATH does not exist, it is created.
+
+```lisp
+(f-append-bytes "path/to/file" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))
 ```
 
 ### f-mkdir `(&rest dirs)`
@@ -351,7 +377,7 @@ If FORCE is t, a directory will be deleted recursively.
 
 ### f-symlink `(source path)`
 
-Create a symlink to `source` from `path`.
+Create a symlink to SOURCE from PATH.
 
 ```lisp
 (f-symlink "path/to/source" "path/to/link")
@@ -373,6 +399,14 @@ Copy file or directory FROM to TO.
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")
 (f-copy "path/to/dir" "other/dir")
+```
+
+### f-copy-contents `(from to)`
+
+Copy contents in directory FROM, to directory TO.
+
+```lisp
+(f-copy-contents "path/to/dir" "path/to/other/dir")
 ```
 
 ### f-touch `(path)`
@@ -501,7 +535,8 @@ If EXT is nil or omitted, return t if PATH has any extension,
 false otherwise.
 
 The extension, in a file name, is the part that follows the last
-'.', excluding version numbers and backup suffixes.
+’.’, excluding version numbers and backup suffixes.
+
 Alias: `f-ext-p`
 
 ```lisp
@@ -513,7 +548,7 @@ Alias: `f-ext-p`
 
 ### f-same? `(path-a path-b)`
 
-Return t if PATH-A and PATH-b are references to same file.
+Return t if PATH-A and PATH-B are references to same file.
 
 Aliases: `f-same-p f-equal? f-equal-p`
 
@@ -572,11 +607,20 @@ Alias: `f-descendant-of-p`
 (f-descendant-of? "/path/to" "/path/to") ;; => nil
 ```
 
+### f-hidden? `(path)`
+
+Return t if PATH is hidden, nil otherwise.
+
+```lisp
+(f-hidden? "/path/to/foo") ;; => nil
+(f-hidden? "/path/to/.foo") ;; => t
+```
+
 ### f-size `(path)`
 
 Return size of PATH.
 
-If PATH is a file, return size of that file. If PATH is
+If PATH is a file, return size of that file.  If PATH is
 directory, return sum of all files in PATH.
 
 ```lisp
@@ -588,9 +632,9 @@ directory, return sum of all files in PATH.
 
 Return the depth of PATH.
 
-At first, PATH is expanded with `f-expand'. Then the full path is used to
+At first, PATH is expanded with ‘f-expand’.  Then the full path is used to
 detect the depth.
-'/' will be zero depth, '/usr' will be one depth. And so on.
+’/’ will be zero depth,  ’/usr’ will be one depth.  And so on.
 
 ```lisp
 (f-depth "/") ;; 0
@@ -629,7 +673,7 @@ See: `file-expand-wildcards`
 
 Find all files and directories in PATH.
 
-FN - called for each found file and directory. If FN returns a thruthy
+FN - called for each found file and directory.  If FN returns a thruthy
 value, file or directory will be included.
 RECURSIVE - Search for files and directories recursive.
 
@@ -642,7 +686,7 @@ RECURSIVE - Search for files and directories recursive.
 
 ### f-directories `(path &optional fn recursive)`
 
-Find all directories in PATH. See `f-entries`.
+Find all directories in PATH.  See ‘f-entries‘.
 
 ```lisp
 (f-directories "path/to/dir")
@@ -653,7 +697,7 @@ Find all directories in PATH. See `f-entries`.
 
 ### f-files `(path &optional fn recursive)`
 
-Find all files in PATH. See `f-entries`.
+Find all files in PATH.  See ‘f-entries‘.
 
 ```lisp
 (f-files "path/to/dir")
@@ -670,27 +714,12 @@ Return absolute root.
 (f-root) ;; => "/"
 ```
 
-### f-up `(fn &optional dir)`
-
-Traverse up as long as FN returns nil, starting at DIR.
-
-Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-path)
-
-```lisp
-(f-up
- (lambda (path)
-   (f-exists? (f-expand ".git" path)))
- start-path)
-
-(f--up (f-exists? (f-expand ".git" it)) start-path) ;; same as above
-```
-
 ### f-traverse-upwards `(fn &optional path)`
 
-Traverse up as long as FN returns nil, starting at PATH.
+Traverse up as long as FN return nil, starting at PATH.
 
 If FN returns a non-nil value, the path sent as argument to FN is
-returned. If no function callback return a non-nil value, nil is
+returned.  If no function callback return a non-nil value, nil is
 returned.
 
 ```lisp
@@ -718,9 +747,11 @@ Only allow PATH-OR-PATHS and decendants to be modified in BODY.
 
 ## Changelog
 
-### v0.18.2
+### v0.19.0
 
-* Added `-p` aliases of all `?` functions.
+* Remove deprecated `f-up` function, use `f-traverse-upwards` instead
+* Add `f-append-text` and `f-append-bytes`
+* Add `f-hidden?`
 
 ### v0.18.0
 

@@ -43,6 +43,8 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-write-bytes](#f-write-bytes-data-path) `(data path)`
 * [f-read-text](#f-read-text-path-optional-coding) `(path &optional coding)`
 * [f-write-text](#f-write-text-text-coding-path)`(text coding path)`
+* [f-append-text](#f-append-text-text-coding-path)`(text coding path)`
+* [f-append-bytes](#f-append-data-path)`(text coding path)`
 
 ### Destructive
 
@@ -51,6 +53,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
 * [f-copy](#f-copy-from-to) `(from to)`
+* [f-copy-contenst](#f-copy-contents-from-to) `(from to)`
 * [f-touch](#f-touch-path) `(path)`
 
 ### Predicates
@@ -71,6 +74,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-child-of?](#f-child-of-path-a-path-b) `(path-a path-b)`
 * [f-ancestor-of?](#f-ancestor-of-path-a-path-b) `(path-a path-b)`
 * [f-descendant-of?](#f-descendant-of-path-a-path-b) `(path-a path-b)`
+* [f-hidden?](#f-hidden-path) `(path)`
 
 ### Stats
 
@@ -86,7 +90,6 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-directories](#f-directories-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-files](#f-files-path-optional-fn-recursive) `(path &optional fn recursive)`
 * [f-root](#f-root-) `()`
-* [f-up](#f-up-fn-optional-dir) `(fn &optional dir)`
 * [f-traverse-upwards](#f-traverse-upwards-fn-optional-path) `(fn &optional path)`
 * [f-with-sandbox](#f-with-sandbox-path-or-paths-rest-body) `(path-or-paths &rest body)`
 
@@ -306,6 +309,25 @@ Alias: `f-write`
 (f-write "Hello world" 'utf-8 "path/to/file.txt")
 ```
 
+### f-append-text `(text coding path)`
+
+{{f-append-text}}
+
+Alias: `f-append`
+
+```lisp
+(f-append-text "Hello world" 'utf-8 "path/to/file.txt")
+(f-append "Hello world" 'utf-8 "path/to/file.txt")
+```
+
+### f-append-bytes `(data path)`
+
+{{f-append-bytes}}
+
+```lisp
+(f-append-bytes "path/to/file" (unibyte-string 72 101 108 108 111 32 119 111 114 108 100))
+```
+
 ### f-mkdir `(&rest dirs)`
 
 {{f-mkdir}}
@@ -349,6 +371,14 @@ Alias: `f-write`
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")
 (f-copy "path/to/dir" "other/dir")
+```
+
+### f-copy-contents `(from to)`
+
+{{f-copy-contents}}
+
+```lisp
+(f-copy-contents "path/to/dir" "path/to/other/dir")
 ```
 
 ### f-touch `(path)`
@@ -543,6 +573,15 @@ Alias: `f-descendant-of-p`
 (f-descendant-of? "/path/to" "/path/to") ;; => nil
 ```
 
+### f-hidden? `(path)`
+
+{{f-hidden?}}
+
+```lisp
+(f-hidden? "/path/to/foo") ;; => nil
+(f-hidden? "/path/to/.foo") ;; => t
+```
+
 ### f-size `(path)`
 
 {{f-size}}
@@ -630,21 +669,6 @@ See: `file-expand-wildcards`
 (f-root) ;; => "/"
 ```
 
-### f-up `(fn &optional dir)`
-
-{{f-up}}
-
-Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-path)
-
-```lisp
-(f-up
- (lambda (path)
-   (f-exists? (f-expand ".git" path)))
- start-path)
-
-(f--up (f-exists? (f-expand ".git" it)) start-path) ;; same as above
-```
-
 ### f-traverse-upwards `(fn &optional path)`
 
 {{f-traverse-upwards}}
@@ -673,6 +697,12 @@ Deprecated in favor of: [f-traverse-upwards](#f-traverse-upwards-fn-optional-pat
 ```
 
 ## Changelog
+
+### v0.19.0
+
+* Remove deprecated `f-up` function, use `f-traverse-upwards` instead
+* Add `f-append-text` and `f-append-bytes`
+* Add `f-hidden?`
 
 ### v0.18.0
 
