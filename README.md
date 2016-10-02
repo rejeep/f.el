@@ -616,6 +616,8 @@ Return t if PATH is hidden, nil otherwise.
 (f-hidden? "/path/to/.foo") ;; => t
 ```
 
+Alias: `f-hidden-p`
+
 ### f-size `(path)`
 
 Return size of PATH.

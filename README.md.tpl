@@ -582,6 +582,8 @@ Alias: `f-descendant-of-p`
 (f-hidden? "/path/to/.foo") ;; => t
 ```
 
+Alias: `f-hidden-p`
+
 ### f-size `(path)`
 
 {{f-size}}

@@ -450,6 +450,8 @@ The extension, in a file name, is the part that follows the last
     (error "Path does not exist: %s" path))
   (string= (substring path 0 1) "."))
 
+(defalias 'f-hidden-p 'f-hidden?)
+
 
 ;;;; Stats
 
