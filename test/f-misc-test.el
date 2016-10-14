@@ -107,7 +107,7 @@
    (should
     (equal
      (--map (f-relative it "foo") (f-entries "foo" nil t (list "ignore_inner")))
-     '("qux" "baz.txt" "bar.txt" "ignore")))))
+     '("qux" "ignore" "baz.txt" "bar.txt")))))
 
 (ert-deftest f-entries-test/anaphoric ()
   (with-playground
