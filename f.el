@@ -492,14 +492,12 @@ detect the depth.
   (file-expand-wildcards
    (f-join (or path default-directory) pattern)))
 
-(defun f--collect-entries (path recursive)
+(defun f--collect-entries (path recursive &optional reject-paths)
   (let (result
         (entries
          (-reject
           (lambda (file)
-            (or
-             (equal (f-filename file) ".")
-             (equal (f-filename file) "..")))
+	    (member (f-filename file) (append (list "." "..") reject-paths)))
           (directory-files path t))))
     (cond (recursive
            (-map
@@ -508,27 +506,27 @@ detect the depth.
                   (setq result (cons entry result))
                 (when (f-directory? entry)
                   (setq result (cons entry result))
-                  (setq result (append result (f--collect-entries entry recursive))))))
+                  (setq result (append result (f--collect-entries entry recursive reject-paths))))))
             entries))
           (t (setq result entries)))
     result))
 
-(defmacro f--entries (path body &optional recursive)
+(defmacro f--entries (path body &optional recursive reject-paths)
   "Anaphoric version of `f-entries'."
   `(f-entries
     ,path
     (lambda (path)
       (let ((it path))
         ,body))
-    ,recursive))
+    ,recursive ,reject-paths))
 
-(defun f-entries (path &optional fn recursive)
+(defun f-entries (path &optional fn recursive reject-paths)
   "Find all files and directories in PATH.
 
 FN - called for each found file and directory.  If FN returns a thruthy
 value, file or directory will be included.
 RECURSIVE - Search for files and directories recursive."
-  (let ((entries (f--collect-entries path recursive)))
+  (let ((entries (f--collect-entries path recursive reject-paths)))
     (if fn (-select fn entries) entries)))
 
 (defmacro f--directories (path body &optional recursive)
@@ -540,9 +538,9 @@ RECURSIVE - Search for files and directories recursive."
         ,body))
     ,recursive))
 
-(defun f-directories (path &optional fn recursive)
+(defun f-directories (path &optional fn recursive reject-paths)
   "Find all directories in PATH.  See `f-entries`."
-  (let ((directories (-select 'f-directory? (f--collect-entries path recursive))))
+  (let ((directories (-select 'f-directory? (f--collect-entries path recursive reject-paths))))
     (if fn (-select fn directories) directories)))
 
 (defmacro f--files (path body &optional recursive)
@@ -554,9 +552,9 @@ RECURSIVE - Search for files and directories recursive."
         ,body))
     ,recursive))
 
-(defun f-files (path &optional fn recursive)
+(defun f-files (path &optional fn recursive reject-paths)
   "Find all files in PATH.  See `f-entries`."
-  (let ((files (-select 'f-file? (f--collect-entries path recursive))))
+  (let ((files (-select 'f-file? (f--collect-entries path recursive reject-paths))))
     (if fn (-select fn files) files)))
 
 (defmacro f--traverse-upwards (body &optional path)
