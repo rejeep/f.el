@@ -94,6 +94,21 @@
      (--map (f-relative it "foo") (f-entries "foo" nil t))
      '("bar.el" "bar" "bar/qux" "bar/baz.el" "bar/qux/hey.el")))))
 
+(ert-deftest f-entries-test/with-reject-paths ()
+  (with-playground
+   (f-mkdir "foo")
+   (f-touch "foo/bar.txt")
+   (f-touch "foo/baz.txt")
+   (f-mkdir "foo/qux")
+   (f-mkdir "foo/ignore")
+   (f-mkdir "foo/ignore/ignore_inner")
+   (f-touch "foo/ignore/ignore_inner/1.txt")
+   (f-touch "foo/ignore/ignore_inner/2.txt")
+   (should
+    (equal
+     (--map (f-relative it "foo") (f-entries "foo" nil t (list "ignore_inner")))
+     '("qux" "baz.txt" "bar.txt" "ignore")))))
+
 (ert-deftest f-entries-test/anaphoric ()
   (with-playground
    (f-mkdir "foo")
