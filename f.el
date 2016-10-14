@@ -525,7 +525,8 @@ detect the depth.
 
 FN - called for each found file and directory.  If FN returns a thruthy
 value, file or directory will be included.
-RECURSIVE - Search for files and directories recursive."
+RECURSIVE - Search for files and directories recursive.
+REJECT-PATHS - List of strings containing names to be skipped from traversing."
   (let ((entries (f--collect-entries path recursive reject-paths)))
     (if fn (-select fn entries) entries)))
 
