@@ -14,6 +14,11 @@ It's available on [Melpa](https://melpa.org/):
 
 Or you can just dump `f.el` in your load path somewhere.
 
+### Debian and Ubuntu
+
+Users of Debian 9 or later or Ubuntu 16.04 or later may simply
+`apt-get install elpa-f`.
+
 ## API
 
 ### Paths
