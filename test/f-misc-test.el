@@ -104,14 +104,17 @@
    (f-touch "foo/quux.el")
    (f-mkdir "foo/quuz")
    (f-touch "foo/quuz/corge.el")
-   (chmod "foo/quux.el" "400")
-   (chmod "foo/quuz" "400")
-   (should
-    (equal
-     (--map (f-relative it "foo") (f-entries "foo" nil t))
-     '("quuz" "quux.el" "bar.el" "bar" "bar/qux" "bar/baz.el")))
-   (chmod "foo/quuz" "700")
-   (chmod "foo/quuz/corge.el" "700")))
+   (unwind-protect
+       (progn
+         (chmod "foo/quux.el" "000")
+         (chmod "foo/quuz" "000")
+         (should
+          (equal
+           (--map (f-relative it "foo") (f-entries "foo" nil t))
+           '("quuz" "quux.el" "bar.el" "bar" "bar/qux" "bar/baz.el"))))
+     (progn
+       (chmod "foo/quuz" "700")
+       (chmod "foo/quuz/corge.el" "700")))))
 
 (ert-deftest f-entries-test/anaphoric ()
   (with-playground
