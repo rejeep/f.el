@@ -103,7 +103,7 @@
   (with-playground
    (f-touch "foo.txt")
    (f-mkdir "bar")
-   (f-move "foo.txt" "bar")
+   (f-move "foo.txt" "bar/")
    (should-exist "bar/foo.txt")))
 
 (ert-deftest f-move-test/move-absolute-path ()
@@ -112,7 +112,7 @@
    (f-mkdir "bar")
    (f-move
     (f-expand "foo.txt" f-test/playground-path)
-    (f-expand "bar" f-test/playground-path))
+    (file-name-as-directory (f-expand "bar" f-test/playground-path)))
    (should-exist "bar/foo.txt")))
 
 (ert-deftest f-move-test/rename-relative-path ()
@@ -153,7 +153,7 @@
    (f-mkdir "foo")
    (f-mkdir "bar")
    (f-write "FILE" 'utf-8 "foo/file.txt")
-   (f-copy "foo" "bar")
+   (f-copy "foo" "bar/")
    (should-exist "foo/file.txt" "FILE")
    (should-exist "bar/foo/file.txt" "FILE")))
 
@@ -172,7 +172,7 @@
    (f-write "FILE" 'utf-8 "foo/file.txt")
    (f-copy
     (f-expand "foo" f-test/playground-path)
-    (f-expand "bar" f-test/playground-path))
+    (file-name-as-directory (f-expand "bar" f-test/playground-path)))
    (should-exist "foo/file.txt" "FILE")
    (should-exist "bar/foo/file.txt" "FILE")))
 
