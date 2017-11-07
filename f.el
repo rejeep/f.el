@@ -483,9 +483,13 @@ detect the depth.
     byte-compile-current-file)
    (:else (buffer-file-name))))
 
+(defvar f--path-separator nil
+  "A variable to cache result of `f-path-separator'.")
+
 (defun f-path-separator ()
   "Return path separator."
-  (substring (f-join "x" "y") 1 2))
+  (or f--path-separator
+      (setf f--path-separator (substring (f-join "x" "y") 1 2))))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."
