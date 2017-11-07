@@ -489,7 +489,7 @@ detect the depth.
 (defun f-path-separator ()
   "Return path separator."
   (or f--path-separator
-      (setf f--path-separator (substring (f-join "x" "y") 1 2))))
+      (setq f--path-separator (substring (f-join "x" "y") 1 2))))
 
 (defun f-glob (pattern &optional path)
   "Find PATTERN in PATH."
