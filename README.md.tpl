@@ -75,6 +75,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-ancestor-of?](#f-ancestor-of-path-a-path-b) `(path-a path-b)`
 * [f-descendant-of?](#f-descendant-of-path-a-path-b) `(path-a path-b)`
 * [f-hidden?](#f-hidden-path) `(path)`
+* [f-empty?](#f-empty-path) `(path)`
 
 ### Stats
 
@@ -583,6 +584,19 @@ Alias: `f-descendant-of-p`
 ```
 
 Alias: `f-hidden-p`
+
+### f-empty? `(path)`
+
+{{f-empty?}}
+
+```lisp
+(f-empty? "/path/to/empty-file") ;; => t
+(f-empty? "/path/to/file-with-contents") ;; => nil
+(f-empty? "/path/to/empty-dir/") ;; => t
+(f-empty? "/path/to/dir-with-contents/") ;; => nil
+```
+
+Alias: `f-empty-p`
 
 ### f-size `(path)`
 
