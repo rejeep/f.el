@@ -416,6 +416,29 @@
    (should-not (f-hidden? "foo"))
    (should-not (f-hidden? "bar"))))
 
+;;; f-empty?
+
+(ert-deftest f-empty?-test/empty-file-is-empty ()
+  (with-playground
+   (f-write-text "" 'utf-8 "foo.txt")
+   (should (f-empty? "foo.txt"))))
+
+(ert-deftest f-empty?-test/file-containing-text-is--not-empty ()
+  (with-playground
+   (f-write-text "hello" 'utf-8 "derp.txt")
+   (should-not (f-empty? "derp.txt"))))
+
+(ert-deftest f-empty?-test/empty-directory-is-empty ()
+  (with-playground
+   (f-mkdir "bar")
+   (should (f-empty? "bar"))))
+
+(ert-deftest f-empty?-test/directory-containing-files-is--not-empty ()
+  (with-playground
+   (f-mkdir "bar")
+   (f-write-text "hello" 'utf-8 "bar/derp.txt")
+   (should-not (f-empty? "bar"))))
+
 (provide 'f-predicates-test)
 
 ;;; f-predicates-test.el ends here
