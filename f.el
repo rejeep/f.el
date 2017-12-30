@@ -284,11 +284,14 @@ If FORCE is t, a directory will be deleted recursively."
   (f--destructive path (make-symbolic-link source path)))
 
 (defun f-move (from to)
-  "Move or rename FROM to TO."
+  "Move or rename FROM to TO.
+If TO is a directory name, move FROM into TO."
   (f--destructive to (rename-file from to t)))
 
 (defun f-copy (from to)
-  "Copy file or directory FROM to TO."
+  "Copy file or directory FROM to TO.
+If FROM names a directory and TO is a directory name, copy FROM
+into TO as a subdirectory."
   (f--destructive to
     (if (f-file? from)
         (copy-file from to)
@@ -312,7 +315,7 @@ If FORCE is t, a directory will be deleted recursively."
   (unless (f-dir? from)
     (error "Cannot copy contents as %s is a file" from))
   (--each (f-entries from)
-    (f-copy it to)))
+    (f-copy it (file-name-as-directory to))))
 
 (defun f-touch (path)
   "Update PATH last modification date or create if it does not exist."
