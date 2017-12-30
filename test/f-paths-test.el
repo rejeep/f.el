@@ -82,6 +82,10 @@
   ;; exception, hence this will fail.
   (f-expand "foo:" "/"))
 
+(ert-deftest f-expand-test/directory-name ()
+  (with-default-directory
+   (should (equal (f-expand "foo/" "/other/") "/other/foo/"))))
+
 
 ;;;; f-filename
 
@@ -117,7 +121,7 @@
    (should
     (equal
      (f-dirname (f-expand "foo/bar/baz" f-test/playground-path))
-     (f-expand "foo/bar/" f-test/playground-path)))))
+     (f-expand "foo/bar" f-test/playground-path)))))
 
 (ert-deftest f-dirname-test/file-absolute ()
   (with-playground
@@ -126,7 +130,7 @@
    (should
     (equal
      (f-dirname (f-expand "foo/bar/baz/qux.txt" f-test/playground-path))
-     (f-expand "foo/bar/baz/" f-test/playground-path)))))
+     (f-expand "foo/bar/baz" f-test/playground-path)))))
 
 (ert-deftest f-dirname-test/file-with-ending-slash ()
   (with-playground
