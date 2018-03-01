@@ -146,6 +146,16 @@ Alias: `f-parent`
 (f-dirname "/") ;; => nil
 ```
 
+### f-last `(path)`
+
+{{f-last}}
+
+```lisp
+(f-last "path/to/file.txt") ;; => "file.txt"
+(f-last "path/to/dir/") ;; => "dir/"
+(f-last "/root/") ;; => "root/"
+```
+
 ### f-common-parent `(paths)`
 
 {{f-common-parent}}
