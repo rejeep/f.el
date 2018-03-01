@@ -87,6 +87,18 @@ ignored."
   "Return the name of PATH."
   (file-name-nondirectory (directory-file-name path)))
 
+(defun f-last (path)
+  "Return the last component of PATH.
+
+If PATH represents a file this is equivalent to `f-filename'.
+
+If PATH represents a directory return the result of `f-filename'
+as a directory."
+  (let ((base-name (f-filename path)))
+    (if (directory-name-p path)
+        (file-name-as-directory base-name)
+      base-name)))
+
 (defalias 'f-parent 'f-dirname)
 (defun f-dirname (path)
   "Return the parent directory to PATH."

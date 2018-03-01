@@ -102,6 +102,24 @@
   (should (equal (f-filename "/path/to/dir/") "dir")))
 
 
+;;;; f-last
+
+(ert-deftest f-last-test/filename-relative ()
+  (should (equal (f-last "path/to/file.txt") "file.txt")))
+
+(ert-deftest f-last-test/filename-absolute ()
+  (should (equal (f-last "/path/to/file.txt") "file.txt")))
+
+(ert-deftest f-last-test/dirname-relative ()
+  (should (equal (f-last "path/to/dir/") "dir/")))
+
+(ert-deftest f-last-test/dirname-absolute ()
+  (should (equal (f-last "/path/to/dir/") "dir/")))
+
+(ert-deftest f-last-test/root ()
+  (should (equal (f-last "/root/") "root/")))
+
+
 ;;;; f-dirname
 
 (ert-deftest f-dirname-test/directory-relative ()
