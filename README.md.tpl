@@ -26,7 +26,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-common-parent](#f-common-parent-paths) `(paths)`
 * [f-ext](#f-ext-path) `(path)`
 * [f-no-ext](#f-no-ext-path) `(path)`
-* [f-swap-ext](#f-swap-ext) `(path ext)`
+* [f-swap-ext](#f-swap-ext-path-ext) `(path ext)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-dir) `(path &optional dir)`
 * [f-short](#f-short-path) `(path)`

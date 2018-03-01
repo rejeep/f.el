@@ -180,7 +180,7 @@ Return the deepest common parent directory of PATHS.
 Return the file extension of PATH.
 
 The extension, in a file name, is the part that follows the last
-’.’, excluding version numbers and backup suffixes.
+'.', excluding version numbers and backup suffixes.
 
 ```lisp
 (f-ext "path/to/file.ext") ;; => "ext"
@@ -226,7 +226,7 @@ Return PATH relative to DIR.
 
 ### f-short `(path)`
 
-Return abbrev of PATH.  See ‘abbreviate-file-name’.
+Return abbrev of PATH.  See `abbreviate-file-name`.
 
 Alias: `f-abbrev`
 
@@ -257,7 +257,7 @@ Return the canonical name of PATH.
 
 Append slash to PATH unless one already.
 
-Some functions, such as ‘call-process’ requires there to be an
+Some functions, such as `call-process` requires there to be an
 ending slash.
 
 ```lisp
@@ -326,7 +326,7 @@ DATA is a unibyte string.  PATH is a file name to write to.
 
 Read text with PATH, using CODING.
 
-CODING defaults to ‘utf-8’.
+CODING defaults to `utf-8`.
 
 Return the decoded text as multibyte string.
 
@@ -558,7 +558,7 @@ If EXT is nil or omitted, return t if PATH has any extension,
 false otherwise.
 
 The extension, in a file name, is the part that follows the last
-’.’, excluding version numbers and backup suffixes.
+'.', excluding version numbers and backup suffixes.
 
 Alias: `f-ext-p`
 
@@ -671,9 +671,9 @@ directory, return sum of all files in PATH.
 
 Return the depth of PATH.
 
-At first, PATH is expanded with ‘f-expand’.  Then the full path is used to
+At first, PATH is expanded with `f-expand`.  Then the full path is used to
 detect the depth.
-’/’ will be zero depth,  ’/usr’ will be one depth.  And so on.
+'/' will be zero depth,  '/usr' will be one depth.  And so on.
 
 ```lisp
 (f-depth "/") ;; 0
