@@ -61,6 +61,18 @@
    (should (f-dir? "foo"))))
 
 
+;;;; f-directory-name?
+
+(ert-deftest f-directory-name?-test/file ()
+  (should-not (f-directory-name? "path/to/file.txt")))
+
+(ert-deftest f-directory-name?-test/dir-without-slash ()
+  (should-not (f-directory-name? "path/to/dir")))
+
+(ert-deftest f-directory-name?-test/dir-with-slash ()
+  (should (f-directory-name? "path/to/dir/")))
+
+
 ;;;; f-file?
 
 (ert-deftest f-file?-test/is-file ()

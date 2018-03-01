@@ -60,6 +60,7 @@ Or you can just dump `f.el` in your load path somewhere.
 
 * [f-exists?](#f-exists-path) `(path)`
 * [f-directory?](#f-directory-path) `(path)`
+* [f-directory-name?](#f-directory-name-path) `(path)`
 * [f-file?](#f-file-path) `(path)`
 * [f-symlink?](#f-symlink-path) `(path)`
 * [f-readable?](#f-readable-path) `(path)`
@@ -414,11 +415,23 @@ Alias: `f-append`
 
 {{f-directory?}}
 
-Aliases: `f-directory-p f-dir? f-dir-p`
+Aliases: `f-directory-p`, `f-dir?`, `f-dir-p`
 
 ```lisp
 (f-directory? "path/to/file.txt") ;; => nil
 (f-directory? "path/to/dir") ;; => t
+```
+
+### f-directory-name? `(path)`
+
+{{f-directory-name?}}
+
+Aliases: `f-directory-name-p`, `f-dirname?`, `f-dirname-p`
+
+```lisp
+(f-directory-name? "path/to/file.txt") ;; => nil
+(f-directory-name? "path/to/dir") ;; => nil
+(f-directory-name? "path/to/dir/") ;; => t
 ```
 
 ### f-file? `(path)`

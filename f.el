@@ -95,7 +95,7 @@ If PATH represents a file this is equivalent to `f-filename'.
 If PATH represents a directory return the result of `f-filename'
 as a directory."
   (let ((base-name (f-filename path)))
-    (if (directory-name-p path)
+    (if (f-directory-name? path)
         (file-name-as-directory base-name)
       base-name)))
 
@@ -350,14 +350,31 @@ into TO as a subdirectory."
 
 (defalias 'f-exists-p 'f-exists?)
 
-(defalias 'f-dir? 'f-directory?)
-(defalias 'f-dir-p 'f-dir?)
-
 (defun f-directory? (path)
   "Return t if PATH is directory, false otherwise."
   (file-directory-p path))
 
 (defalias 'f-directory-p 'f-directory?)
+(defalias 'f-dir? 'f-directory?)
+(defalias 'f-dir-p 'f-dir?)
+
+(declare-function f-directory-name? "f")
+(if (fboundp 'directory-name-p)
+    (defalias 'f-directory-name? 'directory-name-p)
+  (defun f-directory-name? (path)
+    "Return non-nil if NAME ends with a directory separator character."
+    ;; copied from lisp/files.el, Emacs 25+
+    (let ((len (length path))
+          (lastc ?.))
+      (if (> len 0)
+          (setq lastc (aref path (1- len))))
+      (or (= lastc ?/)
+          (and (memq system-type '(windows-nt ms-dos))
+               (= lastc ?\\))))))
+
+(defalias 'f-directory-name-p 'f-directory-name?)
+(defalias 'f-dirname? 'f-directory-name?)
+(defalias 'f-dirname-p 'f-directory-name?)
 
 (defun f-file? (path)
   "Return t if PATH is file, false otherwise."
