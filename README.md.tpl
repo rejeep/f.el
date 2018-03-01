@@ -768,3 +768,7 @@ Do not change `README.md` directly. If you want to change the README
 or if you change any function comments, update the README with:
 
     $ make docs
+
+<!-- Local Variables: -->
+<!-- mode: gfm -->
+<!-- End: -->
