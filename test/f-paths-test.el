@@ -406,6 +406,10 @@
   (should (equal (f-uniquify '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz"))
                  '("foo/bar" "www/bar" "foo/baz" "home/www/baz" "foo/www/baz" "foo"))))
 
+(ert-deftest f-uniquify/remote-files ()
+  (should (equal (f-uniquify '("/ssh:s04:/home/user/.bashrc" "/ssh:s05:/home/user/.bashrc"))
+                 '("/ssh:s04:.bashrc" "/ssh:s05:.bashrc"))))
+
 ;;;; f-uniquify-alist
 
 (ert-deftest f-uniquify/no-conflict ()
