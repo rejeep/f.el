@@ -135,6 +135,9 @@
 (ert-deftest f-absolute?-test/is-absolute ()
   (should (f-absolute? "/full/path/to/dir")))
 
+(ert-deftest f-absolute?-test/is-tilde-not-absolute ()
+  (should-not (f-absolute? "~/a/path/from/home")))
+
 (ert-deftest f-absolute?-test/is-relative ()
   (should-not (f-absolute? "path/to/dir")))
 

@@ -7,7 +7,7 @@
 ;; Version: 0.20.0
 ;; Keywords: files, directories
 ;; URL: http://github.com/rejeep/f.el
-;; Package-Requires: ((s "1.7.0") (dash "2.2.0"))
+;; Package-Requires: ((emacs "24") (s "1.7.0") (dash "2.2.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -379,7 +379,9 @@ into TO as a subdirectory."
 
 (defun f-absolute? (path)
   "Return t if PATH is absolute, false otherwise."
-  (file-name-absolute-p path))
+  (if (string-prefix-p "~" path)
+      nil
+    (file-name-absolute-p path)))
 
 (defalias 'f-absolute-p 'f-absolute?)
 
