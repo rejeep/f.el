@@ -456,7 +456,7 @@ The extension, in a file name, is the part that follows the last
   "Return t if PATH is hidden, nil otherwise."
   (unless (f-exists? path)
     (error "Path does not exist: %s" path))
-  (string= (substring path 0 1) "."))
+  (string= (substring (car (last (f-split path))) 0 1) "."))
 
 (defalias 'f-hidden-p 'f-hidden?)
 

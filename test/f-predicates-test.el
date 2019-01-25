@@ -404,17 +404,19 @@
 
 (ert-deftest f-hidden?-test/is-hidden ()
   (with-playground
-   (f-touch ".foo")
-   (f-mkdir ".bar")
-   (should (f-hidden? ".foo"))
-   (should (f-hidden? ".bar"))))
+   (f-mkdir "foo")
+   (f-touch "foo/.bar")
+   (f-mkdir "foo/.baz")
+   (should (f-hidden? "foo/.bar"))
+   (should (f-hidden? "foo/.baz"))))
 
 (ert-deftest f-hidden?-test/is-not-hidden ()
   (with-playground
-   (f-touch "foo")
-   (f-mkdir "bar")
-   (should-not (f-hidden? "foo"))
-   (should-not (f-hidden? "bar"))))
+   (f-mkdir "foo")
+   (f-touch "foo/bar")
+   (f-mkdir "foo/baz")
+   (should-not (f-hidden? "foo/bar"))
+   (should-not (f-hidden? "foo/baz"))))
 
 ;;; f-empty?
 
