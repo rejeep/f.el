@@ -608,7 +608,7 @@ returned."
   (f-traverse-upwards 'f-root?))
 
 (defmacro f-with-sandbox (path-or-paths &rest body)
-  "Only allow PATH-OR-PATHS and decendants to be modified in BODY."
+  "Only allow PATH-OR-PATHS and descendants to be modified in BODY."
   (declare (indent 1))
   `(let ((paths (if (listp ,path-or-paths)
                     ,path-or-paths
