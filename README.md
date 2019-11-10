@@ -750,7 +750,7 @@ returned.
 
 ### f-with-sandbox `(path-or-paths &rest body)`
 
-Only allow PATH-OR-PATHS and decendants to be modified in BODY.
+Only allow PATH-OR-PATHS and descendants to be modified in BODY.
 
 ```lisp
 (f-with-sandbox foo-path
