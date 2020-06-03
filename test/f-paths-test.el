@@ -399,6 +399,9 @@
 (ert-deftest f-uniquify-alist/single-conflict-shared-subpath ()
   (should (equal (f-uniquify-alist '("/foo/bar" "/www/bar" "/www/bar/quux")) '(("/foo/bar" . "foo/bar") ("/www/bar" . "www/bar") ("/www/bar/quux" . "quux")))))
 
+(ert-deftest f-uniquify-alist/projectile-dirs ()
+  (should (equal (f-uniquify-alist '("/bar/foo/" "/baz/foo/")) '(("/bar/foo/" . "bar/foo/") ("/baz/foo/" . "baz/foo/")))))
+
 (ert-deftest f-uniquify-alist/recursive-conflict ()
   (should (equal (f-uniquify-alist '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz"))
                  '(("/foo/bar" . "foo/bar") ("/home/www/bar" . "www/bar") ("/foo/baz" . "foo/baz") ("/home/www/baz" . "home/www/baz") ("/opt/foo/www/baz" . "foo/www/baz") ("/var/foo" . "foo")) )))
