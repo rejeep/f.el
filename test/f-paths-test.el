@@ -53,6 +53,12 @@
 (ert-deftest f-split-test/single-path-absolute ()
   (should (equal (f-split "/path") '("/" "path"))))
 
+(ert-deftest f-split-test/tilde-path-absolute ()
+  (should (equal (f-split "~/path") '("~" "path"))))
+
+(ert-deftest f-split-test/windows-path-absolute ()
+  (should (equal (f-split "C:/path") '("C:" "path"))))
+
 (ert-deftest f-split-test/multiple-paths-relative ()
   (should (equal (f-split "path/to/file") '("path" "to" "file"))))
 
