@@ -14,18 +14,26 @@
 
 (require 'f f-lib-file)
 
-(-map
- (lambda (lib)
-   (when (equal (car lib) f-lib-file)
-     (-select
-      (lambda (alist)
-        (when (and
-               (listp alist)
-               (equal (car alist) 'defun)
-               (s-matches? "^f-[^-][a-z-]+\\??$" (symbol-name (cdr alist))))
-          (puthash (symbol-name (cdr alist)) (documentation (cdr alist)) f-fn-doc-mapping)))
-      (cdr lib))))
- load-history)
+(defun quote-as-markdown (string)
+  (format "`%s`" (substring string 1 -1)))
+
+(let ((text-quoting-style 'grave))
+  (-map
+   (lambda (lib)
+     (when (equal (car lib) f-lib-file)
+       (-select
+        (lambda (alist)
+          (when (and
+                 (listp alist)
+                 (equal (car alist) 'defun)
+                 (s-matches? "^f-[^-][a-z-]+\\??$" (symbol-name (cdr alist))))
+            (puthash (symbol-name (cdr alist))
+                     (replace-regexp-in-string
+                      "`\\([^ ]+\\)'" 'quote-as-markdown
+                      (documentation (cdr alist)))
+                     f-fn-doc-mapping)))
+        (cdr lib))))
+   load-history))
 
 (let ((content (f-read f-readme-template)))
   (maphash

@@ -26,7 +26,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-common-parent](#f-common-parent-paths) `(paths)`
 * [f-ext](#f-ext-path) `(path)`
 * [f-no-ext](#f-no-ext-path) `(path)`
-* [f-swap-ext](#f-swap-ext) `(path ext)`
+* [f-swap-ext](#f-swap-ext-path-ext) `(path ext)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-dir) `(path &optional dir)`
 * [f-short](#f-short-path) `(path)`
@@ -60,6 +60,7 @@ Or you can just dump `f.el` in your load path somewhere.
 
 * [f-exists?](#f-exists-path) `(path)`
 * [f-directory?](#f-directory-path) `(path)`
+* [f-directory-name?](#f-directory-name-path) `(path)`
 * [f-file?](#f-file-path) `(path)`
 * [f-symlink?](#f-symlink-path) `(path)`
 * [f-readable?](#f-readable-path) `(path)`
@@ -144,6 +145,16 @@ Alias: `f-parent`
 (f-dirname "path/to/file.ext") ;; => "path/to"
 (f-dirname "path/to/directory") ;; => "path/to"
 (f-dirname "/") ;; => nil
+```
+
+### f-last `(path)`
+
+{{f-last}}
+
+```lisp
+(f-last "path/to/file.txt") ;; => "file.txt"
+(f-last "path/to/dir/") ;; => "dir/"
+(f-last "/root/") ;; => "root/"
 ```
 
 ### f-common-parent `(paths)`
@@ -404,11 +415,23 @@ Alias: `f-append`
 
 {{f-directory?}}
 
-Aliases: `f-directory-p f-dir? f-dir-p`
+Aliases: `f-directory-p`, `f-dir?`, `f-dir-p`
 
 ```lisp
 (f-directory? "path/to/file.txt") ;; => nil
 (f-directory? "path/to/dir") ;; => t
+```
+
+### f-directory-name? `(path)`
+
+{{f-directory-name?}}
+
+Aliases: `f-directory-name-p`, `f-dirname?`, `f-dirname-p`
+
+```lisp
+(f-directory-name? "path/to/file.txt") ;; => nil
+(f-directory-name? "path/to/dir") ;; => nil
+(f-directory-name? "path/to/dir/") ;; => t
 ```
 
 ### f-file? `(path)`
@@ -758,3 +781,7 @@ Do not change `README.md` directly. If you want to change the README
 or if you change any function comments, update the README with:
 
     $ make docs
+
+<!-- Local Variables: -->
+<!-- mode: gfm -->
+<!-- End: -->

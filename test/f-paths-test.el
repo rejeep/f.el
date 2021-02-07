@@ -102,6 +102,24 @@
   (should (equal (f-filename "/path/to/dir/") "dir")))
 
 
+;;;; f-last
+
+(ert-deftest f-last-test/filename-relative ()
+  (should (equal (f-last "path/to/file.txt") "file.txt")))
+
+(ert-deftest f-last-test/filename-absolute ()
+  (should (equal (f-last "/path/to/file.txt") "file.txt")))
+
+(ert-deftest f-last-test/dirname-relative ()
+  (should (equal (f-last "path/to/dir/") "dir/")))
+
+(ert-deftest f-last-test/dirname-absolute ()
+  (should (equal (f-last "/path/to/dir/") "dir/")))
+
+(ert-deftest f-last-test/root ()
+  (should (equal (f-last "/root/") "root/")))
+
+
 ;;;; f-dirname
 
 (ert-deftest f-dirname-test/directory-relative ()
@@ -388,6 +406,10 @@
   (should (equal (f-uniquify '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz"))
                  '("foo/bar" "www/bar" "foo/baz" "home/www/baz" "foo/www/baz" "foo"))))
 
+(ert-deftest f-uniquify/remote-files ()
+  (should (equal (f-uniquify '("/ssh:s04:/home/user/.bashrc" "/ssh:s05:/home/user/.bashrc"))
+                 '("/ssh:s04:.bashrc" "/ssh:s05:.bashrc"))))
+
 ;;;; f-uniquify-alist
 
 (ert-deftest f-uniquify/no-conflict ()
@@ -398,6 +420,9 @@
 
 (ert-deftest f-uniquify-alist/single-conflict-shared-subpath ()
   (should (equal (f-uniquify-alist '("/foo/bar" "/www/bar" "/www/bar/quux")) '(("/foo/bar" . "foo/bar") ("/www/bar" . "www/bar") ("/www/bar/quux" . "quux")))))
+
+(ert-deftest f-uniquify-alist/projectile-dirs ()
+  (should (equal (f-uniquify-alist '("/bar/foo/" "/baz/foo/")) '(("/bar/foo/" . "bar/foo/") ("/baz/foo/" . "baz/foo/")))))
 
 (ert-deftest f-uniquify-alist/recursive-conflict ()
   (should (equal (f-uniquify-alist '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz"))

@@ -87,6 +87,18 @@ ignored."
   "Return the name of PATH."
   (file-name-nondirectory (directory-file-name path)))
 
+(defun f-last (path)
+  "Return the last component of PATH.
+
+If PATH represents a file this is equivalent to `f-filename'.
+
+If PATH represents a directory return the result of `f-filename'
+as a directory."
+  (let ((base-name (f-filename path)))
+    (if (f-directory-name? path)
+        (file-name-as-directory base-name)
+      base-name)))
+
 (defalias 'f-parent 'f-dirname)
 (defun f-dirname (path)
   "Return the parent directory to PATH."
@@ -172,7 +184,11 @@ ending slash."
 (defun f--uniquify (paths)
   "Helper for `f-uniquify' and `f-uniquify-alist'."
   (let* ((files-length (length paths))
-         (uniq-filenames (--map (cons it (f-filename it)) paths))
+         (uniq-filenames (--map
+                          (cons it (concat
+                                    (-if-let (prefix (file-remote-p it)) prefix "")
+                                    (f-last it)))
+                          paths))
          (uniq-filenames-next (-group-by 'cdr uniq-filenames)))
     (while (/= files-length (length uniq-filenames-next))
       (setq uniq-filenames-next
@@ -180,7 +196,12 @@ ending slash."
                        (--mapcat
                         (let ((conf-files (cdr it)))
                           (if (> (length conf-files) 1)
-                              (--map (cons (car it) (concat (f-filename (s-chop-suffix (cdr it) (car it))) (f-path-separator) (cdr it))) conf-files)
+                              (--map (cons (car it)
+                                           (concat
+                                            (-if-let (prefix (file-remote-p (car it))) prefix "")
+                                            (f-last (s-chop-suffix (cdr it) (car it)))
+                                            (cdr it)))
+                                     conf-files)
                             conf-files))
                         uniq-filenames-next))))
     uniq-filenames-next))
@@ -338,14 +359,31 @@ into TO as a subdirectory."
 
 (defalias 'f-exists-p 'f-exists?)
 
-(defalias 'f-dir? 'f-directory?)
-(defalias 'f-dir-p 'f-dir?)
-
 (defun f-directory? (path)
   "Return t if PATH is directory, false otherwise."
   (file-directory-p path))
 
 (defalias 'f-directory-p 'f-directory?)
+(defalias 'f-dir? 'f-directory?)
+(defalias 'f-dir-p 'f-dir?)
+
+(declare-function f-directory-name? "f")
+(if (fboundp 'directory-name-p)
+    (defalias 'f-directory-name? 'directory-name-p)
+  (defun f-directory-name? (path)
+    "Return non-nil if NAME ends with a directory separator character."
+    ;; copied from lisp/files.el, Emacs 25+
+    (let ((len (length path))
+          (lastc ?.))
+      (if (> len 0)
+          (setq lastc (aref path (1- len))))
+      (or (= lastc ?/)
+          (and (memq system-type '(windows-nt ms-dos))
+               (= lastc ?\\))))))
+
+(defalias 'f-directory-name-p 'f-directory-name?)
+(defalias 'f-dirname? 'f-directory-name?)
+(defalias 'f-dirname-p 'f-directory-name?)
 
 (defun f-file? (path)
   "Return t if PATH is file, false otherwise."

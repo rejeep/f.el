@@ -60,6 +60,7 @@ Or you can just dump `f.el` in your load path somewhere.
 
 * [f-exists?](#f-exists-path) `(path)`
 * [f-directory?](#f-directory-path) `(path)`
+* [f-directory-name?](#f-directory-name-path) `(path)`
 * [f-file?](#f-file-path) `(path)`
 * [f-symlink?](#f-symlink-path) `(path)`
 * [f-readable?](#f-readable-path) `(path)`
@@ -118,7 +119,11 @@ Split PATH and return list containing parts.
 
 ### f-expand `(path &optional dir)`
 
-Expand PATH relative to DIR (or ‘default-directory’).
+Expand PATH relative to DIR (or `default-directory`).
+PATH and DIR can be either a directory names or directory file
+names.  Return a directory name if PATH is a directory name, and
+a directory file name otherwise.  File name handlers are
+ignored.
 
 ```lisp
 (f-expand "name") ;; => "/default/directory/name"
@@ -146,6 +151,21 @@ Alias: `f-parent`
 (f-dirname "/") ;; => nil
 ```
 
+### f-last `(path)`
+
+Return the last component of PATH.
+
+If PATH represents a file this is equivalent to `f-filename`.
+
+If PATH represents a directory return the result of `f-filename`
+as a directory.
+
+```lisp
+(f-last "path/to/file.txt") ;; => "file.txt"
+(f-last "path/to/dir/") ;; => "dir/"
+(f-last "/root/") ;; => "root/"
+```
+
 ### f-common-parent `(paths)`
 
 Return the deepest common parent directory of PATHS.
@@ -161,7 +181,7 @@ Return the deepest common parent directory of PATHS.
 Return the file extension of PATH.
 
 The extension, in a file name, is the part that follows the last
-’.’, excluding version numbers and backup suffixes.
+'.', excluding version numbers and backup suffixes.
 
 ```lisp
 (f-ext "path/to/file.ext") ;; => "ext"
@@ -207,7 +227,7 @@ Return PATH relative to DIR.
 
 ### f-short `(path)`
 
-Return abbrev of PATH.  See ‘abbreviate-file-name’.
+Return abbrev of PATH.  See `abbreviate-file-name`.
 
 Alias: `f-abbrev`
 
@@ -238,7 +258,7 @@ Return the canonical name of PATH.
 
 Append slash to PATH unless one already.
 
-Some functions, such as ‘call-process’ requires there to be an
+Some functions, such as `call-process` requires there to be an
 ending slash.
 
 ```lisp
@@ -307,7 +327,7 @@ DATA is a unibyte string.  PATH is a file name to write to.
 
 Read text with PATH, using CODING.
 
-CODING defaults to ‘utf-8’.
+CODING defaults to `utf-8`.
 
 Return the decoded text as multibyte string.
 
@@ -387,6 +407,7 @@ Create a symlink to SOURCE from PATH.
 ### f-move `(from to)`
 
 Move or rename FROM to TO.
+If TO is a directory name, move FROM into TO.
 
 ```lisp
 (f-move "path/to/file.txt" "new-file.txt")
@@ -396,6 +417,8 @@ Move or rename FROM to TO.
 ### f-copy `(from to)`
 
 Copy file or directory FROM to TO.
+If FROM names a directory and TO is a directory name, copy FROM
+into TO as a subdirectory.
 
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")
@@ -432,11 +455,25 @@ Return t if PATH exists, false otherwise.
 
 Return t if PATH is directory, false otherwise.
 
-Aliases: `f-directory-p f-dir? f-dir-p`
+Aliases: `f-directory-p`, `f-dir?`, `f-dir-p`
 
 ```lisp
 (f-directory? "path/to/file.txt") ;; => nil
 (f-directory? "path/to/dir") ;; => t
+```
+
+### f-directory-name? `(path)`
+
+Return non-nil if NAME ends with a directory separator character.
+
+(fn NAME)
+
+Aliases: `f-directory-name-p`, `f-dirname?`, `f-dirname-p`
+
+```lisp
+(f-directory-name? "path/to/file.txt") ;; => nil
+(f-directory-name? "path/to/dir") ;; => nil
+(f-directory-name? "path/to/dir/") ;; => t
 ```
 
 ### f-file? `(path)`
@@ -536,7 +573,7 @@ If EXT is nil or omitted, return t if PATH has any extension,
 false otherwise.
 
 The extension, in a file name, is the part that follows the last
-’.’, excluding version numbers and backup suffixes.
+'.', excluding version numbers and backup suffixes.
 
 Alias: `f-ext-p`
 
@@ -649,9 +686,9 @@ directory, return sum of all files in PATH.
 
 Return the depth of PATH.
 
-At first, PATH is expanded with ‘f-expand’.  Then the full path is used to
+At first, PATH is expanded with `f-expand`.  Then the full path is used to
 detect the depth.
-’/’ will be zero depth,  ’/usr’ will be one depth.  And so on.
+'/' will be zero depth,  '/usr' will be one depth.  And so on.
 
 ```lisp
 (f-depth "/") ;; 0
@@ -703,7 +740,7 @@ RECURSIVE - Search for files and directories recursive.
 
 ### f-directories `(path &optional fn recursive)`
 
-Find all directories in PATH.  See ‘f-entries‘.
+Find all directories in PATH.  See `f-entries`.
 
 ```lisp
 (f-directories "path/to/dir")
@@ -714,7 +751,7 @@ Find all directories in PATH.  See ‘f-entries‘.
 
 ### f-files `(path &optional fn recursive)`
 
-Find all files in PATH.  See ‘f-entries‘.
+Find all files in PATH.  See `f-entries`.
 
 ```lisp
 (f-files "path/to/dir")
@@ -808,3 +845,7 @@ Do not change `README.md` directly. If you want to change the README
 or if you change any function comments, update the README with:
 
     $ make docs
+
+<!-- Local Variables: -->
+<!-- mode: gfm -->
+<!-- End: -->
