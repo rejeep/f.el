@@ -79,6 +79,13 @@
        (should (f-unibyte-string-p content))
        (should (string= content bytes))))))
 
+(ert-deftest f-read-bytes-test/partial ()
+  (with-playground
+    (f-write-bytes "foobarbaz" "foo.txt")
+    (should (string= (f-read-bytes "foo.txt" 0 3) "foo"))
+    (should (string= (f-read-bytes "foo.txt" 3 6) "bar"))
+    (should (string= (f-read-bytes "foo.txt" 6)   "baz"))))
+
 
 ;;;; f-read/f-read-text
 

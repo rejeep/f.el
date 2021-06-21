@@ -200,14 +200,16 @@ This function expects no duplicate paths."
 
 ;;;; I/O
 
-(defun f-read-bytes (path)
+(defun f-read-bytes (path &optional beg end)
   "Read binary data from PATH.
 
-Return the binary data as unibyte string."
+Return the binary data as unibyte string. The optional second and
+third arguments BEG and END specify what portion of the file to
+read."
   (with-temp-buffer
     (set-buffer-multibyte nil)
     (setq buffer-file-coding-system 'binary)
-    (insert-file-contents-literally path)
+    (insert-file-contents-literally path nil beg end)
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (defalias 'f-read 'f-read-text)
