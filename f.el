@@ -180,7 +180,13 @@ ending slash."
                        (--mapcat
                         (let ((conf-files (cdr it)))
                           (if (> (length conf-files) 1)
-                              (--map (cons (car it) (concat (f-filename (s-chop-suffix (cdr it) (car it))) (f-path-separator) (cdr it))) conf-files)
+                              (--map (cons
+                                      (car it)
+                                      (concat
+                                       (f-filename (s-chop-suffix (cdr it)
+                                                                  (car it)))
+                                       (f-path-separator) (cdr it)))
+                                     conf-files)
                             conf-files))
                         uniq-filenames-next))))
     uniq-filenames-next))
