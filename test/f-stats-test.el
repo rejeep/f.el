@@ -55,6 +55,29 @@
   (should (equal (f-depth "/usr/local/bin/rails") 4))
   (should (equal (f-depth "/opt/git/f") 3)))
 
+;;;; f-change-time
+
+(ert-deftest f-change-time/return-time-for-file ()
+  (with-playground
+    (f-touch "foo.txt")
+    (should (equal (length (f-change-time "foo.txt")) 4))))
+
+;;;; f-modification-time
+
+(ert-deftest f-modification-time/return-time-for-file ()
+  (with-playground
+    (f-touch "foo.txt")
+    (should (equal (length (f-modification-time "foo.txt")) 4))))
+
+;;;; f-access-time
+
+(ert-deftest f-access-time/return-time-for-file ()
+  (with-playground
+    (f-touch "foo.txt")
+    (should (equal (length (f-access-time "foo.txt")) 4))))
+
+
 (provide 'f-stats-test)
 
 ;;; f-stats-test.el ends here
+
