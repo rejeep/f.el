@@ -117,16 +117,9 @@ ignored."
        (:otherwise
         (concat (apply 'f-join (nreverse re)) "/")))))))
 
-(defun f-ext (path)
-  "Return the file extension of PATH.
+(defalias 'f-ext 'file-name-extension)
 
-The extension, in a file name, is the part that follows the last
-'.', excluding version numbers and backup suffixes."
-  (file-name-extension path))
-
-(defun f-no-ext (path)
-  "Return everything but the file extension of PATH."
-  (file-name-sans-extension path))
+(defalias 'f-no-ext 'file-name-sans-extension)
 
 (defun f-swap-ext (path ext)
   "Return PATH but with EXT as the new extension.
@@ -139,22 +132,16 @@ EXT must not be nil or empty."
   "Return the name of PATH, excluding the extension of file."
   (f-no-ext (f-filename path)))
 
-(defun f-relative (path &optional dir)
-  "Return PATH relative to DIR."
-  (file-relative-name path dir))
+(defalias 'f-relative 'file-relative-name)
 
-(defalias 'f-abbrev 'f-short)
-(defun f-short (path)
-  "Return abbrev of PATH.  See `abbreviate-file-name'."
-  (abbreviate-file-name path))
+(defalias 'f-short 'abbreviate-file-name)
+(defalias 'f-abbrev 'abbreviate-file-name)
 
 (defun f-long (path)
   "Return long version of PATH."
   (f-expand path))
 
-(defun f-canonical (path)
-  "Return the canonical name of PATH."
-  (file-truename path))
+(defalias 'f-canonical 'file-truename)
 
 (defun f-slash (path)
   "Append slash to PATH unless one already.
@@ -340,26 +327,17 @@ into TO as a subdirectory."
 
 ;;;; Predicates
 
-(defun f-exists? (path)
-  "Return t if PATH exists, false otherwise."
-  (file-exists-p path))
+(defalias 'f-exists? 'file-exists-p)
+(defalias 'f-exists-p 'file-exists-p)
 
-(defalias 'f-exists-p 'f-exists?)
+(defalias 'f-directory? 'file-directory-p)
+(defalias 'f-directory-p 'file-directory-p)
+(defalias 'f-dir? 'file-directory-p)
+(defalias 'f-dir-p 'file-directory-p)
 
-(defalias 'f-dir? 'f-directory?)
-(defalias 'f-dir-p 'f-dir?)
 
-(defun f-directory? (path)
-  "Return t if PATH is directory, false otherwise."
-  (file-directory-p path))
-
-(defalias 'f-directory-p 'f-directory?)
-
-(defun f-file? (path)
-  "Return t if PATH is file, false otherwise."
-  (file-regular-p path))
-
-(defalias 'f-file-p 'f-file?)
+(defalias 'f-file? 'file-regular-p)
+(defalias 'f-file-p 'file-regular-p)
 
 (defun f-symlink? (path)
   "Return t if PATH is symlink, false otherwise."
@@ -367,29 +345,17 @@ into TO as a subdirectory."
 
 (defalias 'f-symlink-p 'f-symlink?)
 
-(defun f-readable? (path)
-  "Return t if PATH is readable, false otherwise."
-  (file-readable-p path))
+(defalias 'f-readable? 'file-readable-p)
+(defalias 'f-readable-p 'file-readable-p)
 
-(defalias 'f-readable-p 'f-readable?)
+(defalias 'f-writable? 'file-writable-p)
+(defalias 'f-writable-p 'file-writable-p)
 
-(defun f-writable? (path)
-  "Return t if PATH is writable, false otherwise."
-  (file-writable-p path))
-
-(defalias 'f-writable-p 'f-writable?)
-
-(defun f-executable? (path)
-  "Return t if PATH is executable, false otherwise."
-  (file-executable-p path))
-
+(defalias 'f-executable? 'file-executable-p)
 (defalias 'f-executable-p 'f-executable?)
 
-(defun f-absolute? (path)
-  "Return t if PATH is absolute, false otherwise."
-  (file-name-absolute-p path))
-
-(defalias 'f-absolute-p 'f-absolute?)
+(defalias 'f-absolute? 'file-name-absolute-p)
+(defalias 'f-absolute-p 'file-name-absolute-p)
 
 (defun f-relative? (path)
   "Return t if PATH is relative, false otherwise."
