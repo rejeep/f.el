@@ -270,6 +270,23 @@ If APPEND is non-nil, append the DATA to the existing contents."
         (unless (f-directory? path)
           (f--destructive path (make-directory path)))))))
 
+(defun f-mkdir-recursive (&rest dirs)
+  "Recursively create each directory in DIRS."
+
+  (dolist (dir dirs)
+    (let (dirs-to-mkdir)
+
+      (f-traverse-upwards
+       (lambda (path)
+	 (let ((f-exists-p (f-exists? path)))
+	   (unless f-exists-p
+	     (push path dirs-to-mkdir))
+	   f-exists-p))
+       dir)
+
+      (dolist (dir-to-mkdir dirs-to-mkdir)
+	(f--destructive dir-to-make (f-mkdir dir-to-mkdir))))))
+
 (defun f-delete (path &optional force)
   "Delete PATH, which can be file or directory.
 
