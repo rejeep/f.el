@@ -26,7 +26,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-common-parent](#f-common-parent-paths) `(paths)`
 * [f-ext](#f-ext-path) `(path)`
 * [f-no-ext](#f-no-ext-path) `(path)`
-* [f-swap-ext](#f-swap-ext-path-ext) `(path ext)`
+* [f-swap-ext](#f-swap-ext) `(path ext)`
 * [f-base](#f-base-path) `(path)`
 * [f-relative](#f-relative-path-optional-dir) `(path &optional dir)`
 * [f-short](#f-short-path) `(path)`
@@ -119,6 +119,10 @@ Split PATH and return list containing parts.
 ### f-expand `(path &optional dir)`
 
 Expand PATH relative to DIR (or ‘default-directory’).
+PATH and DIR can be either a directory names or directory file
+names.  Return a directory name if PATH is a directory name, and
+a directory file name otherwise.  File name handlers are
+ignored.
 
 ```lisp
 (f-expand "name") ;; => "/default/directory/name"
@@ -158,10 +162,19 @@ Return the deepest common parent directory of PATHS.
 
 ### f-ext `(path)`
 
-Return the file extension of PATH.
+Return FILENAME’s final "extension".
+The extension, in a file name, is the part that begins with the last ‘.’,
+excluding version numbers and backup suffixes, except that a leading ‘.’
+of the file name, if there is one, doesn’t count.
+Return nil for extensionless file names such as ‘foo’.
+Return the empty string for file names such as ‘foo.’.
 
-The extension, in a file name, is the part that follows the last
-’.’, excluding version numbers and backup suffixes.
+By default, the returned value excludes the period that starts the
+extension, but if the optional argument PERIOD is non-nil, the period
+is included in the value, and in that case, if FILENAME has no
+extension, the value is "".
+
+(fn FILENAME &optional PERIOD)
 
 ```lisp
 (f-ext "path/to/file.ext") ;; => "ext"
@@ -170,7 +183,11 @@ The extension, in a file name, is the part that follows the last
 
 ### f-no-ext `(path)`
 
-Return everything but the file extension of PATH.
+Return FILENAME sans final "extension".
+The extension, in a file name, is the part that begins with the last ‘.’,
+except that a leading ‘.’ of the file name, if there is one, doesn’t count.
+
+(fn FILENAME)
 
 ```lisp
 (f-no-ext "path/to/file.ext") ;; => "path/to/file"
@@ -198,7 +215,15 @@ Return the name of PATH, excluding the extension of file.
 
 ### f-relative `(path &optional dir)`
 
-Return PATH relative to DIR.
+Convert FILENAME to be relative to DIRECTORY (default: ‘default-directory’).
+This function returns a relative file name that is equivalent to FILENAME
+when used with that default directory as the default.
+If FILENAME is a relative file name, it will be interpreted as existing in
+‘default-directory’.
+If FILENAME and DIRECTORY lie on different machines or on different drives
+on a DOS/Windows machine, it returns FILENAME in expanded form.
+
+(fn FILENAME &optional DIRECTORY)
 
 ```lisp
 (f-relative "/some/path/relative/to/my/file.txt" "/some/path/") ;; => relative/to/my/file.txt
@@ -207,7 +232,18 @@ Return PATH relative to DIR.
 
 ### f-short `(path)`
 
-Return abbrev of PATH.  See ‘abbreviate-file-name’.
+Return a version of FILENAME shortened using ‘directory-abbrev-alist’.
+This also substitutes "~" for the user’s home directory (unless the
+home directory is a root directory) and removes automounter prefixes
+(see the variable ‘automount-dir-prefix’).
+
+When this function is first called, it caches the user’s home
+directory as a regexp in ‘abbreviated-home-dir’, and reuses it
+afterwards (so long as the home directory does not change;
+if you want to permanently change your home directory after having
+started Emacs, set ‘abbreviated-home-dir’ to nil so it will be recalculated).
+
+(fn FILENAME)
 
 Alias: `f-abbrev`
 
@@ -227,7 +263,13 @@ Return long version of PATH.
 
 ### f-canonical `(path)`
 
-Return the canonical name of PATH.
+Return the truename of FILENAME.
+If FILENAME is not absolute, first expands it against ‘default-directory’.
+The truename of a file name is found by chasing symbolic links
+both at the level of the file and at the level of the directories
+containing it, until no links are left at any level.
+
+(fn FILENAME)
 
 ```lisp
 (f-canonical "/path/to/real/file") ;; => /path/to/real/file
@@ -287,7 +329,9 @@ This function expects no duplicate paths.
 
 Read binary data from PATH.
 
-Return the binary data as unibyte string.
+Return the binary data as unibyte string. The optional second and
+third arguments BEG and END specify what portion of the file to
+read.
 
 ```lisp
 (f-read-bytes "path/to/binary/data")
@@ -387,6 +431,7 @@ Create a symlink to SOURCE from PATH.
 ### f-move `(from to)`
 
 Move or rename FROM to TO.
+If TO is a directory name, move FROM into TO.
 
 ```lisp
 (f-move "path/to/file.txt" "new-file.txt")
@@ -396,6 +441,8 @@ Move or rename FROM to TO.
 ### f-copy `(from to)`
 
 Copy file or directory FROM to TO.
+If FROM names a directory and TO is a directory name, copy FROM
+into TO as a subdirectory.
 
 ```lisp
 (f-copy "path/to/file.txt" "new-file.txt")
@@ -421,7 +468,14 @@ Update PATH last modification date or create if it does not exist.
 
 ### f-exists? `(path)`
 
-Return t if PATH exists, false otherwise.
+Return t if file FILENAME exists (whether or not you can read it).
+Return nil if FILENAME does not exist, or if there was trouble
+determining whether the file exists.
+See also ‘file-readable-p’ and ‘file-attributes’.
+This returns nil for a symlink to a nonexistent file.
+Use ‘file-symlink-p’ to test for such links.
+
+(fn FILENAME)
 
 ```lisp
 (f-exists? "path/to/file.txt")
@@ -430,7 +484,18 @@ Return t if PATH exists, false otherwise.
 
 ### f-directory? `(path)`
 
-Return t if PATH is directory, false otherwise.
+Return t if FILENAME names an existing directory.
+Return nil if FILENAME does not name a directory, or if there
+was trouble determining whether FILENAME is a directory.
+
+As a special case, this function will also return t if FILENAME is the
+empty string ("").  This quirk is due to Emacs interpreting the
+empty string (in some cases) as the current directory.
+
+Symbolic links to directories count as directories.
+See ‘file-symlink-p’ to distinguish symlinks.
+
+(fn FILENAME)
 
 Aliases: `f-directory-p f-dir? f-dir-p`
 
@@ -441,7 +506,14 @@ Aliases: `f-directory-p f-dir? f-dir-p`
 
 ### f-file? `(path)`
 
-Return t if PATH is file, false otherwise.
+Return t if FILENAME names a regular file.
+This is the sort of file that holds an ordinary stream of data bytes.
+Return nil if FILENAME does not exist or is not a regular file,
+or there was trouble determining whether FILENAME is a regular file.
+Symbolic links to regular files count as regular files.
+See ‘file-symlink-p’ to distinguish symlinks.
+
+(fn FILENAME)
 
 Alias: `f-file-p`
 
@@ -464,7 +536,10 @@ Alias: `f-symlink-p`
 
 ### f-readable? `(path)`
 
-Return t if PATH is readable, false otherwise.
+Return t if file FILENAME exists and you can read it.
+See also ‘file-exists-p’ and ‘file-attributes’.
+
+(fn FILENAME)
 
 Alias: `f-readable-p`
 
@@ -475,7 +550,9 @@ Alias: `f-readable-p`
 
 ### f-writable? `(path)`
 
-Return t if PATH is writable, false otherwise.
+Return t if file FILENAME can be written or created by you.
+
+(fn FILENAME)
 
 Alias: `f-writable-p`
 
@@ -486,7 +563,12 @@ Alias: `f-writable-p`
 
 ### f-executable? `(path)`
 
-Return t if PATH is executable, false otherwise.
+Return t if FILENAME can be executed by you.
+For a directory, this means you can access files in that directory.
+(It is generally better to use ‘file-accessible-directory-p’ for that
+purpose, though.)
+
+(fn FILENAME)
 
 Alias: `f-executable-p`
 
@@ -497,7 +579,12 @@ Alias: `f-executable-p`
 
 ### f-absolute? `(path)`
 
-Return t if PATH is absolute, false otherwise.
+Return t if FILENAME is an absolute file name.
+On Unix, absolute file names start with ‘/’.  In Emacs, an absolute
+file name can also start with an initial ‘~’ or ‘~USER’ component,
+where USER is a valid login name.
+
+(fn FILENAME)
 
 Alias: `f-absolute-p`
 
@@ -703,7 +790,7 @@ RECURSIVE - Search for files and directories recursive.
 
 ### f-directories `(path &optional fn recursive)`
 
-Find all directories in PATH.  See ‘f-entries‘.
+Find all directories in PATH.  See ‘f-entries’.
 
 ```lisp
 (f-directories "path/to/dir")
@@ -714,7 +801,7 @@ Find all directories in PATH.  See ‘f-entries‘.
 
 ### f-files `(path &optional fn recursive)`
 
-Find all files in PATH.  See ‘f-entries‘.
+Find all files in PATH.  See ‘f-entries’.
 
 ```lisp
 (f-files "path/to/dir")
