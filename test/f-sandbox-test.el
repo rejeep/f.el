@@ -179,7 +179,7 @@
 
 ;;;; f-copy
 
-(ert-deftest f-guard-test/f-copy/inside ()
+(ert-deftest f-guard-test/f-copy/f-expand/inside ()
   (with-playground
    (let ((path-foo (f-expand "foo" f-test/playground-path))
          (path-bar (f-expand "bar" f-test/playground-path)))
