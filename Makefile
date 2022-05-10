@@ -1,5 +1,6 @@
-EMACS ?= emacs
-CASK ?= cask
+# -*- indent-tabs-mode: t -*-
+export EMACS ?= $(shell which emacs)
+CASK ?= $(shell which cask)
 
 all: test
 
@@ -16,7 +17,7 @@ docs:
 	${CASK} exec ${EMACS} -Q --script bin/docs.el
 
 compile:
-	${CASK} exec ${EMACS} -Q -batch -f batch-byte-compile f.el
+	${CASK} build
 
 clean-elc:
 	rm -f f.elc
