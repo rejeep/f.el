@@ -41,6 +41,18 @@
   (should (equal (f-join "/path" "to" "file") "/path/to/file"))
   (should (equal (f-join "/" "path" "to" "file") "/path/to/file")))
 
+(ert-deftest f-join-test/delimiters-in-path/relative ()
+  (should (equal (f-join "path" "/" "to" "/" "file") "/file"))
+  (should (equal (f-join "path" "/to" "file") "/to/file")))
+
+(ert-deftest f-join-test/delimiters-in-path/absolute ()
+  (should (equal (f-join "/path" "/to" "file") "/to/file"))
+  (should (equal (f-join "/path" "to/" "file") "/path/to/file")))
+
+(ert-deftest f-join-test/double-delimiters ()
+  (should (equal (f-join "path" "//to" "file") "//to/file"))
+  (should (equal (f-join "path" "to//" "file") "path/to/file")))
+
 (ert-deftest f-join-test/root ()
   (should (equal (f-join "/") "/")))
 

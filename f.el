@@ -60,10 +60,16 @@ If PATH is not allowed to be modified, throw error."
 
 (defun f-join (&rest args)
   "Join ARGS to a single path."
-  (let (path (relative (f-relative? (car args))))
+  (let (path
+        (relative (f-relative? (car args))))
     (-map
      (lambda (arg)
-       (setq path (f-expand arg path)))
+       (setq path (cond ((not path) arg)
+                        ((f-absolute-p arg)
+                         (progn
+                           (setq relative nil)
+                           arg))
+                        (t (f-expand arg path)))))
      args)
     (if relative (f-relative path) path)))
 
