@@ -261,7 +261,11 @@ If APPEND is non-nil, append the DATA to the existing contents."
 ;;;; Destructive
 
 (defun f-mkdir (&rest dirs)
-  "Create directories DIRS."
+  "Create directories DIRS.
+
+The function can accept fully formed paths as its sole argument,
+but only if this creates only one directory. It cannot create
+subdirectories recursively from a fully formed path yet."
   (let (path)
     (-each
         dirs
