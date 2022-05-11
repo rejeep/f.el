@@ -69,7 +69,7 @@ If PATH is not allowed to be modified, throw error."
 
 (defun f-split (path)
   "Split PATH and return list containing parts."
-  (let ((parts (s-split (f-path-separator) path 'omit-nulls)))
+  (let ((parts (split-string path (f-path-separator) 'omit-nulls)))
     (if (string= (s-left 1 path) (f-path-separator))
         (push (f-path-separator) parts)
       parts)))
@@ -124,7 +124,7 @@ ignored."
 (defun f-swap-ext (path ext)
   "Return PATH but with EXT as the new extension.
 EXT must not be nil or empty."
-  (if (s-blank? ext)
+  (if (s-blank-p ext)
       (error "Extension cannot be empty or nil")
     (concat (f-no-ext path) "." ext)))
 
@@ -417,16 +417,16 @@ The extension, in a file name, is the part that follows the last
 (defun f-ancestor-of? (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
   (unless (f-same? path-a path-b)
-    (s-starts-with? (f-full path-a)
-                    (f-full path-b))))
+    (string-prefix-p (f-full path-a)
+                     (f-full path-b))))
 
 (defalias 'f-ancestor-of-p 'f-ancestor-of?)
 
 (defun f-descendant-of? (path-a path-b)
   "Return t if PATH-A is desendant of PATH-B."
   (unless (f-same? path-a path-b)
-    (s-starts-with? (f-full path-b)
-                    (f-full path-a))))
+    (string-prefix-p (f-full path-b)
+                     (f-full path-a))))
 
 (defalias 'f-descendant-of-p 'f-descendant-of?)
 
