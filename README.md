@@ -1,4 +1,6 @@
-# f.el [![CI](https://github.com/rajeep/f.el/actions/workflows/workflow.yml/badge.svg)](https://github.com/rajeep/f.el/actions/workflows/workflow.yml) [![Coverage Status](https://img.shields.io/coveralls/rejeep/f.el.svg)](https://coveralls.io/r/rejeep/f.el)
+# f.el
+[![CI](https://github.com/rejeep/f.el/actions/workflows/workflow.yml/badge.svg)](https://github.com/rejeep/f.el/actions/workflows/workflow.yml)
+[![Coverage Status](https://img.shields.io/coveralls/rejeep/f.el.svg)](https://coveralls.io/r/rejeep/f.el)
 
 Much inspired by [@magnars](https://github.com/magnars)'s excellent
 [s.el](https://github.com/magnars/s.el) and
