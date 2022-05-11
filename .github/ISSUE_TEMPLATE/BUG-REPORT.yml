@@ -1,0 +1,70 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. @username or email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: How do you expect the
+      value: "Something should happen"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Actual behavior
+      description: How is what happened different from the expected behavior?
+      value: "Something else happened"
+    validations:
+      required: true
+  - type: dropdown
+    id: package-version
+    attributes:
+      label: f.el version
+      description: What version of f.el are you using?
+      options:
+        - master
+        - 0.20.0
+        - 0.19.0
+        - 0.18.2
+        - 0.18.1
+        - 0.18.0
+        - something else (please specify)
+  - type: dropdown
+    id: emacs-version
+    attributes:
+      label: Emacs version
+      description: Which version of Emacs are you using?
+      options:
+        - 28.1
+        - 27.2
+        - 27.1
+        - 26.3
+        - 26.2
+        - 26.1
+        - 25.3
+        - 25.2
+        - 25.1
+        - master
+        - something else (please specify)
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant code or log output
+      description: Please copy and pase any relevant code or log output. This will be automatically formatted into code, so no need for backticks
+      render: emacs-lisp
