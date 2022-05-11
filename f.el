@@ -70,7 +70,7 @@ If PATH is not allowed to be modified, throw error."
 (defun f-split (path)
   "Split PATH and return list containing parts."
   (let ((parts (s-split (f-path-separator) path 'omit-nulls)))
-    (if (f-absolute? path)
+    (if (string= (s-left 1 path) (f-path-separator))
         (push (f-path-separator) parts)
       parts)))
 
