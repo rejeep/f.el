@@ -55,7 +55,7 @@ Or you can just dump `f.el` in your load path somewhere.
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
 * [f-copy](#f-copy-from-to) `(from to)`
-* [f-copy-contenst](#f-copy-contents-from-to) `(from to)`
+* [f-copy-contents](#f-copy-contents-from-to) `(from to)`
 * [f-touch](#f-touch-path) `(path)`
 
 ### Predicates
