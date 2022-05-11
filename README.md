@@ -405,9 +405,16 @@ If PATH does not exist, it is created.
 
 Create directories DIRS.
 
+The function can accept fully formed paths as its sole argument,
+but only if this creates only one directory. It cannot create
+subdirectories recursively from a fully formed path yet.
+
 ```lisp
-(f-mkdir "dir") ;; => /default/directory/dir
-(f-mkdir "other" "dir") ;; => /default/directory/other/dir
+(f-mkdir "dir") ;; creates /default/directory/dir
+(f-mkdir "other" "dir") ;; creates /default/directory/other/dir
+(f-mkdir "/" "some" "path") ;; creates /some/path
+(f-mkdir "~" "yet" "another" "dir") ;; creates ~/yet/another/dir
+(f-mkdir "~/some/dir") ;; creates "dir" if "~/some" already exists
 ```
 
 ### f-delete `(path &optional force)`
