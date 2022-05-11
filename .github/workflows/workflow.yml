@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        emacs_version:
+          - 25.1
+          - 25.2
+          - 25.3
+          - 26.1
+          - 26.2
+          - 26.3
+          - 27.1
+          - 27.2
+          - 28.1
+          - snapshot
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+      - uses: actions/cache@v2
+        id: cache-cask-packages
+        with:
+          path: .cask
+          key: cache-cask-packages-000
+      - uses: actions/cache@v2
+        id:  cache-cask-executable
+        with:
+          path: ~/.cask
+          key: cache-cask-executable-000
+      - name: "Cask setup"
+        uses: cask/setup-cask@master
+        if: steps.cask-cache-executable.outputs.cache-hit != 'true'
+        with:
+          version: snapshot
+      - name: "Install Cask dependencies"
+        run: cask install
+        if: steps.cask-cache-executable.outputs.cache-hit != 'true'
+      - run: make all
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: purcell/setup-emacs@master
+        with:
+          version: 28.1
+      - uses: actions/cache@v2
+        id: cache-cask-packages
+        with:
+          path: .cask
+          key: cache-cask-packages-000
+      - uses: actions/cache@v2
+        id:  cache-cask-executable
+        with:
+          path: ~/.cask
+          key: cache-cask-executable-000
+      - name: "Cask setup"
+        uses: cask/setup-cask@master
+        if: steps.cask-cache-executable.outputs.cache-hit != 'true'
+        with:
+          version: snapshot
+      - name: "Install Cask dependencies"
+        run: cask install
+        if: steps.cask-cache-executable.outputs.cache-hit != 'true'
+      # - run: cask exec emacs -Q --script bin/docs.el
+      - run: make docs
+      - name: "Commit README changes"
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: Update README
+          default_author: github_actions
+          add: README.md
