@@ -268,10 +268,14 @@ If APPEND is non-nil, append the DATA to the existing contents."
 
 (defun f-mkdir (&rest dirs)
   "Create directories DIRS.
+DIRS should be a successive list of directories forming together
+a full path. The easiest way to call this function with a fully
+formed path is using `f-split' alongside it:
 
-The function can accept fully formed paths as its sole argument,
-but only if this creates only one directory. It cannot create
-subdirectories recursively from a fully formed path yet."
+    (apply #'f-mkdir (f-split \"path/to/file\"))
+
+Although it works sometimes, it is not recommended to use fully
+formed paths in the function."
   (let (path)
     (-each
         dirs

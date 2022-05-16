@@ -340,7 +340,6 @@ Alias: `f-append`
 (f-mkdir "other" "dir") ;; creates /default/directory/other/dir
 (f-mkdir "/" "some" "path") ;; creates /some/path
 (f-mkdir "~" "yet" "another" "dir") ;; creates ~/yet/another/dir
-(f-mkdir "~/some/dir") ;; creates "dir" if "~/some" already exists
 ```
 
 ### f-delete `(path &optional force)`
