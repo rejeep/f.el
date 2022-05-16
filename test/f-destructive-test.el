@@ -46,6 +46,26 @@
    (should-exist "foo/bar/baz")))
 
 
+;;;; f-mkdir-full-path
+
+(ert-deftest f-mkdir-full-path-test/single-level ()
+  (with-playground
+   (f-mkdir-full-path "foo")
+   (should-exist "foo")))
+
+(ert-deftest f-mkdir-full-path-test/multiple-levels-same-call ()
+  (with-playground
+   (f-mkdir-full-path "foo/bar/baz")
+   (should-exist "foo/bar/baz")))
+
+(ert-deftest f-mkdir-full-path-test/multiple-levels-different-calls ()
+  (with-playground
+   (f-mkdir-full-path "foo")
+   (f-mkdir-full-path "foo/bar")
+   (f-mkdir-full-path "foo/bar/baz")
+   (should-exist "foo/bar/baz")))
+
+
 ;;;; f-delete
 
 (ert-deftest f-delete-test/file-in-directory ()

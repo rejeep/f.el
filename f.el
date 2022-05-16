@@ -60,7 +60,8 @@ If PATH is not allowed to be modified, throw error."
 
 (defun f-join (&rest args)
   "Join ARGS to a single path.
-Be aware if one of your arguments is an absolute path, f-join
+
+Be aware if one of the arguments is an absolute path, `f-join'
 will discard all the preceeding arguments and make this absolute
 path the new root of the generated path."
   (let (path
@@ -271,6 +272,7 @@ If APPEND is non-nil, append the DATA to the existing contents."
 
 (defun f-mkdir (&rest dirs)
   "Create directories DIRS.
+
 DIRS should be a successive list of directories forming together
 a full path. The easiest way to call this function with a fully
 formed path is using `f-split' alongside it:
@@ -278,7 +280,8 @@ formed path is using `f-split' alongside it:
     (apply #'f-mkdir (f-split \"path/to/file\"))
 
 Although it works sometimes, it is not recommended to use fully
-formed paths in the function."
+formed paths in the function. In this case, it is recommended to
+use `f-mkdir-full-path' instead."
   (let (path)
     (-each
         dirs
@@ -286,6 +289,13 @@ formed paths in the function."
         (setq path (f-expand dir path))
         (unless (f-directory? path)
           (f--destructive path (make-directory path)))))))
+
+(defun f-mkdir-full-path (dir)
+  "Create DIR from a full path.
+
+This function is similar to `f-mkdir' except it can accept a full
+path instead of requiring several successive directory names."
+  (apply #'f-mkdir (f-split dir)))
 
 (defun f-delete (path &optional force)
   "Delete PATH, which can be file or directory.

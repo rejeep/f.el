@@ -51,6 +51,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### Destructive
 
 * [f-mkdir](#f-mkdir-rest-dirs) `(&rest dirs)`
+* [f-mkdir-full-path](#f-mkdir-full-path-dir) `(dir)`
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
@@ -341,6 +342,17 @@ Alias: `f-append`
 (f-mkdir "other" "dir") ;; creates /default/directory/other/dir
 (f-mkdir "/" "some" "path") ;; creates /some/path
 (f-mkdir "~" "yet" "another" "dir") ;; creates ~/yet/another/dir
+```
+
+### f-mkdir-full-path `(dir)`
+
+{{f-mkdir-full-path}}
+
+```lisp
+(f-mkdir-full-path "dir") ;; creates /default/directory/dir
+(f-mkdir-full-path "other/dir") ;; creates /default/directory/other/dir
+(f-mkdir-full-path "/some/path") ;; creates /some/path
+(f-mkdir-full-path "~/yet/another/dir") ;; creates ~/yet/another/dir
 ```
 
 ### f-delete `(path &optional force)`
