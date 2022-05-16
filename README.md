@@ -51,6 +51,7 @@ Or you can just dump `f.el` in your load path somewhere.
 ### Destructive
 
 * [f-mkdir](#f-mkdir-rest-dirs) `(&rest dirs)`
+* [f-mkdir-full-path](#f-mkdir-full-path-dir) `(dir)`
 * [f-delete](#f-delete-path-optional-force) `(path &optional force)`
 * [f-symlink](#f-symlink-source-path) `(source path)`
 * [f-move](#f-move-from-to) `(from to)`
@@ -102,10 +103,15 @@ Or you can just dump `f.el` in your load path somewhere.
 
 Join ARGS to a single path.
 
+Be aware if one of the arguments is an absolute path, ‘f-join’
+will discard all the preceeding arguments and make this absolute
+path the new root of the generated path.
+
 ```lisp
 (f-join "path") ;; => "path"
 (f-join "path" "to") ;; => "path/to"
 (f-join "/" "path" "to" "heaven") ;; => "/path/to/heaven"
+(f-join "path" "/to" "file") ;; => "/to/file"
 ```
 
 ### f-split `(path)`
@@ -405,16 +411,35 @@ If PATH does not exist, it is created.
 
 Create directories DIRS.
 
-The function can accept fully formed paths as its sole argument,
-but only if this creates only one directory. It cannot create
-subdirectories recursively from a fully formed path yet.
+DIRS should be a successive list of directories forming together
+a full path. The easiest way to call this function with a fully
+formed path is using ‘f-split’ alongside it:
+
+    (apply #’f-mkdir (f-split "path/to/file"))
+
+Although it works sometimes, it is not recommended to use fully
+formed paths in the function. In this case, it is recommended to
+use ‘f-mkdir-full-path’ instead.
 
 ```lisp
 (f-mkdir "dir") ;; creates /default/directory/dir
 (f-mkdir "other" "dir") ;; creates /default/directory/other/dir
 (f-mkdir "/" "some" "path") ;; creates /some/path
 (f-mkdir "~" "yet" "another" "dir") ;; creates ~/yet/another/dir
-(f-mkdir "~/some/dir") ;; creates "dir" if "~/some" already exists
+```
+
+### f-mkdir-full-path `(dir)`
+
+Create DIR from a full path.
+
+This function is similar to ‘f-mkdir’ except it can accept a full
+path instead of requiring several successive directory names.
+
+```lisp
+(f-mkdir-full-path "dir") ;; creates /default/directory/dir
+(f-mkdir-full-path "other/dir") ;; creates /default/directory/other/dir
+(f-mkdir-full-path "/some/path") ;; creates /some/path
+(f-mkdir-full-path "~/yet/another/dir") ;; creates ~/yet/another/dir
 ```
 
 ### f-delete `(path &optional force)`
