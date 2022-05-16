@@ -59,7 +59,10 @@ If PATH is not allowed to be modified, throw error."
 ;;;; Paths
 
 (defun f-join (&rest args)
-  "Join ARGS to a single path."
+  "Join ARGS to a single path.
+Be aware if one of your arguments is an absolute path, f-join
+will discard all the preceeding arguments and make this absolute
+path the new root of the generated path."
   (let (path
         (relative (f-relative? (car args))))
     (-map

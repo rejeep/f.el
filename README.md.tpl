@@ -106,6 +106,7 @@ Or you can just dump `f.el` in your load path somewhere.
 (f-join "path") ;; => "path"
 (f-join "path" "to") ;; => "path/to"
 (f-join "/" "path" "to" "heaven") ;; => "/path/to/heaven"
+(f-join "path" "/to" "file") ;; => "/to/file"
 ```
 
 ### f-split `(path)`
