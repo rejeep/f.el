@@ -492,6 +492,24 @@ detect the depth.
 '/' will be zero depth,  '/usr' will be one depth.  And so on."
   (- (length (f-split (f-expand path))) 1))
 
+(defun f-change-time (path)
+  "Return the last status change time (ctime) of path in the same format as `current-time'.
+
+See `file-attributes' for technical details."
+  (nth 6 (file-attributes path)))
+
+(defun f-modification-time (path)
+  "Return the last modification time (mtime)of path in the same format as `current-time'.
+
+See `file-attributes' for technical details."
+  (nth 5 (file-attributes path)))
+
+(defun f-access-time (path)
+  "Return the last access time (atime) of path in the same format as `current-time'.
+
+See `file-attributes' for technical details."
+  (nth 4 (file-attributes path)))
+
 
 ;;;; Misc
 
