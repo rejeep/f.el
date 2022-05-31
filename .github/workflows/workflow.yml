@@ -81,4 +81,4 @@ jobs:
         with:
           message: Update README
           default_author: github_actions
-          add: README.md
+          add: README.org

@@ -66,8 +66,8 @@ clear as to what you mean it to do. Its description should:
   code suggestion would be useful
 
 *** Updating the README
-In this repository, the [[file:./README.md][README]] is a file automatically generated from
-its template, [[file:./README.md.tpl][README.md.tpl]]. If you wish to edit it, edit this file
+In this repository, the [[file:./README.org][README]] is a file automatically generated from
+its template, [[file:./README.org.tpl][README.org.tpl]] If you wish to edit it, edit this file
 rather than the README itself. You don’t need to regenerate it
 yourself either.
 

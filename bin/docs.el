@@ -5,10 +5,10 @@
   (expand-file-name "f.el" f-root-path))
 
 (defvar f-readme-file
-  (expand-file-name "README.md" f-root-path))
+  (expand-file-name "README.org" f-root-path))
 
 (defvar f-readme-template
-  (expand-file-name "README.md.tpl" f-root-path))
+  (expand-file-name "README.org.tpl" f-root-path))
 
 (defvar f-fn-doc-mapping (make-hash-table :test 'equal))
 
@@ -22,7 +22,7 @@
         (when (and
                (listp alist)
                (equal (car alist) 'defun)
-               (s-matches? "^f-[^-][a-z-]+\\??$" (symbol-name (cdr alist))))
+               (s-matches-p "^f-[^-][a-z-]+\\??$" (symbol-name (cdr alist))))
           (puthash (symbol-name (cdr alist)) (documentation (cdr alist)) f-fn-doc-mapping)))
       (cdr lib))))
  load-history)
