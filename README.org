@@ -76,6 +76,9 @@ Or you can just dump ~f.el~ in your load path somewhere.
   - [[#stats][Stats]]
     - [[#f-size][f-size]]
     - [[#f-depth][f-depth]]
+    - [[#f-change-time][f-change-time]]
+    - [[#f-modification-time][f-modification-time]]
+    - [[#f-access-time][f-access-time]]
   - [[#misc][Misc]]
     - [[#f-this-file][f-this-file]]
     - [[#f-path-separator][f-path-separator]]
@@ -874,6 +877,48 @@ detect the depth.
 (f-depth "/") ;; 0
 (f-depth "/var/") ;; 1
 (f-depth "/usr/local/bin") ;; 3
+#+end_src
+
+*** f-change-time
+#+begin_example
+(f-change-time path)
+
+Return the last status change time (ctime) of path in the same format as ‘current-time’.
+
+See ‘file-attributes’ for technical details.
+#+end_example
+
+#+begin_src emacs-lisp
+(f-change-time "path/to/file.txt")
+(f-change-time "path/to/dir")
+#+end_src
+
+*** f-modification-time
+#+begin_example
+(f-modification-time path)
+
+Return the last modification time (mtime)of path in the same format as ‘current-time’.
+
+See ‘file-attributes’ for technical details.
+#+end_example
+
+#+begin_src emacs-lisp
+(f-modification-time "path/to/file.txt")
+(f-modification-time "path/to/dir")
+#+end_src
+
+*** f-access-time
+#+begin_example
+(f-access-time path)
+
+Return the last access time (atime) of path in the same format as ‘current-time’.
+
+See ‘file-attributes’ for technical details.
+#+end_example
+
+#+begin_src emacs-lisp
+(f-access-time "path/to/file.txt")
+(f-access-time "path/to/dir")
 #+end_src
 
 ** Misc
