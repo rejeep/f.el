@@ -6,7 +6,7 @@
 ;; Maintainer: Johan Andersson <johan.rejeep@gmail.com>
 ;; Version: 0.20.0
 ;; Keywords: files, directories
-;; URL: http://github.com/rejeep/f.el
+;; Homepage: http://github.com/rejeep/f.el
 ;; Package-Requires: ((s "1.7.0") (dash "2.2.0"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -34,6 +34,8 @@
 
 (require 's)
 (require 'dash)
+(when (version<= "28.1" emacs-version)
+  (require 'f-shortdoc))
 
 (put 'f-guard-error 'error-conditions '(error f-guard-error))
 (put 'f-guard-error 'error-message "Destructive operation outside sandbox")

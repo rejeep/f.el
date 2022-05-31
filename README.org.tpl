@@ -15,7 +15,7 @@ It’s available on [[https://melpa.org/#/f][Melpa]] and [[https://stable.melpa.
 M-x package-install f
 #+end_src
 
-Or you can just dump `f.el` in your load path somewhere.
+Or you can just dump ~f.el~ in your load path somewhere.
 
 * Table of Contents                                                :TOC_3_gh:
 - [[#documentation-and-examples][Documentation and examples]]
@@ -92,6 +92,10 @@ Or you can just dump `f.el` in your load path somewhere.
 - [[#contribution][Contribution]]
 
 * Documentation and examples
+If you have Emacs 28.1 or later, you can access ~f.el~'s shortdoc with
+~M-x shortdoc f~. This will essentially give you the examples below save
+for a few lines in the functions’ documentation.
+
 ** Paths
 *** f-join
 #+begin_example
@@ -118,6 +122,7 @@ Or you can just dump `f.el` in your load path somewhere.
 (f-split "path") ;; => '("path")
 (f-split "path/to") ;; => '("path" "to")
 (f-split "/path/to/heaven") ;; => '("/" "path" "to" "heaven")
+(f-split "~/back/to/earth") ;; => '("~" "back" "to" "earth")
 #+end_src
 
 *** f-expand
@@ -179,12 +184,24 @@ Alias: ~f-parent~
 
 Alias of ~file-name-extension~
 
+#+begin_src emacs-lisp
+(f-ext "path/to/file") ;; => nil
+(f-ext "path/to/file.txt") ;; => txt
+(f-ext "path/to/file.txt.org") ;; => org
+#+end_src
+
 *** f-no-ext
 #+begin_example
 (f-no-ext path)
 #+end_example
 
 Alias of ~file-name-sans-extension~
+
+#+begin_src emacs-lisp
+(f-no-ext "path/to/file") ;; => path/to/file
+(f-no-ext "path/to/file.txt") ;; => path/to/file
+(f-no-ext "path/to/file.txt.org") ;; => path/to/file.txt
+#+end_src
 
 *** f-swap-ext
 #+begin_example
@@ -281,9 +298,9 @@ Alias of ~file-truename~
 #+end_example
 
 #+begin_src emacs-lisp
-(f-full "~/path/to/file") ;; => /home/path/to/file
-(f-full "~/path/to/dir") ;; => /home/path/to/dir/
-(f-full "~/path/to/dir/") ;; => /home/path/to/dir/
+(f-full "~/path/to/file") ;; => /home/foo/path/to/file
+(f-full "~/path/to/dir") ;; => /home/foo/path/to/dir/
+(f-full "~/path/to/dir/") ;; => /home/foo/path/to/dir/
 #+end_src
 
 *** f-uniquify
