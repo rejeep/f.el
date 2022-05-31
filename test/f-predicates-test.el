@@ -402,21 +402,38 @@
      (should (string= (error-message-string err) "Path does not exist: foo"))
      (funcall done))))
 
-(ert-deftest f-hidden?-test/is-hidden ()
+(ert-deftest f-hidden-p-test/is-hidden ()
   (with-playground
    (f-mkdir "foo")
+   (f-mkdir "foo" ".baz")
    (f-touch "foo/.bar")
-   (f-mkdir "foo/.baz")
-   (should (f-hidden? "foo/.bar"))
-   (should (f-hidden? "foo/.baz"))))
+   (should (f-hidden-p "foo/.bar"))
+   (should (f-hidden-p "foo/.baz"))))
 
-(ert-deftest f-hidden?-test/is-not-hidden ()
+(ert-deftest f-hidden-p-test/is-not-hidden ()
   (with-playground
    (f-mkdir "foo")
-   (f-touch "foo/bar")
-   (f-mkdir "foo/baz")
-   (should-not (f-hidden? "foo/bar"))
-   (should-not (f-hidden? "foo/baz"))))
+   (f-touch "bar")
+   (f-touch "foo/baz")
+   (f-mkdir "foo/qux")
+   (should-not (f-hidden-p "foo"))
+   (should-not (f-hidden-p "bar"))
+   (should-not (f-hidden-p "foo/baz"))
+   (should-not (f-hidden-p "foo/qux"))))
+
+(ert-deftest f-hidden-p-test/subdir-is-hidden ()
+  (with-playground
+   (f-mkdir "foo" ".bar")
+   (f-touch "foo/.baz")
+   (should (f-hidden-p "foo/.bar"))
+   (should (f-hidden-p "foo/.baz"))))
+
+(ert-deftest f-hidden-p/subdir-is-not-hidden ()
+  (with-playground
+   (f-mkdir ".foo" "bar")
+   (f-touch ".foo/baz")
+   (should-not (f-hidden-p ".foo/bar"))
+   (should-not (f-hidden-p ".foo/baz"))))
 
 ;;; f-empty?
 
