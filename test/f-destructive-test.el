@@ -114,7 +114,7 @@
   (with-playground
    (f-touch "foo.txt")
    (f-symlink "foo.txt" "foo.link")
-   (should (f-symlink? "foo.link"))))
+   (should (f-symlink-p "foo.link"))))
 
 
 ;;;; f-move

@@ -550,7 +550,7 @@ See `file-attributes' for technical details."
                   (setq result (cons entry result))
                 (when (f-directory-p entry)
                   (setq result (cons entry result))
-                  (if (f-readable? entry)
+                  (if (f-readable-p entry)
                       (setq result (append result (f--collect-entries entry recursive)))
                     result))))
             entries))
