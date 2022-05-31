@@ -883,9 +883,10 @@ detect the depth.
 #+begin_example
 (f-change-time path)
 
-Return the last status change time (ctime) of path in the same format as ‘current-time’.
+Return the last status change time of PATH.
 
-See ‘file-attributes’ for technical details.
+The status change time (ctime) of PATH in the same format as
+‘current-time’. See ‘file-attributes’ for technical details.
 #+end_example
 
 #+begin_src emacs-lisp
@@ -897,9 +898,10 @@ See ‘file-attributes’ for technical details.
 #+begin_example
 (f-modification-time path)
 
-Return the last modification time (mtime)of path in the same format as ‘current-time’.
+Return the last modification time of PATH.
 
-See ‘file-attributes’ for technical details.
+The modification time (mtime) of PATH in the same format as
+‘current-time’. See ‘file-attributes’ for technical details.
 #+end_example
 
 #+begin_src emacs-lisp
@@ -911,9 +913,10 @@ See ‘file-attributes’ for technical details.
 #+begin_example
 (f-access-time path)
 
-Return the last access time (atime) of path in the same format as ‘current-time’.
+Return the last access time of PATH.
 
-See ‘file-attributes’ for technical details.
+The access time (atime) of PATH is in the same format as
+‘current-time’. See ‘file-attributes’ for technical details.
 #+end_example
 
 #+begin_src emacs-lisp
