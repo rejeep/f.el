@@ -493,21 +493,24 @@ detect the depth.
   (- (length (f-split (f-expand path))) 1))
 
 (defun f-change-time (path)
-  "Return the last status change time (ctime) of path in the same format as `current-time'.
+  "Return the last status change time of PATH.
 
-See `file-attributes' for technical details."
+The status change time (ctime) of PATH in the same format as
+`current-time'. See `file-attributes' for technical details."
   (nth 6 (file-attributes path)))
 
 (defun f-modification-time (path)
-  "Return the last modification time (mtime)of path in the same format as `current-time'.
+  "Return the last modification time of PATH.
 
-See `file-attributes' for technical details."
+The modification time (mtime) of PATH in the same format as
+`current-time'. See `file-attributes' for technical details."
   (nth 5 (file-attributes path)))
 
 (defun f-access-time (path)
-  "Return the last access time (atime) of path in the same format as `current-time'.
+  "Return the last access time of PATH.
 
-See `file-attributes' for technical details."
+The access time (atime) of PATH is in the same format as
+`current-time'. See `file-attributes' for technical details."
   (nth 4 (file-attributes path)))
 
 
