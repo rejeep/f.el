@@ -10,8 +10,10 @@ follow them.
   - [[#submitting-bugs-and-errors][Submitting Bugs and Errors]]
   - [[#submitting-new-code][Submitting New Code]]
     - [[#git-commit-messages][Git Commit Messages]]
+    - [[#create-git-branches][Create Git Branches]]
     - [[#describing-the-pull-request][Describing the Pull Request]]
     - [[#updating-the-readme][Updating the README]]
+    - [[#run-your-tests][Run your tests]]
   - [[#finding-something-to-do][Finding Something To Do]]
 - [[#issue-labels][Issue Labels]]
 
@@ -57,11 +59,18 @@ especially:
 - Use the imperative in your summary
 - Use present tense and imperative for what your commit changes
 
+*** Create Git Branches
+If you work on a fix or on a new feature, create a new branch prefixed
+with ~fix/~ or ~feature/~ respectively and give a descriptive name to your
+branch. This simplifies the process of merging PRs for Magit and Forge
+users (or for anyone that merge PRs without using Github’s web
+interface really).
+
 *** Describing the Pull Request
 When opening a new pull request, check that its title is short and
 clear as to what you mean it to do. Its description should:
 - Provide the current behavior of the package, and how it will modify it
-- If it is linked to an open issue, mention it
+- If it is linked to an issue, mention it
 - If you are submitting an enhancement pull request, describe why this
   code suggestion would be useful
 
@@ -70,6 +79,19 @@ In this repository, the [[file:./README.org][README]] is a file automatically ge
 its template, [[file:./README.org.tpl][README.org.tpl]] If you wish to edit it, edit this file
 rather than the README itself. You don’t need to regenerate it
 yourself either.
+
+*** Run your tests
+In order to be able to run your tests, make sure [[https://github.com/rejeep/cask.el][Cask]] is available on
+your ~$PATH~. You can run the tests with
+#+begin_src sh
+$ make test
+#+end_src
+
+If you push your changes on a branch of the official repo or on your
+own Github repo, an automatic CI should check your code is valid not
+only for your current version of Emacs but for all versions since
+Emacs 25.1. But it doesn’t hurt to check your code works on at least
+your version before pushing, you’ll spend less time debugging.
 
 ** Finding Something To Do
 Not sure where to begin? Take a look at the list of open issues,
