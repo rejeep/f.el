@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013 Johan Andersson
 
 ;; Author: Johan Andersson <johan.rejeep@gmail.com>
-;; Maintainer: Johan Andersson <johan.rejeep@gmail.com>
+;; Maintainer: Lucien Cartier-Tilet <lucien@phundrak.com>
 ;; Version: 0.20.0
 ;; Keywords: files, directories
 ;; Homepage: http://github.com/rejeep/f.el
