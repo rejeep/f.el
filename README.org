@@ -94,6 +94,9 @@ Or you can just dump ~f.el~ in your load path somewhere.
   - [[#using-fel][Using f.el]]
 - [[#contribution][Contribution]]
 
+* Contributing
+Check [[file:./CONTRIBUTING.org]]
+
 * Documentation and examples
 If you have Emacs 28.1 or later, you can access ~f.el~'s shortdoc with
 ~M-x shortdoc f~. This will essentially give you the examples below save
@@ -1081,13 +1084,3 @@ Here's an example of a function that finds the Git project root.
 #+end_src
 
 Now, try writing it even simpler yourself. Hint, check out ~f-traverse-upwards~.
-
-* Contribution
-Be sure to:
-- Install [[https://github.com/rejeep/cask.el][Cask]] if you haven’t already
-- Run the unit tests with
-  #+begin_src sh
-$ make test
-  #+end_src
-- Do not change ~README.org~ directly. If you want to change the README,
-  modify ~README.org.tpl~. The CI will update the actual README itself.
