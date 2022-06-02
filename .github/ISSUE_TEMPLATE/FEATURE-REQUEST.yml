@@ -1,0 +1,41 @@
+name: Feature Request
+description: Request a new feature
+title: "[Feature Request]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to request a new feature!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: e.g. @username or email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: New feature
+      description: Description of the new feature
+      value: "New function f-thing should do thing"
+    validations:
+      required: true
+  - type: textarea
+    id: feature-reason
+    attributes:
+      label: Why this new feature
+      description: Describe why this new feature should be added to f.el
+      value: "New function f-thing does something often done by people"
+    validations:
+      required: true
+  - type: textarea
+    id: ideas-implementation
+    attributes:
+      label: Implementation ideas and additional thoughts
+      description: Do you have an idea on how to implement it?
+      value: "It could be implemented doing foo, bar, and baz"
+    validations:
+      required: false
