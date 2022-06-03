@@ -18,6 +18,7 @@ M-x package-install f
 Or you can just dump ~f.el~ in your load path somewhere.
 
 * Table of Contents                                                :TOC_3_gh:
+- [[#contributing][Contributing]]
 - [[#documentation-and-examples][Documentation and examples]]
   - [[#paths][Paths]]
     - [[#f-join][f-join]]
@@ -92,15 +93,14 @@ Or you can just dump ~f.el~ in your load path somewhere.
 - [[#example][Example]]
   - [[#using-standard-emacs-builtin-functions][Using standard Emacs builtin functions]]
   - [[#using-fel][Using f.el]]
-- [[#contribution][Contribution]]
 
 * Contributing
 Check [[file:./CONTRIBUTING.org]]
 
 * Documentation and examples
 If you have Emacs 28.1 or later, you can access ~f.el~'s shortdoc with
-~M-x shortdoc f~. This will essentially give you the examples below save
-for a few lines in the functions’ documentation.
+~M-x shortdoc-display-group f~. This will essentially give you the
+examples below save for a few lines in the functions’ documentation.
 
 ** Paths
 *** f-join
