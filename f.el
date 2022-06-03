@@ -455,11 +455,30 @@ The extension, in a file name, is the part that follows the last
 
 (defalias 'f-descendant-of? 'f-descendant-of-p)
 
-(defun f-hidden-p (path)
-  "Return t if PATH is hidden, nil otherwise."
-  (unless (f-exists-p path)
-    (error "Path does not exist: %s" path))
-  (string= (substring path 0 1) "."))
+(defun f-hidden-p (path &optional children-not-hidden-p)
+  "Return t if PATH is hidden, nil otherwise.
+
+By default, any file or directory that is a child of a hidden
+directory in PATH is considered as hidden too, i.e. \".a/b\"
+returns t. When CHILDREN-NOT-HIDDEN-P is nil, only the last
+element of PATH is considered, i.e. \".a./b\" returns nil. By
+default this argument is set to t.
+
+Leaving CHILDREN-NOT-HIDDEN-P to nil gives `f-hidden-p' a similar
+behavior to `f-hidden-p' prior to stable version 0.21.0.
+
+TODO: Hidden directories and files on Windows do not necessarily
+begin with a dot. This should be implemented."
+  (let ((split-path (f-split path))
+        (check-hidden (lambda (elt)
+                        (and (string= (substring elt 0 1) ".")
+                             (not (member elt '("." ".."))))))
+        hidden-p)
+    (if children-not-hidden-p
+        (apply check-hidden (last split-path))
+      (dolist (elt split-path hidden-p)
+        (when (apply check-hidden `(,elt))
+            (setq hidden-p t))))))
 
 (defalias 'f-hidden? 'f-hidden-p)
 
