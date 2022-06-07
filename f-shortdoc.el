@@ -31,6 +31,7 @@
 (require 'shortdoc)
 
 (define-short-documentation-group f
+  "Paths"
   (f-join
    :eval (f-join "path")
    :eval (f-join "path" "to")
@@ -125,6 +126,7 @@
    :eval (f-uniquify-alist '("/foo/bar" "/www/bar" "/www/bar/quux"))
    :eval (f-uniquify-alist '("/foo/bar" "/foo/baz" "/home/www/bar" "/home/www/baz" "/var/foo" "/opt/foo/www/baz")))
 
+  "I/O"
   (f-read-bytes
    :no-eval* (f-read-bytes "path/to/binary/data"))
 
@@ -146,6 +148,7 @@
    :no-eval* (f-append-text "Hello world" 'utf-8 "path/to/file.txt")
    :no-eval* (f-append "Hello world" 'utf-8 "path/to/file.txt"))
 
+  "Destructive"
   (f-mkdir
    :no-eval (f-mkdir "dir")
    :result-string "creates /default/directory/dir"
@@ -189,6 +192,7 @@
    :no-eval* (f-touch "path/to/existing/file.txt")
    :no-eval* (f-touch "path/to/non/existing/file.txt"))
 
+  "Predicates"
   (f-exists-p
    :no-eval* (f-exists-p "path/to/file.txt")
    :no-eval* (f-exists-p "path/to/dir"))
@@ -222,7 +226,7 @@
    :eval (f-absolute-p "path/to/dir")
    :eval (f-absolute-p "/full/path/to/dir"))
 
-  (f-relative
+  (f-relative-p
    :eval (f-relative-p "path/to/dir")
    :eval (f-relative-p "/full/path/to/dir"))
 
@@ -293,6 +297,7 @@
    :no-eval (f-empty-p "/path/to/dir-with-contents/")
    :result nil)
 
+  "Stats"
   (f-size
    :no-eval* (f-size "path/to/file.txt")
    :no-eval* (f-size "path/to/dir"))
@@ -302,6 +307,19 @@
    :eval (f-depth "/var/")
    :eval (f-depth "/usr/local/bin"))
 
+  (f-change-time
+   :no-eval* (f-change-time "path/to/file.txt")
+   :no-eval* (f-change-time "path/to/dir"))
+
+  (f-modification-time
+   :no-eval* (f-modification-time "path/to/file.txt")
+   :no-eval* (f-modification-time "path/to/dir"))
+
+  (f-access-time
+   :no-eval* (f-access-time "path/to/file.txt")
+   :no-eval* (f-access-time "path/to/dir"))
+
+  "Misc"
   (f-this-file
    :no-eval* (f-this-file))
 
