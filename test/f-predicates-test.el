@@ -187,7 +187,7 @@
 
 (ert-deftest f-same-p/does-not-exist ()
   (with-playground
-   (should-not (f-same-p "foo" "foo"))))
+   (should (f-same-p "foo" "foo"))))
 
 (ert-deftest f-same-p/relative-equal-file ()
   (with-playground
@@ -269,6 +269,11 @@
   (with-playground
    (f-touch "foo")
    (should (f-equal-p "foo" "foo"))))
+
+(ert-deftest f-same-p/theoretical-paths ()
+  (should (f-same-p "/a/b" "/a/b"))
+  (should (f-same-p "/a/b/../c" "/a/c"))
+  (should (f-same-p "a/b/../c" "a/c")))
 
 
 ;;;; f-parent-of-p

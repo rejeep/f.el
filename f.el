@@ -100,6 +100,7 @@ ignored."
   (file-name-nondirectory (directory-file-name path)))
 
 (defalias 'f-parent 'f-dirname)
+
 (defun f-dirname (path)
   "Return the parent directory to PATH."
   (let ((parent (file-name-directory
@@ -417,11 +418,9 @@ The extension, in a file name, is the part that follows the last
 
 (defun f-same-p (path-a path-b)
   "Return t if PATH-A and PATH-B are references to same file."
-  (when (and (f-exists-p path-a)
-             (f-exists-p path-b))
-    (equal
-     (f-canonical (directory-file-name (f-expand path-a)))
-     (f-canonical (directory-file-name (f-expand path-b))))))
+  (equal
+   (f-canonical (directory-file-name (f-expand path-a)))
+   (f-canonical (directory-file-name (f-expand path-b)))))
 
 (defalias 'f-same? 'f-same-p)
 

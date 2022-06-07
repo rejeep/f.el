@@ -237,10 +237,9 @@
    :eval (f-ext-p "path/to/file"))
 
   (f-same-p
-   :no-eval (f-same-p "foo.txt" "foo.txt")
-   :result t
-   :no-eval (f-same-p "/path/to/foo.txt" "/path/to/bar.txt")
-   :result nil)
+   :eval (f-same-p "foo.txt" "foo.txt")
+   :eval (f-same-p "foo/bar/../baz" "foo/baz")
+   :eval (f-same-p "/path/to/foo.txt" "/path/to/bar.txt"))
 
   (f-parent-of-p
    :no-eval (f-parent-of-p "/path/to" "/path/to/dir")
