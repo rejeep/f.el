@@ -3,3 +3,4 @@
 /test/trash
 *.elc
 *~
+/.eask/

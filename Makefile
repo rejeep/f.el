@@ -1,25 +1,40 @@
 # -*- indent-tabs-mode: t -*-
-export EMACS ?= $(shell which emacs)
-CASK ?= $(shell which cask)
+SHELL := /usr/bin/env bash
 
-all: test
+EMACS ?= emacs
+EASK ?= eask
 
-test: clean-elc
-	${MAKE} unit
-	${MAKE} compile
-	${MAKE} unit
-	${MAKE} clean-elc
+.PHONY: clean checkdoc lint package install compile test
 
-unit:
-	${CASK} exec ert-runner
+ci: clean package install compile
 
-docs:
-	${CASK} exec ${EMACS} -Q --script bin/docs.el
+package:
+	@echo "Packaging..."
+	$(EASK) package
+
+install:
+	@echo "Installing"
+	$(EASK) install
 
 compile:
-	${CASK} build
+	@echo "Compiling..."
+	$(EASK) compile
 
-clean-elc:
-	rm -f f.elc
+test:
+	@echo "Testing..."
+	$(EASK) ert ./test/*.el
 
-.PHONY:	all test docs unit
+checkdoc:
+	@echo "Run checkdoc..."
+	$(EASK) checkdoc
+
+lint:
+	@echo "Run package-lint..."
+	$(EASK) lint
+
+doc:
+	@echo "Generating doc..."
+	$(EASK) exec $(EMACS) -Q --script bin/docs.el
+
+clean:
+	$(EASK) clean-all
