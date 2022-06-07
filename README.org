@@ -754,6 +754,7 @@ Aliases:
 #+begin_src emacs-lisp
 (f-same-p "foo.txt" "foo.txt") ;; => t
 (f-same-p "/path/to/foo.txt" "/path/to/bar.txt") ;; => nil
+(f-same-p "foo/bar/../baz" "foo/baz") ;; => t
 #+end_src
 
 *** f-parent-of-p
