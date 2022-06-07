@@ -5,9 +5,9 @@
 ;; Author: Johan Andersson <johan.rejeep@gmail.com>
 ;; Maintainer: Lucien Cartier-Tilet <lucien@phundrak.com>
 ;; Version: 0.20.0
+;; Package-Requires: ((emacs "24.1") (s "1.7.0") (dash "2.2.0"))
 ;; Keywords: files, directories
 ;; Homepage: http://github.com/rejeep/f.el
-;; Package-Requires: ((s "1.7.0") (dash "2.2.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -541,9 +541,7 @@ The access time (atime) of PATH is in the same format as
         (entries
          (-reject
           (lambda (file)
-            (or
-             (equal (f-filename file) ".")
-             (equal (f-filename file) "..")))
+            (member (f-filename file) '("." "..")))
           (directory-files path t))))
     (cond (recursive
            (-map
