@@ -55,15 +55,6 @@ If PATH is not allowed to be modified, throw error."
          (signal 'f-guard-error (list ,path f--guard-paths)))
      ,@body))
 
-(defmacro f--case-sensitive-fs-p (path)
-  "Determine if PATH points to a case-sensitive filesystem.
-This requires PATH to exist on the filesystem."
-  `(let ((full-path (f-expand ,path)))
-     ,(if (version<= "26.1" emacs-version)
-          `(not (file-name-case-insensitive-p full-path))
-        `(and (file-exists-p (upcase full-path))
-              (file-exists-p (lowercase full-path))))))
-
 
 ;;;; Paths
 
@@ -477,6 +468,18 @@ If PATH is directory, return t if directory has no files, nil otherwise."
     (= (f-size path) 0)))
 
 (defalias 'f-empty? 'f-empty-p)
+
+;; TODO: Write tests for this predicate
+(defmacro f-case-insensitive-p (path)
+  "Determine if PATH points to a case-insensitive filesystem.
+This requires PATH to exist on the filesystem."
+  `(let ((full-path (f-expand ,path)))
+     ,(if (version<= "26.1" emacs-version)
+          `(file-name-case-insensitive-p full-path)
+        `(not (and (file-exists-p (upcase full-path))
+                   (file-exists-p (lowercase full-path)))))))
+
+(defalias 'f-case-insensitive? 'f-case-insensitive-p)
 
 
 ;;;; Stats
