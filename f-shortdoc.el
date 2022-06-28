@@ -30,7 +30,8 @@
 ;;; Code:
 
 (when (version<= "28.1" emacs-version)
-  (require 'shortdoc)
+  (when (< emacs-major-version 29)
+    (require 'shortdoc))
 
   (define-short-documentation-group f
     "Paths"
