@@ -280,7 +280,7 @@ DIRS should be a successive list of directories forming together
 a full path. The easiest way to call this function with a fully
 formed path is using `f-split' alongside it:
 
-    (apply #'f-mkdir (f-split \"path/to/file\"))
+    (apply #\\='f-mkdir (f-split \"path/to/file\"))
 
 Although it works sometimes, it is not recommended to use fully
 formed paths in the function. In this case, it is recommended to
