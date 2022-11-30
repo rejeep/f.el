@@ -84,6 +84,11 @@ Or you can just dump ~f.el~ in your load path somewhere.
     - [[#f-modification-time][f-modification-time]]
     - [[#f-access-time][f-access-time]]
   - [[#misc][Misc]]
+    - [[#f-presence][f-presence]]
+    - [[#f-presence-directory][f-presence-directory]]
+    - [[#f-presence-file][f-presence-file]]
+    - [[#f-presence-symlink][f-presence-symlink]]
+    - [[#f-presence-readable][f-presence-readable]]
     - [[#f-this-file][f-this-file]]
     - [[#f-path-separator][f-path-separator]]
     - [[#f-glob][f-glob]]
@@ -911,6 +916,100 @@ Alias: ~f-same-time?~
 #+end_src
 
 ** Misc
+*** f-presence
+#+begin_example
+(f-presence path)
+
+{{f-presence}}
+#+end_example
+
+Aliases:
+- ~f-present?~
+- ~f-present-p~
+
+#+begin_src emacs-lisp
+(f-presence "path/to/file.txt") ;; => "path/to/file.txt"
+(f-presence "path/to/nonexistent.txt") ;; => nil
+(f-presence "path/to/directory") ;; => "path/to/directory"
+(f-presence "path/to/nonexistent") ;; => nil
+(f-presence "path/to/symlink") ;; => "path/to/symlink"
+(f-presence "path/to/nonexistent_symlink") ;; => nil
+(f-presence nil) ;; => nil
+(f-presence "") ;; => nil
+#+end_src
+
+*** f-presence-directory
+#+begin_example
+(f-presence-directory path)
+
+{{f-presence-directory}}
+#+end_example
+
+Aliases:
+- ~f-directory-present?~
+- ~f-directory-present-p~
+
+#+begin_src emacs-lisp
+(f-presence-directory "path/to/file.txt") ;; => nil
+(f-presence-directory "path/to/directory") ;; => "path/to/directory"
+(f-presence-directory "path/to/nonexistent") ;; => nil
+(f-presence-directory "path/to/symlink") ;; => nil
+#+end_src
+
+*** f-presence-file
+#+begin_example
+(f-presence-file path)
+
+{{f-presence-file}}
+#+end_example
+
+Aliases:
+- ~f-file-present?~
+- ~f-file-present-p~
+
+#+begin_src emacs-lisp
+(f-presence-file "path/to/file.txt") ;; => "path/to/file.txt"
+(f-presence-file "path/to/nonexistent.txt") ;; => nil
+(f-presence-file "path/to/directory") ;; => nil
+(f-presence-file "path/to/symlink") ;; => nil
+#+end_src
+
+*** f-presence-symlink
+#+begin_example
+(f-presence-symlink path)
+
+{{f-presence-symlink}}
+#+end_example
+
+Aliases:
+- ~f-symlink-present?~
+- ~f-symlink-present-p~
+
+#+begin_src emacs-lisp
+(f-presence-symlink "path/to/file.txt") ;; => nil
+(f-presence-symlink "path/to/directory") ;; => nil
+(f-presence-symlink "path/to/symlink") ;; => "path/to/symlink"
+(f-presence-symlink "path/to/nonexistent_symlink") ;; => nil
+#+end_src
+
+*** f-presence-readable
+#+begin_example
+(f-presence-readable path)
+
+{{f-presence-readable}}
+#+end_example
+
+Aliases:
+- ~f-readable-presence?~
+- ~f-readable-presence-p~
+
+#+begin_src emacs-lisp
+(f-presence-readable "path/to/readable.txt") ;; => "path/to/readable.txt"
+(f-presence-readable "path/to/unreadable.txt") ;; => nil
+(f-presence-readable "path/to/readable") ;; => "path/to/readable"
+(f-presence-readable "path/to/unreadable") ;; => nil
+#+end_src
+
 *** f-this-file
 #+begin_example
 (f-this-file)
