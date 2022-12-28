@@ -5,7 +5,7 @@
 ;; Author: Johan Andersson <johan.rejeep@gmail.com>
 ;; Maintainer: Lucien Cartier-Tilet <lucien@phundrak.com>
 ;; Version: 0.20.0
-;; Package-Requires: ((emacs "24.1") (dash "2.2.0"))
+;; Package-Requires: ((emacs "24.1") (s "1.7.0") (dash "2.2.0"))
 ;; Keywords: files, directories
 ;; Homepage: http://github.com/rejeep/f.el
 
@@ -86,11 +86,8 @@ path the new root of the generated path."
 
 (defun f-split (path)
   "Split PATH and return list containing parts."
-  (let ((parts (split-string path (f-path-separator) 'omit-nulls))
-        (first-char (if (> (length path) 1)
-                        (substring path 0 1)
-                      path)))
-    (if (string= first-char (f-path-separator))
+  (let ((parts (split-string path (f-path-separator) 'omit-nulls)))
+    (if (string= (s-left 1 path) (f-path-separator))
         (push (f-path-separator) parts)
       parts)))
 
@@ -145,8 +142,7 @@ ignored."
 (defun f-swap-ext (path ext)
   "Return PATH but with EXT as the new extension.
 EXT must not be nil or empty."
-  (if (or (null ext)
-          (string= "" ext))
+  (if (s-blank-p ext)
       (error "Extension cannot be empty or nil")
     (concat (f-no-ext path) "." ext)))
 
@@ -192,8 +188,8 @@ ending slash."
                               (--map (cons
                                       (car it)
                                       (concat
-                                       (f-filename (string-remove-suffix (cdr it)
-                                                                         (car it)))
+                                       (f-filename (s-chop-suffix (cdr it)
+                                                                  (car it)))
                                        (f-path-separator) (cdr it)))
                                      conf-files)
                             conf-files))
