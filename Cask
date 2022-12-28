@@ -6,6 +6,5 @@
 (development
  (depends-on "ert-runner")
  (depends-on "ert-async")
- (depends-on "s")
  (depends-on "dash")
  (depends-on "undercover"))
