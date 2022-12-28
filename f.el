@@ -209,9 +209,9 @@ This function expects no duplicate paths."
 (defun f-read-bytes (path &optional beg end)
   "Read binary data from PATH.
 
-Return the binary data as unibyte string. The optional second and
-third arguments BEG and END specify what portion of the file to
-read."
+Return the binary data as unibyte string.  The optional second
+and third arguments BEG and END specify what portion of the file
+to read."
   (with-temp-buffer
     (set-buffer-multibyte nil)
     (setq buffer-file-coding-system 'binary)
@@ -277,7 +277,7 @@ If APPEND is non-nil, append the DATA to the existing contents."
   "Create directories DIRS.
 
 DIRS should be a successive list of directories forming together
-a full path. The easiest way to call this function with a fully
+a full path.  The easiest way to call this function with a fully
 formed path is using `f-split' alongside it:
 
     (apply #\\='f-mkdir (f-split \"path/to/file\"))
@@ -495,21 +495,21 @@ detect the depth.
   "Return the last status change time of PATH.
 
 The status change time (ctime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details."
+`current-time'.  See `file-attributes' for technical details."
   (nth 6 (file-attributes path)))
 
 (defun f-modification-time (path)
   "Return the last modification time of PATH.
 
 The modification time (mtime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details."
+`current-time'.  See `file-attributes' for technical details."
   (nth 5 (file-attributes path)))
 
 (defun f-access-time (path)
   "Return the last access time of PATH.
 
 The access time (atime) of PATH is in the same format as
-`current-time'. See `file-attributes' for technical details."
+`current-time'.  See `file-attributes' for technical details."
   (nth 4 (file-attributes path)))
 
 
