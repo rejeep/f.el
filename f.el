@@ -491,26 +491,45 @@ detect the depth.
 '/' will be zero depth,  '/usr' will be one depth.  And so on."
   (- (length (f-split (f-expand path))) 1))
 
-(defun f-change-time (path)
+(defun f--get-time (path timestamp-p fn)
+  "Helper function.
+Helper for `f-change-time', `f-modification-time',
+`f-access-time'.
+
+Forward to this function PATH and TIMESTAMP-P. FN is the function
+used to extract the necessary information."
+  (let* ((current-time-list (not timestamp-p))
+         (date (apply fn (list (file-attributes path)))))
+    (if timestamp-p
+        (/ (car date) (cdr date))
+      date)))
+
+(defun f-change-time (path &optional timestamp-p)
   "Return the last status change time of PATH.
-
 The status change time (ctime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details."
-  (nth 6 (file-attributes path)))
+`current-time'. See `file-attributes' for technical details.
 
-(defun f-modification-time (path)
+If TIMESTAMP-P is t, return the last status change time as a
+timestamp in seconds."
+  (f--get-time path timestamp-p #'file-attribute-status-change-time))
+
+(defun f-modification-time (path &optional timestamp-p)
   "Return the last modification time of PATH.
-
 The modification time (mtime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details."
-  (nth 5 (file-attributes path)))
+`current-time'. See `file-attributes' for technical details.
 
-(defun f-access-time (path)
+If TIMESTAMP-P is t, return the last status change time as a
+timestamp in seconds."
+  (f--get-time path timestamp-p #'file-attribute-modification-time))
+
+(defun f-access-time (path &optional timestamp-p)
   "Return the last access time of PATH.
-
 The access time (atime) of PATH is in the same format as
-`current-time'. See `file-attributes' for technical details."
-  (nth 4 (file-attributes path)))
+`current-time'. See `file-attributes' for technical details.
+
+If TIMESTAMP-P is t, return the last status change time as a
+timestamp in seconds."
+  (f--get-time path timestamp-p #'file-attribute-access-time))
 
 
 ;;;; Misc
