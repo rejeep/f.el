@@ -492,43 +492,48 @@ detect the depth.
   (- (length (f-split (f-expand path))) 1))
 
 (defun f--get-time (path timestamp-p fn)
-  "Helper function.
+  "Helper function, get time-related information for PATH.
 Helper for `f-change-time', `f-modification-time',
-`f-access-time'.
+`f-access-time'.  It is meant to be called internally, avoid
+calling it manually unless you have to.
 
-Forward to this function PATH and TIMESTAMP-P. FN is the function
-used to extract the necessary information."
+If TIMESTAMP-P is non-nil, return the date requested as a
+timestamp.  If the value is \\='seconds, return the timestamp as
+a timestamp with a one-second precision.  Otherwise, the
+timestamp is returned in a (TICKS . HZ) format, see
+`current-time'.
+
+Otherwise, if TIMESTAMP-P is nil, return the default style of
+`current-time'.
+
+FN is the function specified by the caller function to retrieve
+the correct data from PATH."
   (let* ((current-time-list (not timestamp-p))
          (date (apply fn (list (file-attributes path)))))
-    (if timestamp-p
+    (if (eq timestamp-p 'seconds)
         (/ (car date) (cdr date))
       date)))
 
 (defun f-change-time (path &optional timestamp-p)
   "Return the last status change time of PATH.
-The status change time (ctime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details.
 
-If TIMESTAMP-P is t, return the last status change time as a
-timestamp in seconds."
+The status change time (ctime) of PATH in the same format as
+`current-time'.  For details on TIMESTAMP-P and the format of the
+returned value, see `f--get-time'."
   (f--get-time path timestamp-p #'file-attribute-status-change-time))
 
 (defun f-modification-time (path &optional timestamp-p)
   "Return the last modification time of PATH.
 The modification time (mtime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details.
-
-If TIMESTAMP-P is t, return the last status change time as a
-timestamp in seconds."
+`current-time'.  For details on TIMESTAMP-P and the format of the
+returned value, see `f--get-time'."
   (f--get-time path timestamp-p #'file-attribute-modification-time))
 
 (defun f-access-time (path &optional timestamp-p)
   "Return the last access time of PATH.
 The access time (atime) of PATH is in the same format as
-`current-time'. See `file-attributes' for technical details.
-
-If TIMESTAMP-P is t, return the last status change time as a
-timestamp in seconds."
+`current-time'.  For details on TIMESTAMP-P and the format of the
+returned value, see `f--get-time'."
   (f--get-time path timestamp-p #'file-attribute-access-time))
 
 
