@@ -309,16 +309,46 @@
      :eval (f-depth "/usr/local/bin"))
 
     (f-change-time
-     :no-eval* (f-change-time "path/to/file.txt")
-     :no-eval* (f-change-time "path/to/dir"))
+     :no-eval (f-change-time "path/to/file.txt")
+     :result (25517 48756 26337 111000)
+     :no-eval (f-change-time "path/to/dir")
+     :result (25517 57887 344657 210000)
+     :no-eval (f-change-time "path/to/file.txt" t)
+     :result (1672330868026337111 . 1000000000)
+     :no-eval (f-change-time "path/to/dir" t)
+     :result (1672339999344657210 . 1000000000)
+     :no-eval (f-change-time "path/to/file.txt" 'seconds)
+     :result 1672330868
+     :no-eval (f-change-time "path/to/dir" 'seconds)
+     :result 1672339999)
 
     (f-modification-time
-     :no-eval* (f-modification-time "path/to/file.txt")
-     :no-eval* (f-modification-time "path/to/dir"))
+     :no-eval (f-modification-time "path/to/file.txt")
+     :result (25517 48756 26337 111000)
+     :no-eval (f-modification-time "path/to/dir")
+     :result (25517 57887 344657 210000)
+     :no-eval (f-modification-time "path/to/file.txt" t)
+     :result (1672330868026337111 . 1000000000)
+     :no-eval (f-modification-time "path/to/dir" t)
+     :result (1672339999344657210 . 1000000000)
+     :no-eval (f-modification-time "path/to/file.txt" 'seconds)
+     :result 1672330868
+     :no-eval (f-modification-time "path/to/dir" 'seconds)
+     :result 1672339999)
 
     (f-access-time
-     :no-eval* (f-access-time "path/to/file.txt")
-     :no-eval* (f-access-time "path/to/dir"))
+     :no-eval (f-access-time "path/to/file.txt")
+     :result (25517 48756 26337 111000)
+     :no-eval (f-access-time "path/to/dir")
+     :result (25517 57887 344657 210000)
+     :no-eval (f-access-time "path/to/file.txt" t)
+     :result (1672330868026337111 . 1000000000)
+     :no-eval (f-access-time "path/to/dir" t)
+     :result (1672339999344657210 . 1000000000)
+     :no-eval (f-access-time "path/to/file.txt" 'seconds)
+     :result 1672330868
+     :no-eval (f-access-time "path/to/dir" 'seconds)
+     :result 1672339999)
 
     "Misc"
     (f-this-file
@@ -328,8 +358,8 @@
      :eval (f-path-separator))
 
     (f-glob
-     :noeval* (f-glob "path/to/*.el")
-     :noeval* (f-glob "*.el" "path/to"))
+     :no-eval* (f-glob "path/to/*.el")
+     :no-eval* (f-glob "*.el" "path/to"))
 
     (f-entries
      :no-eval* (f-entries "path/to/dir")
