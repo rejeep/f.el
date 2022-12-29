@@ -824,6 +824,16 @@ Alias: ~f-descendant-of?~
 (f-hidden-p path)
 
 Return t if PATH is hidden, nil otherwise.
+By default, any file or directory that is a child of a hidden
+directory in PATH is considered as hidden too, i.e. ".a/b"
+returns t. When ONLY-CHECK-LAST-ELT-P is nil, only the last
+element of PATH is considered, i.e. ".a/b" returns nil.
+
+Leaving ONLY-CHECK-LAST-ELT-P to nil gives ‘f-hidden-p’ a similar
+behavior to ‘f-hidden-p’ prior to stable version 0.21.0.
+
+TODO: Hidden directories and files on Windows do not necessarily
+begin with a dot. This should be implemented.
 #+end_example
 
 Alias: ~f-hidden?~
