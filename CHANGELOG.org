@@ -11,8 +11,9 @@
 - Fix ~f-join~
 - Allow ~f-read-bytes~ to do partial file reading ([[https://github.com/rejeep/f.el/pull/106][#106]] by @nagy)
 - Clarify ~f-mkdir~ behavior
-- Implement shortdoc for Emacs 28
+- Implement shortdoc for Emacs 28 and later
 - Prefer Elisp-style predicates in ~-p~ rather than Scheme-style predicates in ~?~
+- Improve behavior of ~f-hidden-p~
 
 * v0.20.0
 - Add predicate ~f-hidden-p~
