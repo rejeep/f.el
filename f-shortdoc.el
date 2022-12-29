@@ -284,10 +284,16 @@
      :result nil)
 
     (f-hidden-p
-     :no-eval (f-hidden-p "/path/to/foo")
-     :result nil
-     :no-eval (f-hidden-p "/path/to/.foo")
-     :result t)
+     :eval (f-hidden-p "path/to/foo")
+     :eval (f-hidden-p ".path/to/foo")
+     :eval (f-hidden-p "path/.to/foo")
+     :eval (f-hidden-p "path/to/.foo")
+     :eval (f-hidden-p ".path/to/foo" 'any)
+     :eval (f-hidden-p "path/.to/foo" 'any)
+     :eval (f-hidden-p "path/to/.foo" 'any)
+     :eval (f-hidden-p ".path/to/foo" 'last)
+     :eval (f-hidden-p "path/.to/foo" 'last)
+     :eval (f-hidden-p "path/to/.foo" 'last))
 
     (f-empty-p
      :no-eval (f-empty-p "/path/to/empty-file")

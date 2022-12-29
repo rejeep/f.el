@@ -760,8 +760,16 @@ Alias: ~f-descendant-of?~
 Alias: ~f-hidden?~
 
 #+begin_src emacs-lisp
-(f-hidden-p "/path/to/foo") ;; => nil
-(f-hidden-p "/path/to/.foo") ;; => t
+(f-hidden-p "path/to/foo") ;; => nil
+(f-hidden-p ".path/to/foo") ;; => t
+(f-hidden-p "path/.to/foo") ;; => nil
+(f-hidden-p "path/to/.foo") ;; => nil
+(f-hidden-p ".path/to/foo" 'any) ;; => t
+(f-hidden-p "path/.to/foo" 'any) ;; => t
+(f-hidden-p "path/to/.foo" 'any) ;; => t
+(f-hidden-p ".path/to/foo" 'last) ;; => nil
+(f-hidden-p "path/.to/foo" 'last) ;; => nil
+(f-hidden-p "path/to/.foo" 'last) ;; => t
 #+end_src
 
 *** f-empty-p
