@@ -459,28 +459,37 @@ The extension, in a file name, is the part that follows the last
 
 (defalias 'f-descendant-of? 'f-descendant-of-p)
 
-(defun f-hidden-p (path &optional only-check-last-elt-p)
+(defun f-hidden-p (path &optional behavior)
   "Return t if PATH is hidden, nil otherwise.
-By default, any file or directory that is a child of a hidden
-directory in PATH is considered as hidden too, i.e. \".a/b\"
-returns t. When ONLY-CHECK-LAST-ELT-P is nil, only the last
-element of PATH is considered, i.e. \".a/b\" returns nil.
 
-Leaving ONLY-CHECK-LAST-ELT-P to nil gives `f-hidden-p' a similar
-behavior to `f-hidden-p' prior to stable version 0.21.0.
+BEHAVIOR controls when a path should be considered as hidden
+depending on its value.  Beware, if PATH begins with \"./\", the
+current dir \".\" will not be considered as hidden.
 
-TODO: Hidden directories and files on Windows do not necessarily
-begin with a dot. This should be implemented."
+When BEHAVIOR is nil, it will only check if the path begins with
+a dot, as in .a/b/c, and return t if there is one.  This is the
+old behavior of f.el left as default for backward-compatibility
+purposes.
+
+When BEHAVIOR is ANY, return t if any of the elements of PATH is
+hidden, nil otherwise.
+
+When BEHAVIOR is LAST, return t only if the last element of PATH
+is hidden, nil otherwise.
+
+TODO: Hidden directories and files on Windows are marked
+differently than on *NIX systems.  This should be properly
+implemented."
   (let ((split-path (f-split path))
         (check-hidden (lambda (elt)
                         (and (string= (substring elt 0 1) ".")
-                             (not (member elt '("." ".."))))))
-        hidden-p)
-    (if only-check-last-elt-p
-        (apply check-hidden (last split-path))
-      (dolist (elt split-path hidden-p)
-        (when (apply check-hidden `(,elt))
-            (setq hidden-p t))))))
+                             (not (member elt '("." "..")))))))
+    (pcase behavior
+      ('any  (-any check-hidden split-path))
+      ('last (apply check-hidden (last split-path)))
+      (otherwise (if (null otherwise)
+                     (funcall check-hidden (car split-path))
+                   (error "Invalid value %S for argument BEHAVIOR" otherwise))))))
 
 (defalias 'f-hidden? 'f-hidden-p)
 
