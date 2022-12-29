@@ -98,10 +98,6 @@ Or you can just dump ~f.el~ in your load path somewhere.
 Check [[file:./CONTRIBUTING.org]]
 
 * Documentation and examples
-If you have Emacs 28.1 or later, you can access ~f.el~'s shortdoc with
-~M-x shortdoc-display-group f~. This will essentially give you the
-examples below save for a few lines in the functions’ documentation.
-
 ** Paths
 *** f-join
 #+begin_example
@@ -824,16 +820,25 @@ Alias: ~f-descendant-of?~
 (f-hidden-p path)
 
 Return t if PATH is hidden, nil otherwise.
-By default, any file or directory that is a child of a hidden
-directory in PATH is considered as hidden too, i.e. ".a/b"
-returns t. When ONLY-CHECK-LAST-ELT-P is nil, only the last
-element of PATH is considered, i.e. ".a/b" returns nil.
 
-Leaving ONLY-CHECK-LAST-ELT-P to nil gives ‘f-hidden-p’ a similar
-behavior to ‘f-hidden-p’ prior to stable version 0.21.0.
+BEHAVIOR controls when a path should be considered as hidden
+depending on its value.  Beware, if PATH begins with "./", the
+current dir "." will not be considered as hidden.
 
-TODO: Hidden directories and files on Windows do not necessarily
-begin with a dot. This should be implemented.
+When BEHAVIOR is nil, it will only check if the path begins with
+a dot, as in .a/b/c, and return t if there is one.  This is the
+old behavior of f.el left as default for backward-compatibility
+purposes.
+
+When BEHAVIOR is ANY, return t if any of the elements of PATH is
+hidden, nil otherwise.
+
+When BEHAVIOR is LAST, return t only if the last element of PATH
+is hidden, nil otherwise.
+
+TODO: Hidden directories and files on Windows are marked
+differently than on *NIX systems.  This should be properly
+implemented.
 #+end_example
 
 Alias: ~f-hidden?~
