@@ -520,21 +520,33 @@ the correct data from PATH."
 The status change time (ctime) of PATH in the same format as
 `current-time'.  For details on TIMESTAMP-P and the format of the
 returned value, see `f--get-time'."
-  (f--get-time path timestamp-p #'file-attribute-status-change-time))
+  (f--get-time path
+               timestamp-p
+               (if (fboundp 'file-attribute-status-change-time)
+                   #'file-attribute-status-change-time
+                 (lambda (f) (nth 6 f)))))
 
 (defun f-modification-time (path &optional timestamp-p)
   "Return the last modification time of PATH.
 The modification time (mtime) of PATH in the same format as
 `current-time'.  For details on TIMESTAMP-P and the format of the
 returned value, see `f--get-time'."
-  (f--get-time path timestamp-p #'file-attribute-modification-time))
+  (f--get-time path
+               timestamp-p
+               (if (fboundp 'file-attribute-modification-time)
+                   #'file-attribute-modification-time
+                 (lambda (f) (nth 5 f)))))
 
 (defun f-access-time (path &optional timestamp-p)
   "Return the last access time of PATH.
 The access time (atime) of PATH is in the same format as
 `current-time'.  For details on TIMESTAMP-P and the format of the
 returned value, see `f--get-time'."
-  (f--get-time path timestamp-p #'file-attribute-access-time))
+  (f--get-time path
+               timestamp-p
+               (if (fboundp 'file-attribute-access-time)
+                   #'file-attribute-access-time
+                 (lambda (f) (nth 4 f)))))
 
 
 ;;;; Misc
