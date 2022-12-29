@@ -60,30 +60,27 @@
 (ert-deftest f-change-time/return-time-for-file ()
   (with-playground
     (f-touch "foo.txt")
-    (should (equal (length (f-change-time "foo.txt"))
-                   (if (version<= "24.3" emacs-version)
-                       4
-                     2)))))
+    (should (equal (length (f-change-time "foo.txt")) 4))
+    (should (consp (f-change-time "foo.txt" t)))
+    (should (integerp (f-change-time "foo.txt" 'seconds)))))
 
 ;;;; f-modification-time
 
 (ert-deftest f-modification-time/return-time-for-file ()
   (with-playground
     (f-touch "foo.txt")
-    (should (equal (length (f-modification-time "foo.txt"))
-                   (if (version<= "24.3" emacs-version)
-                       4
-                     2)))))
+    (should (equal (length (f-modification-time "foo.txt")) 4))
+    (should (consp (f-modification-time "foo.txt" t)))
+    (should (integerp (f-modification-time "foo.txt" 'seconds)))))
 
 ;;;; f-access-time
 
 (ert-deftest f-access-time/return-time-for-file ()
   (with-playground
     (f-touch "foo.txt")
-    (should (equal (length (f-access-time "foo.txt"))
-                   (if (version<= "24.3" emacs-version)
-                       4
-                     2)))))
+    (should (equal (length (f-access-time "foo.txt")) 4))
+    (should (consp (f-access-time "foo.txt" t)))
+    (should (integerp (f-access-time "foo.txt" 'seconds)))))
 
 
 (provide 'f-stats-test)
