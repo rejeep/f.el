@@ -98,10 +98,6 @@ Or you can just dump ~f.el~ in your load path somewhere.
 Check [[file:./CONTRIBUTING.org]]
 
 * Documentation and examples
-If you have Emacs 28.1 or later, you can access ~f.el~'s shortdoc with
-~M-x shortdoc-display-group f~. This will essentially give you the
-examples below save for a few lines in the functions’ documentation.
-
 ** Paths
 *** f-join
 #+begin_example
@@ -689,6 +685,7 @@ Aliases:
 #+begin_src emacs-lisp
 (f-same-p "foo.txt" "foo.txt") ;; => t
 (f-same-p "/path/to/foo.txt" "/path/to/bar.txt") ;; => nil
+(f-same-p "foo/bar/../baz" "foo/baz") ;; => t
 #+end_src
 
 *** f-parent-of-p

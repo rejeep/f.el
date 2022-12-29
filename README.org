@@ -368,9 +368,9 @@ This function expects no duplicate paths.
 
 Read binary data from PATH.
 
-Return the binary data as unibyte string. The optional second and
-third arguments BEG and END specify what portion of the file to
-read.
+Return the binary data as unibyte string.  The optional second
+and third arguments BEG and END specify what portion of the file
+to read.
 #+end_example
 
 #+begin_src emacs-lisp
@@ -462,10 +462,10 @@ Alias: ~f-append~
 Create directories DIRS.
 
 DIRS should be a successive list of directories forming together
-a full path. The easiest way to call this function with a fully
+a full path.  The easiest way to call this function with a fully
 formed path is using ‘f-split’ alongside it:
 
-    (apply #’f-mkdir (f-split "path/to/file"))
+    (apply #'f-mkdir (f-split "path/to/file"))
 
 Although it works sometimes, it is not recommended to use fully
 formed paths in the function. In this case, it is recommended to
@@ -754,6 +754,7 @@ Aliases:
 #+begin_src emacs-lisp
 (f-same-p "foo.txt" "foo.txt") ;; => t
 (f-same-p "/path/to/foo.txt" "/path/to/bar.txt") ;; => nil
+(f-same-p "foo/bar/../baz" "foo/baz") ;; => t
 #+end_src
 
 *** f-parent-of-p
@@ -823,18 +824,6 @@ Alias: ~f-descendant-of?~
 (f-hidden-p path)
 
 Return t if PATH is hidden, nil otherwise.
-
-By default, any file or directory that is a child of a hidden
-directory in PATH is considered as hidden too, i.e. ".a/b"
-returns t. When CHILDREN-NOT-HIDDEN-P is nil, only the last
-element of PATH is considered, i.e. ".a./b" returns nil. By
-default this argument is set to t.
-
-Leaving CHILDREN-NOT-HIDDEN-P to nil gives ‘f-hidden-p’ a similar
-behavior to ‘f-hidden-p’ prior to stable version 0.21.0.
-
-TODO: Hidden directories and files on Windows do not necessarily
-begin with a dot. This should be implemented.
 #+end_example
 
 Alias: ~f-hidden?~
@@ -901,7 +890,7 @@ detect the depth.
 Return the last status change time of PATH.
 
 The status change time (ctime) of PATH in the same format as
-‘current-time’. See ‘file-attributes’ for technical details.
+‘current-time’.  See ‘file-attributes’ for technical details.
 #+end_example
 
 #+begin_src emacs-lisp
@@ -916,7 +905,7 @@ The status change time (ctime) of PATH in the same format as
 Return the last modification time of PATH.
 
 The modification time (mtime) of PATH in the same format as
-‘current-time’. See ‘file-attributes’ for technical details.
+‘current-time’.  See ‘file-attributes’ for technical details.
 #+end_example
 
 #+begin_src emacs-lisp
@@ -931,7 +920,7 @@ The modification time (mtime) of PATH in the same format as
 Return the last access time of PATH.
 
 The access time (atime) of PATH is in the same format as
-‘current-time’. See ‘file-attributes’ for technical details.
+‘current-time’.  See ‘file-attributes’ for technical details.
 #+end_example
 
 #+begin_src emacs-lisp

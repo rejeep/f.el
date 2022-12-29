@@ -5,9 +5,9 @@
 ;; Author: Johan Andersson <johan.rejeep@gmail.com>
 ;; Maintainer: Lucien Cartier-Tilet <lucien@phundrak.com>
 ;; Version: 0.20.0
+;; Package-Requires: ((emacs "24.1") (s "1.7.0") (dash "2.2.0"))
 ;; Keywords: files, directories
 ;; Homepage: http://github.com/rejeep/f.el
-;; Package-Requires: ((s "1.7.0") (dash "2.2.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -27,6 +27,11 @@
 ;; along with GNU Emacs; see the file COPYING.  If not, write to the
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+;;
+;; Much inspired by magnar's excellent s.el and dash.el, f.el is a
+;; modern API for working with files and directories in Emacs.
 
 ;;; Code:
 
@@ -100,6 +105,7 @@ ignored."
   (file-name-nondirectory (directory-file-name path)))
 
 (defalias 'f-parent 'f-dirname)
+
 (defun f-dirname (path)
   "Return the parent directory to PATH."
   (let ((parent (file-name-directory
@@ -208,9 +214,9 @@ This function expects no duplicate paths."
 (defun f-read-bytes (path &optional beg end)
   "Read binary data from PATH.
 
-Return the binary data as unibyte string. The optional second and
-third arguments BEG and END specify what portion of the file to
-read."
+Return the binary data as unibyte string.  The optional second
+and third arguments BEG and END specify what portion of the file
+to read."
   (with-temp-buffer
     (set-buffer-multibyte nil)
     (setq buffer-file-coding-system 'binary)
@@ -276,10 +282,10 @@ If APPEND is non-nil, append the DATA to the existing contents."
   "Create directories DIRS.
 
 DIRS should be a successive list of directories forming together
-a full path. The easiest way to call this function with a fully
+a full path.  The easiest way to call this function with a fully
 formed path is using `f-split' alongside it:
 
-    (apply #'f-mkdir (f-split \"path/to/file\"))
+    (apply #\\='f-mkdir (f-split \"path/to/file\"))
 
 Although it works sometimes, it is not recommended to use fully
 formed paths in the function. In this case, it is recommended to
@@ -417,11 +423,9 @@ The extension, in a file name, is the part that follows the last
 
 (defun f-same-p (path-a path-b)
   "Return t if PATH-A and PATH-B are references to same file."
-  (when (and (f-exists-p path-a)
-             (f-exists-p path-b))
-    (equal
-     (f-canonical (directory-file-name (f-expand path-a)))
-     (f-canonical (directory-file-name (f-expand path-b))))))
+  (equal
+   (f-canonical (directory-file-name (f-expand path-a)))
+   (f-canonical (directory-file-name (f-expand path-b)))))
 
 (defalias 'f-same? 'f-same-p)
 
@@ -513,21 +517,21 @@ detect the depth.
   "Return the last status change time of PATH.
 
 The status change time (ctime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details."
+`current-time'.  See `file-attributes' for technical details."
   (nth 6 (file-attributes path)))
 
 (defun f-modification-time (path)
   "Return the last modification time of PATH.
 
 The modification time (mtime) of PATH in the same format as
-`current-time'. See `file-attributes' for technical details."
+`current-time'.  See `file-attributes' for technical details."
   (nth 5 (file-attributes path)))
 
 (defun f-access-time (path)
   "Return the last access time of PATH.
 
 The access time (atime) of PATH is in the same format as
-`current-time'. See `file-attributes' for technical details."
+`current-time'.  See `file-attributes' for technical details."
   (nth 4 (file-attributes path)))
 
 
@@ -559,9 +563,7 @@ The access time (atime) of PATH is in the same format as
         (entries
          (-reject
           (lambda (file)
-            (or
-             (equal (f-filename file) ".")
-             (equal (f-filename file) "..")))
+            (member (f-filename file) '("." "..")))
           (directory-files path t))))
     (cond (recursive
            (-map

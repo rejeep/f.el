@@ -4,20 +4,20 @@
 - Deprecate Scheme-style predicates in ~?~ in favor of Elisp-style predicates in ~-p~
 
 * v0.21.0 (upcoming)
-- Add ~f-change-time~, ~f-modification-time~, ~f-access-time~
+- Add ~f-change-time~, ~f-modification-time~, ~f-access-time~ ([[https://github.com/rejeep/f.el/pull/66][#66]] by @ebpa)
 - Add Github Action CI
 - Add ~f-mkdir-full-path~
-- Fix ~f-split~
+- Fix ~f-split~ ([[https://github.com/rejeep/f.el/issues/80][#80]] by @blaenk)
 - Fix ~f-join~
-- Allow ~f-read-bytes~ to do partial file reading
+- Allow ~f-read-bytes~ to do partial file reading ([[https://github.com/rejeep/f.el/pull/106][#106]] by @nagy)
 - Clarify ~f-mkdir~ behavior
 - Implement shortdoc for Emacs 28
 - Prefer Elisp-style predicates in ~-p~ rather than Scheme-style predicates in ~?~
 
 * v0.20.0
 - Add predicate ~f-hidden-p~
-- Add ~f-empty?~ and ~f-empty-p~
-- Cache result of ~f-path-separator~
+- Add ~f-empty?~ and ~f-empty-p~ ([[https://github.com/rejeep/f.el/pull/88][#88]] by @mwfogleman)
+- Cache result of ~f-path-separator~ ([[https://github.com/rejeep/f.el/pull/84][#84]] by @sergv)
 
 * v0.19.0
 - Remove deprecated ~f-up~ function, use ~f-traverse-upwards~ instead
@@ -26,12 +26,12 @@
 
 * v0.18.0
 
-- Add ~f-swap-ext~ (by @phillord)
-- Add ~f-depth~ (by @cheunghy)
+- Add ~f-swap-ext~ ([[https://github.com/rejeep/f.el/pull/38][#38]] by @phillord)
+- Add ~f-depth~ ([[https://github.com/rejeep/f.el/pull/43][#43]] by @cheunghy)
 
 * v0.17.0
 
-- Add ~f-common-parent~ (by @Fuco1)
+- Add ~f-common-parent~ ([[https://github.com/rejeep/f.el/pull/19][#19]] by @Fuco1)
 
 * v0.16.0
 
@@ -48,7 +48,7 @@
 
 * v0.13.0
 
-- Add ~f-uniquify~ and ~f-uniquify-alist~ (by @Fuco1)
+- Add ~f-uniquify~ and ~f-uniquify-alist~ ([[https://github.com/rejeep/f.el/pull/13][#13]] by @Fuco1)
 
 * v0.12.0
 
