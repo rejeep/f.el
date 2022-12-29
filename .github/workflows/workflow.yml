@@ -27,12 +27,12 @@ jobs:
       - uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs_version }}
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache-cask-packages
         with:
           path: .cask
           key: cache-cask-packages-000
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id:  cache-cask-executable
         with:
           path: ~/.cask
@@ -56,12 +56,12 @@ jobs:
       - uses: purcell/setup-emacs@master
         with:
           version: 28.1
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: cache-cask-packages
         with:
           path: .cask
           key: cache-cask-packages-000
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id:  cache-cask-executable
         with:
           path: ~/.cask
