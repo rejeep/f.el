@@ -501,18 +501,30 @@ If TIMESTAMP-P is non-nil, return the date requested as a
 timestamp.  If the value is \\='seconds, return the timestamp as
 a timestamp with a one-second precision.  Otherwise, the
 timestamp is returned in a (TICKS . HZ) format, see
-`current-time'.
+`current-time' if using Emacs 29 or newer.
 
 Otherwise, if TIMESTAMP-P is nil, return the default style of
 `current-time'.
 
 FN is the function specified by the caller function to retrieve
 the correct data from PATH."
-  (let* ((current-time-list (not timestamp-p))
-         (date (apply fn (list (file-attributes path)))))
-    (if (eq timestamp-p 'seconds)
-        (/ (car date) (cdr date))
-      date)))
+      (let* ((current-time-list (not timestamp-p))
+             (date (apply fn (list (file-attributes path))))
+             (emacs29-or-newer-p (version<= "29" emacs-version)))
+        (cond
+         ((and (eq timestamp-p 'seconds) emacs29-or-newer-p)
+          (/ (car date) (cdr date)))
+         ((or (and (not (eq timestamp-p 'seconds)) emacs29-or-newer-p)
+              (and (not timestamp-p) (not emacs29-or-newer-p)))
+          date)
+         ((and (eq timestamp-p 'seconds) (not emacs29-or-newer-p))
+          (+ (* (nth 0 date) (expt 2 16))
+             (nth 1 date)))
+         ((and timestamp-p (not emacs29-or-newer-p))
+          `(,(+ (* (nth 0 date) (expt 2 16) 1000)
+                (* (nth 1 date) 1000)
+                (nth 3 date))
+            . 1000)))))
 
 (defun f-change-time (path &optional timestamp-p)
   "Return the last status change time of PATH.

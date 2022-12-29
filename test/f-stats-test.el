@@ -60,8 +60,16 @@
 (ert-deftest f-change-time/return-time-for-file ()
   (with-playground
     (f-touch "foo.txt")
-    (should (equal (length (f-change-time "foo.txt")) 4))
-    (should (consp (f-change-time "foo.txt" t)))
+    (should (equal (length (f-change-time "foo.txt")) 4))))
+
+(ert-deftest f-change-time/return-time-for-file--timestamp ()
+  (with-playground
+    (f-touch "foo.txt")
+    (should (consp (f-change-time "foo.txt" t)))))
+
+(ert-deftest f-change-time/return-time-for-file--seconds ()
+  (with-playground
+    (f-touch "foo.txt")
     (should (integerp (f-change-time "foo.txt" 'seconds)))))
 
 ;;;; f-modification-time
