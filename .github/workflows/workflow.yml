@@ -22,7 +22,6 @@ jobs:
           - 28.1
           - snapshot
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       - uses: purcell/setup-emacs@master
         with:
@@ -43,13 +42,12 @@ jobs:
         with:
           version: snapshot
       - name: "Install Cask dependencies"
-        run: cask install
+        run: make install-deps
         if: steps.cask-cache-executable.outputs.cache-hit != 'true'
       - run: make all
   docs:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
@@ -72,9 +70,8 @@ jobs:
         with:
           version: snapshot
       - name: "Install Cask dependencies"
-        run: cask install
+        run: make install-deps
         if: steps.cask-cache-executable.outputs.cache-hit != 'true'
-      # - run: cask exec emacs -Q --script bin/docs.el
       - run: make docs
       - name: "Commit README changes"
         uses: EndBug/add-and-commit@v9

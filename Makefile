@@ -22,4 +22,7 @@ compile:
 clean-elc:
 	rm -f f.elc
 
-.PHONY:	all test docs unit
+install-deps:
+	${CASK} install
+
+.PHONY:	all test docs unit install-deps
