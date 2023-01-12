@@ -522,26 +522,74 @@ detect the depth.
 '/' will be zero depth,  '/usr' will be one depth.  And so on."
   (- (length (f-split (f-expand path))) 1))
 
-(defun f-change-time (path)
+(defun f--get-time (path timestamp-p fn)
+  "Helper function, get time-related information for PATH.
+Helper for `f-change-time', `f-modification-time',
+`f-access-time'.  It is meant to be called internally, avoid
+calling it manually unless you have to.
+
+If TIMESTAMP-P is non-nil, return the date requested as a
+timestamp.  If the value is \\='seconds, return the timestamp as
+a timestamp with a one-second precision.  Otherwise, the
+timestamp is returned in a (TICKS . HZ) format, see
+`current-time' if using Emacs 29 or newer.
+
+Otherwise, if TIMESTAMP-P is nil, return the default style of
+`current-time'.
+
+FN is the function specified by the caller function to retrieve
+the correct data from PATH."
+      (let* ((current-time-list (not timestamp-p))
+             (date (apply fn (list (file-attributes path))))
+             (emacs29-or-newer-p (version<= "29" emacs-version)))
+        (cond
+         ((and (eq timestamp-p 'seconds) emacs29-or-newer-p)
+          (/ (car date) (cdr date)))
+         ((or (and (not (eq timestamp-p 'seconds)) emacs29-or-newer-p)
+              (and (not timestamp-p) (not emacs29-or-newer-p)))
+          date)
+         ((and (eq timestamp-p 'seconds) (not emacs29-or-newer-p))
+          (+ (* (nth 0 date) (expt 2 16))
+             (nth 1 date)))
+         ((and timestamp-p (not emacs29-or-newer-p))
+          `(,(+ (* (nth 0 date) (expt 2 16) 1000)
+                (* (nth 1 date) 1000)
+                (nth 3 date))
+            . 1000)))))
+
+(defun f-change-time (path &optional timestamp-p)
   "Return the last status change time of PATH.
 
 The status change time (ctime) of PATH in the same format as
-`current-time'.  See `file-attributes' for technical details."
-  (nth 6 (file-attributes path)))
+`current-time'.  For details on TIMESTAMP-P and the format of the
+returned value, see `f--get-time'."
+  (f--get-time path
+               timestamp-p
+               (if (fboundp 'file-attribute-status-change-time)
+                   #'file-attribute-status-change-time
+                 (lambda (f) (nth 6 f)))))
 
-(defun f-modification-time (path)
+(defun f-modification-time (path &optional timestamp-p)
   "Return the last modification time of PATH.
-
 The modification time (mtime) of PATH in the same format as
-`current-time'.  See `file-attributes' for technical details."
-  (nth 5 (file-attributes path)))
+`current-time'.  For details on TIMESTAMP-P and the format of the
+returned value, see `f--get-time'."
+  (f--get-time path
+               timestamp-p
+               (if (fboundp 'file-attribute-modification-time)
+                   #'file-attribute-modification-time
+                 (lambda (f) (nth 5 f)))))
 
-(defun f-access-time (path)
+(defun f-access-time (path &optional timestamp-p)
   "Return the last access time of PATH.
-
 The access time (atime) of PATH is in the same format as
-`current-time'.  See `file-attributes' for technical details."
-  (nth 4 (file-attributes path)))
+`current-time'.  For details on TIMESTAMP-P and the format of the
+returned value, see `f--get-time'."
+  (f--get-time path
+               timestamp-p
+               (if (fboundp 'file-attribute-access-time)
+                   #'file-attribute-access-time
+                 (lambda (f) (nth 4 f)))))
 
 
 ;;;; Misc

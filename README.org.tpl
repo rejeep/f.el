@@ -816,38 +816,50 @@ Alias: ~f-empty?~
 
 *** f-change-time
 #+begin_example
-(f-change-time path)
+(f-change-time path &optional timestamp-p)
 
 {{f-change-time}}
 #+end_example
 
 #+begin_src emacs-lisp
-(f-change-time "path/to/file.txt")
-(f-change-time "path/to/dir")
+(f-change-time "path/to/file.txt")         ;; (25517 48756 26337 111000)
+(f-change-time "path/to/dir")              ;; (25517 57887 344657 210000)
+(f-change-time "path/to/file.txt" t)       ;; (1672330868026337111 . 1000000000)
+(f-change-time "path/to/dir" t)            ;; (1672339999344657210 . 1000000000)
+(f-change-time "path/to/file.txt"'seconds) ;; 1672330868
+(f-change-time "path/to/dir"'seconds)      ;; 1672339999
 #+end_src
 
 *** f-modification-time
 #+begin_example
-(f-modification-time path)
+(f-modification-time path &optional timestamp-p)
 
 {{f-modification-time}}
 #+end_example
 
 #+begin_src emacs-lisp
-(f-modification-time "path/to/file.txt")
-(f-modification-time "path/to/dir")
+(f-modification-time "path/to/file.txt")          ;; (25517 48756 26337 111000)
+(f-modification-time "path/to/dir")               ;; (25517 57887 344657 210000)
+(f-modification-time "path/to/file.txt" t)        ;; (1672330868026337111 . 1000000000)
+(f-modification-time "path/to/dir" t)             ;; (1672339999344657210 . 1000000000)
+(f-modification-time "path/to/file.txt" 'seconds) ;; 1672330868
+(f-modification-time "path/to/dir" 'seconds)      ;; 1672339999
 #+end_src
 
 *** f-access-time
 #+begin_example
-(f-access-time path)
+(f-access-time path &optional timestamp-p)
 
 {{f-access-time}}
 #+end_example
 
 #+begin_src emacs-lisp
-(f-access-time "path/to/file.txt")
-(f-access-time "path/to/dir")
+(f-access-time "path/to/file.txt")          ;; (25517 48756 26337 111000)
+(f-access-time "path/to/dir")               ;; (25517 57887 344657 210000)
+(f-access-time "path/to/file.txt" t)        ;; (1672330868026337111 . 1000000000)
+(f-access-time "path/to/dir" t)             ;; (1672339999344657210 . 1000000000)
+(f-access-time "path/to/file.txt" 'seconds) ;; 1672330868
+(f-access-time "path/to/dir" 'seconds)      ;; 1672339999
 #+end_src
 
 ** Misc
