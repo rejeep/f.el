@@ -591,6 +591,70 @@ returned value, see `f--get-time'."
                    #'file-attribute-access-time
                  (lambda (f) (nth 4 f)))))
 
+(defun f--three-way-compare (a b)
+  "Three way comparison.
+
+Return -1 if A < B.
+Return 0 if A = B.
+Return 1 if A > B."
+  (cond ((< a b) -1)
+        ((= a b) 0)
+        ((> a b) 1)))
+
+;; TODO: How to properly test this function?
+(defun f--date-compare (file other method)
+  "Three-way comparison of the date of FILE and OTHER.
+
+This function can return three values:
+* 1 means FILE is newer than OTHER
+* 0 means FILE and NEWER share the same date
+* -1 means FILE is older than OTHER
+
+The statistics used for the date comparison depends on METHOD.
+When METHOD is null, compare their modification time.  Otherwise,
+compare their change time when METHOD is \\='change, or compare
+their last access time when METHOD is \\='access."
+  (let* ((fn-method (cond
+                     ((eq 'change method) #'f-change-time)
+                     ((eq 'access method) #'f-access-time)
+                     ((null method)       #'f-modification-time)
+                     (t (error "Unknown method %S" method))))
+         (date-file (apply fn-method (list file)))
+         (date-other (apply fn-method (list other)))
+         (dates      (-zip-pair date-file date-other)))
+    (message "[DEBUG]: file: %s\t\tother: %s" file other)
+    (message "[DEBUG]: dates: %S" dates)
+    (-reduce-from (lambda (acc elt)
+                    (if (= acc 0)
+                        (f--three-way-compare (car elt) (cdr elt))
+                      acc))
+                  0
+                  dates)))
+
+(defun f-older-p (file other &optional method)
+  "Compare if FILE is older than OTHER.
+
+For more info on METHOD, see `f--date-compare'."
+  (< (f--date-compare file other method) 0))
+
+(defalias 'f-older? #'f-older-p)
+
+(defun f-newer-p (file other &optional method)
+  "Compare if FILE is newer than OTHER.
+
+For more info on METHOD, see `f--date-compare'."
+  (> (f--date-compare file other method) 0))
+
+(defalias 'f-newer? #'f-newer-p)
+
+(defun f-same-time-p (file other &optional method)
+  "Check if FILE and OTHER share the same access or modification time.
+
+For more info on METHOD, see `f--date-compare'."
+  (= (f--date-compare file other method) 0))
+
+(defalias 'f-same-time? #'f-same-time-p)
+
 
 ;;;; Misc
 

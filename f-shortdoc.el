@@ -305,6 +305,30 @@
      :no-eval (f-empty-p "/path/to/dir-with-contents/")
      :result nil)
 
+    (f-older-p
+     :noeval (f-older-p "older-file.txt" "newer-file.txt")
+     :result t
+     :noeval (f-older-p "newer-file.txt" "older-file.txt")
+     :result nil
+     :noeval (f-older-p "same-time1.txt" "same-time2.txt")
+     :result nil)
+
+    (f-newer-p
+     :noeval (f-newer-p "newer-file.txt" "older-file.txt")
+     :result t
+     :noeval (f-newer-p "older-file.txt" "newer-file.txt")
+     :result nil
+     :noeval (f-newer-p "same-time1.txt" "same-time2.txt")
+     :result nil)
+
+    (f-same-time-p
+     :noeval (f-same-time-p "same-time1.txt" "same-time2.txt")
+     :result t
+     :noeval (f-same-time-p "newer-file.txt" "older-file.txt")
+     :result nil
+     :noeval (f-same-time-p "older-file.txt" "newer-file.txt")
+     :result nil)
+
     "Stats"
     (f-size
      :no-eval* (f-size "path/to/file.txt")
