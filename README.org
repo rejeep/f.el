@@ -74,6 +74,9 @@ Or you can just dump ~f.el~ in your load path somewhere.
     - [[#f-descendant-of-p][f-descendant-of-p]]
     - [[#f-hidden-p][f-hidden-p]]
     - [[#f-empty-p][f-empty-p]]
+    - [[#f-newer-p][f-newer-p]]
+    - [[#f-older-p][f-older-p]]
+    - [[#f-same-time-p][f-same-time-p]]
   - [[#stats][Stats]]
     - [[#f-size][f-size]]
     - [[#f-depth][f-depth]]
@@ -871,6 +874,51 @@ Alias: ~f-empty?~
 (f-empty-p "/path/to/file-with-contents") ;; => nil
 (f-empty-p "/path/to/empty-dir/") ;; => t
 (f-empty-p "/path/to/dir-with-contents/") ;; => nil
+#+end_src
+
+*** f-newer-p
+#+begin_example
+(f-newer-p file other &optional method)
+
+Compare if FILE is newer than OTHER.
+
+For more info on METHOD, see ‘f--date-compare’.
+#+end_example
+
+#+begin_src emacs-lisp
+(f-newer-p "newer.txt" "older.txt") ;; t
+(f-newer-p "older.txt""newer.txt" ) ;; nil
+(f-newer-p "same1.txt" "same2.txt") ;; nil
+#+end_src
+
+*** f-older-p
+#+begin_example
+(f-older-p file other &optional method)
+
+Compare if FILE is older than OTHER.
+
+For more info on METHOD, see ‘f--date-compare’.
+#+end_example
+
+#+begin_src emacs-lisp
+(f-older-p "older.txt" "newer.txt") ;; t
+(f-older-p "newer.txt""older.txt" ) ;; nil
+(f-older-p "same1.txt" "same2.txt") ;; nil
+#+end_src
+
+*** f-same-time-p
+#+begin_example
+(f-same-time-p file other &optional method)
+
+Check if FILE and OTHER share the same access or modification time.
+
+For more info on METHOD, see ‘f--date-compare’.
+#+end_example
+
+#+begin_src emacs-lisp
+(f-same-time-p "same1.txt" "same2.txt") ;; t
+(f-same-time-p "newer.txt" "older.txt") ;; nil
+(f-same-time-p "older.txt" "newer.txt") ;; nil
 #+end_src
 
 ** Stats
