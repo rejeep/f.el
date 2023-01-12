@@ -798,6 +798,8 @@ Alias: ~f-empty?~
 {{f-newer-p}}
 #+end_example
 
+Alias: ~f-newer?~
+
 #+begin_src emacs-lisp
 (f-newer-p "newer.txt" "older.txt") ;; t
 (f-newer-p "older.txt""newer.txt" ) ;; nil
@@ -811,6 +813,8 @@ Alias: ~f-empty?~
 {{f-older-p}}
 #+end_example
 
+Alias: ~f-older?~
+
 #+begin_src emacs-lisp
 (f-older-p "older.txt" "newer.txt") ;; t
 (f-older-p "newer.txt""older.txt" ) ;; nil
@@ -823,6 +827,8 @@ Alias: ~f-empty?~
 
 {{f-same-time-p}}
 #+end_example
+
+Alias: ~f-same-time?~
 
 #+begin_src emacs-lisp
 (f-same-time-p "same1.txt" "same2.txt") ;; t
