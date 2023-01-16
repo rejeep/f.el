@@ -522,6 +522,10 @@ detect the depth.
 '/' will be zero depth,  '/usr' will be one depth.  And so on."
   (- (length (f-split (f-expand path))) 1))
 
+;; For Emacs 28 and below, forward-declare ‘current-time-list’, which was
+;; introduced in Emacs 29.
+(defvar current-time-list)
+
 (defun f--get-time (path timestamp-p fn)
   "Helper function, get time-related information for PATH.
 Helper for `f-change-time', `f-modification-time',
