@@ -380,6 +380,7 @@
   (with-playground
    (f-mkdir "foo" "bar" "baz" "qux")
    (should-not (f-descendant-of-p "foo" "foo/bar"))
+   (should-not (f-descendant-of-p "foobar" "foo/bar"))
    (should-not (f-descendant-of-p "foo" "foo/bar/baz"))
    (should-not (f-descendant-of-p "foo" "foo/bar/baz/qux"))
    (should-not (f-descendant-of-p "foo/bar" "foo/bar/baz"))

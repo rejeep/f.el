@@ -454,8 +454,15 @@ The extension, in a file name, is the part that follows the last
 (defun f-descendant-of-p (path-a path-b)
   "Return t if PATH-A is desendant of PATH-B."
   (unless (f-same-p path-a path-b)
-    (string-prefix-p (f-full path-b)
-                     (f-full path-a))))
+    (let ((path-a (f-split (f-full path-a)))
+          (path-b (f-split (f-full path-b)))
+          (parent-p t))
+      (while (and path-b parent-p)
+        (if (string= (car path-a) (car path-b))
+            (setq path-a (cdr path-a)
+                  path-b (cdr path-b))
+          (setq parent-p nil)))
+      parent-p)))
 
 (defalias 'f-descendant-of? 'f-descendant-of-p)
 
