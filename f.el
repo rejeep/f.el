@@ -73,7 +73,7 @@ will discard all the preceeding arguments and make this absolute
 path the new root of the generated path."
   (let (path
         (relative (f-relative-p (car args))))
-    (-map
+    (mapc
      (lambda (arg)
        (setq path (cond ((not path) arg)
                         ((f-absolute-p arg)
@@ -691,7 +691,7 @@ For more info on METHOD, see `f--date-compare'."
             (member (f-filename file) '("." "..")))
           (directory-files path t))))
     (cond (recursive
-           (-map
+           (mapc
             (lambda (entry)
               (if (f-file-p entry)
                   (setq result (cons entry result))
