@@ -633,8 +633,6 @@ their last access time when METHOD is \\='access."
          (date-file (apply fn-method (list file)))
          (date-other (apply fn-method (list other)))
          (dates      (-zip-pair date-file date-other)))
-    (message "[DEBUG]: file: %s\t\tother: %s" file other)
-    (message "[DEBUG]: dates: %S" dates)
     (-reduce-from (lambda (acc elt)
                     (if (= acc 0)
                         (f--three-way-compare (car elt) (cdr elt))
