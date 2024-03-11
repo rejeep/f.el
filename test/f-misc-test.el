@@ -26,6 +26,96 @@
 ;;; Code:
 
 
+;;;; f-presence
+
+(ert-deftest f-presence/nonexistent-paths ()
+  (with-playground
+   (should
+    (equal
+     (mapcar 'f-presence ("nonexistent.txt" "nonexistent" "nonexistent_symlink" nil "")) '(nil nil nil nil nil)))))
+
+(ert-deftest f-presence/existent-paths ()
+  (with-playground
+   (f-touch "file.txt")
+   (f-mkdir "directory")
+   (f-symlink "symlink" "file.txt")
+   (should
+    (equal
+     (mapcar 'f-presence ("file.txt" "directory" "symlink")) '("file.txt" "directory" "symlink")))))
+
+
+;;;; f-presence-directory
+
+(ert-deftest f-presence-directory/non-directory-paths ()
+  (with-playground
+   (f-touch "file.txt")
+   (f-symlink "symlink" "file.txt")
+   (should
+    (equal
+     (mapcar 'f-presence-directory ("file.txt" "nonexistent" "symlink")) '(nil nil nil)))))
+
+(ert-deftest f-presence-directory/directory-paths ()
+  (with-playground
+   (f-mkdir "directory")
+   (should
+    (equal
+     (mapcar 'f-presence-directory ("directory")) '("directory")))))
+
+
+;;;; f-presence-file
+
+(ert-deftest f-presence-file/non-file-paths ()
+  (with-playground
+   (f-mkdir "directory")
+   (f-symlink "symlink" "directory")
+   (should
+    (equal
+     (mapcar 'f-presence-file ("nonexistent.txt" "directory" "symlink")) '(nil nil nil)))))
+
+(ert-deftest f-presence-file/file-paths ()
+  (with-playground
+   (f-touch "file.txt")
+   (should
+    (equal
+     (mapcar 'f-presence-file ("file.txt")) '("file.txt")))))
+
+
+;;;; f-presence-symlink
+
+(ert-deftest f-presence-symlink/non-symlink-paths ()
+  (with-playground
+   (f-touch "file.txt")
+   (f-mkdir "directory")
+   (should
+    (equal
+     (mapcar 'f-presence-symlink ("file.txt" "directory" "nonexistent_symlink")) '(nil nil nil)))))
+
+(ert-deftest f-presence-symlink/symlink-paths ()
+  (with-playground
+   (f-touch "file.txt")
+   (f-symlink "symlink" "file.txt")
+   (should
+    (equal
+     (mapcar 'f-presence-symlink ("symlink")) '("symlink")))))
+
+
+;;;; f-presence-readable
+
+(ert-deftest f-presence-readable/unreadable-paths ()
+  (with-playground
+   (should
+    (equal
+     (mapcar 'f-presence-readable ("unreadable.txt" "unreadable")) '(nil nil)))))
+
+(ert-deftest f-presence-readable/readable-paths ()
+  (with-playground
+   (f-touch "readable.txt")
+   (f-mkdir "readable")
+   (should
+    (equal
+     (mapcar 'f-presence-readable ("readable.txt" "readable")) '("readable.txt" "readable")))))
+
+
 ;;;; f-glob
 
 (ert-deftest f-glob-test/without-path ()

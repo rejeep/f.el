@@ -668,6 +668,41 @@ For more info on METHOD, see `f--date-compare'."
 
 ;;;; Misc
 
+(defun f-presence (path)
+  "When PATH exists, return PATH, else nil."
+  (when (f-exists-p path) path))
+
+(defalias 'f-present? #'f-presence)
+(defalias 'f-present-p #'f-presence)
+
+(defun f-presence-directory (path)
+  "When directory PATH exists, return PATH, else nil."
+  (when (f-directory-p path) path))
+
+(defalias 'f-directory-present? #'f-presence-directory)
+(defalias 'f-directory-present-p #'f-presence-directory)
+
+(defun f-presence-file (path)
+  "When file PATH exists, return PATH, else nil."
+  (when (f-file-p path) path))
+
+(defalias 'f-file-present? #'f-presence-file)
+(defalias 'f-file-present-p #'f-presence-file)
+
+(defun f-presence-symlink (path)
+  "When symlink PATH exists, return PATH, else nil."
+  (when (f-symlink-p path) path))
+
+(defalias 'f-symlink-present? #'f-presence-symlink)
+(defalias 'f-symlink-present-p #'f-presence-symlink)
+
+(defun f-presence-readable (path)
+  "When PATH is readable, return PATH, else nil."
+  (when (f-readable-p path) path))
+
+(defalias 'f-readable-presence? #'f-presence-readable)
+(defalias 'f-readable-presence-p #'f-presence-readable)
+
 (defun f-this-file ()
   "Return path to this file."
   (cond

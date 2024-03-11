@@ -381,6 +381,64 @@
      :result 1672339999)
 
     "Misc"
+    (f-presence
+     :noeval (f-presence "path/to/file.txt")
+     :result "path/to/file.txt"
+     :noeval (f-presence "path/to/nonexistent.txt")
+     :result nil
+     :noeval (f-presence "path/to/directory")
+     :result "path/to/directory"
+     :noeval (f-presence "path/to/nonexistent")
+     :result nil
+     :noeval (f-presence "path/to/symlink")
+     :result "path/to/symlink"
+     :noeval (f-presence "path/to/nonexistent_symlink")
+     :result nil
+     :noeval (f-presence nil)
+     :result nil
+     :noeval (f-presence "")
+     :result nil)
+
+    (f-presence-directory
+     :noeval (f-presence-directory "path/to/file.txt")
+     :result nil
+     :noeval (f-presence-directory "path/to/directory")
+     :result "path/to/directory"
+     :noeval (f-presence-directory "path/to/nonexistent")
+     :result nil
+     :noeval (f-presence-directory "path/to/symlink")
+     :result nil)
+
+    (f-presence-file
+     :noeval (f-presence-file "path/to/file.txt")
+     :result "path/to/file.txt"
+     :noeval (f-presence-file "path/to/nonexistent.txt")
+     :result nil
+     :noeval (f-presence-file "path/to/directory")
+     :result nil
+     :noeval (f-presence-file "path/to/symlink")
+     :result nil)
+
+    (f-presence-symlink
+     :noeval (f-presence-symlink "path/to/file.txt")
+     :result nil
+     :noeval (f-presence-symlink "path/to/directory")
+     :result nil
+     :noeval (f-presence-symlink "path/to/symlink")
+     :result "path/to/symlink"
+     :noeval (f-presence-symlink "path/to/nonexistent_symlink")
+     :result nil)
+
+    (f-presence-readable
+     :noeval (f-presence-readable "path/to/readable.txt")
+     :result "path/to/readable.txt"
+     :noeval (f-presence-readable "path/to/unreadable.txt")
+     :result nil
+     :noeval (f-presence-readable "path/to/readable")
+     :result "path/to/readable"
+     :noeval (f-presence-readable "path/to/unreadable")
+     :result nil)
+
     (f-this-file
      :no-eval* (f-this-file))
 
