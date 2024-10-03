@@ -3,7 +3,7 @@
 * v0.22.0 (upcoming)
 - Deprecate Scheme-style predicates in ~?~ in favor of Elisp-style predicates in ~-p~
 
-* v0.21.0 (upcoming)
+* v0.21.0
 - Add ~f-change-time~, ~f-modification-time~, ~f-access-time~ ([[https://github.com/rejeep/f.el/pull/66][#66]] by @ebpa)
 - Add ~f-newer-p~, ~f-same-time-p~, and ~f-older-p~
 - Add Github Action CI
