@@ -315,6 +315,14 @@ If FORCE is t, a directory will be deleted recursively."
         (delete-file path)
       (delete-directory path force))))
 
+(defmacro f-with-temp-directory (tdir &rest body)
+  "Cleate temp directory bound to TDIR and execute BODY."
+  `(letrec ((,tdir (make-temp-file "f-tmpdir" t))
+         (default-directory ,tdir))
+     (unwind-protect
+         (progn ,@body)
+       (delete-directory ,tdir t))))
+
 (defun f-symlink (source path)
   "Create a symlink to SOURCE from PATH."
   (f--destructive path (make-symbolic-link source path)))

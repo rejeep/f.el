@@ -83,6 +83,35 @@
    (f-delete "foo")
    (should-not-exist "foo")))
 
+(ert-deftest f-with-temp-directory-test ()
+  (with-playground
+   (let ((dd default-directory)
+         (td-was nil))
+     (f-with-temp-directory
+      td
+      (setq td-was td)
+      (f-mkdir "foo")
+      (f-touch "foo/bar.txt")
+      (f-touch "bar.txt")
+      (should (not (equal dd default-directory))))
+     (should-not-exist td-was)
+     (should (equal dd default-directory)))))
+
+(ert-deftest f-with-temp-directory-exception-test ()
+  (with-playground
+   (let ((dd default-directory)
+         (td-was nil))
+     (should-error
+      (f-with-temp-directory
+       td
+       (setq td-was td)
+       (f-mkdir "foo")
+       (f-touch "foo/bar.txt")
+       (f-touch "bar.txt")
+       (error "Oops")))
+     (should-not-exist td-was)
+     (should (equal dd default-directory)))))
+
 (ert-deftest f-delete-test/directory-with-content ()
   (with-playground
    (f-mkdir "foo")
