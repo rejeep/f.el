@@ -447,8 +447,11 @@ The extension, in a file name, is the part that follows the last
 (defun f-ancestor-of-p (path-a path-b)
   "Return t if PATH-A is ancestor of PATH-B."
   (unless (f-same-p path-a path-b)
-    (string-prefix-p (f-full path-a)
-                     (f-full path-b))))
+    (cond ((string-suffix-p (f-path-separator) path-a)
+           (string-prefix-p (f-full path-a)
+                            (f-full path-b)))
+          (t (string-prefix-p (f-full (concat path-a (f-path-separator)))
+                              (f-full path-b))))))
 
 (defalias 'f-ancestor-of? 'f-ancestor-of-p)
 

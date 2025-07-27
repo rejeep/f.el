@@ -339,6 +339,7 @@
    (should (equal t (f-ancestor-of-p "foo/bar" "foo/bar/baz")))
    (should (equal t (f-ancestor-of-p "foo/bar" "foo/bar/baz/qux")))
    (should (equal t (f-ancestor-of-p "foo/bar/baz" "foo/bar/baz/qux")))
+   (should (equal t (f-ancestor-of-p "foo/bar/" "foo/bar/baz/qux")))
    (should (equal t (f-ancestor-of-p (f-root) (f-expand (car (f-directories (f-root))) (f-root)))))))
 
 (ert-deftest f-ancestor-of-p-test/is-not-ancestor ()
@@ -350,6 +351,7 @@
    (should-not (f-ancestor-of-p "foo/bar/baz" "foo/bar"))
    (should-not (f-ancestor-of-p "foo/bar/baz/qux" "foo/bar"))
    (should-not (f-ancestor-of-p "foo/bar/baz/qux" "foo/bar/baz"))
+   (should-not (f-ancestor-of-p "foo" "foobar/baz"))
    (should-not (f-ancestor-of-p (f-expand (car (f-directories (f-root))) (f-root)) (f-root)))))
 
 (ert-deftest f-ancestor-of-p-test/is-same ()
