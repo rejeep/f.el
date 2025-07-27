@@ -1,28 +1,37 @@
 # -*- indent-tabs-mode: t -*-
 export EMACS ?= $(shell which emacs)
-CASK ?= $(shell which cask)
+EASK ?= $(shell which eask)
 
 all: test
+
+install:
+	${EASK} install
+	${EASK} install-deps
+	${EASK} install-deps --dev
 
 test: clean-elc
 	${MAKE} unit
 	${MAKE} compile
 	${MAKE} unit
+	${MAKE} package
 	${MAKE} clean-elc
 
 unit:
-	${CASK} exec ert-runner
+	${EASK} exec ert-runner
 
 docs:
-	${CASK} exec ${EMACS} -Q --script bin/docs.el
+	${EASK} exec ${EMACS} -Q --script bin/docs.el
 
 compile:
-	${CASK} build
+	${EASK} compile
+
+clean-all:
+	${EASK} clean all
 
 clean-elc:
-	rm -f f.elc
+	${EASK} clean elc
 
-install-deps:
-	${CASK} install
+package:
+	${EASK} package
 
-.PHONY:	all test docs unit install-deps
+.PHONY:	all clean-all test docs unit install

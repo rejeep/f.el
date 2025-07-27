@@ -7,7 +7,7 @@
 ;; Version: 0.21.0
 ;; Package-Requires: ((emacs "24.1") (s "1.7.0") (dash "2.2.0"))
 ;; Keywords: files, directories
-;; Homepage: http://github.com/rejeep/f.el
+;; Homepage: https://github.com/rejeep/f.el
 
 ;; This file is NOT part of GNU Emacs.
 

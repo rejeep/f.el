@@ -1,4 +1,5 @@
 /.cask
+/.eask
 /test/playground
 /test/trash
 *.elc
